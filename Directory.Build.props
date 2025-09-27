@@ -1,0 +1,16 @@
+<Project>
+  <PropertyGroup>
+    <Authors>ShipGameTeam</Authors>
+    <Product>ShipGame</Product>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/DigitalRiseEngine/ShipGame</PackageProjectUrl>
+    <Description>MonoGame/FNA library that provides simple 3D model class</Description>
+    <RootNamespace>ShipGame</RootNamespace>
+    <MonoGameTargetFramework>net8.0</MonoGameTargetFramework>
+    <FNATargetFramework>net8.0</FNATargetFramework>
+    <Version>1.0.0</Version>
+    <MonoGameVersion>3.8.0.1641</MonoGameVersion>
+    <AppMonoGameVersion>3.8.4</AppMonoGameVersion>
+    <DigitalRiseModelVersion>0.5.2</DigitalRiseModelVersion>
+  </PropertyGroup>
+</Project>
