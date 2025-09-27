@@ -8,7 +8,7 @@
 #endregion
 
 #region Using Statements
-using Microsoft.Xna.Framework.Content;
+using AssetManagementBase;
 using Microsoft.Xna.Framework.Graphics;
 #endregion
 
@@ -27,7 +27,7 @@ namespace ShipGame
 	public abstract class Screen
 	{
 		// called when screen gets or looses focus
-		public abstract void SetFocus(ContentManager content, bool focus);
+		public abstract void SetFocus(GraphicsDevice gd, AssetManager content, bool focus);
 
 		// called to update input
 		public abstract void ProcessInput(float elapsedTime, InputManager input);

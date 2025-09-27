@@ -7,6 +7,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShipGame.Core.MonoGame", "S
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BoxCollider.MonoGame", "ShipGame.Dependencies\BoxCollider\BoxCollider.MonoGame.csproj", "{5B115CE6-AB69-42BF-0826-4ABF9A07A54B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShipGame.MonoGame.DesktopGL", "ShipGame.DesktopGL\ShipGame.MonoGame.DesktopGL.csproj", "{29D3D336-ADEC-C038-0CC2-72F687AFB5BB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DigitalRiseModel.Gltf.MonoGame", "..\DigitalRiseModel\Source\DigitalRiseModel.Gltf\DigitalRiseModel.Gltf.MonoGame.csproj", "{9B360B7E-B241-7A1A-0367-82E4523110AA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DigitalRiseModel.MonoGame", "..\DigitalRiseModel\Source\DigitalRiseModel\DigitalRiseModel.MonoGame.csproj", "{3B1EEA7E-FEBA-4174-CC8D-1EEC121DA200}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +27,18 @@ Global
 		{5B115CE6-AB69-42BF-0826-4ABF9A07A54B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5B115CE6-AB69-42BF-0826-4ABF9A07A54B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5B115CE6-AB69-42BF-0826-4ABF9A07A54B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{29D3D336-ADEC-C038-0CC2-72F687AFB5BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{29D3D336-ADEC-C038-0CC2-72F687AFB5BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{29D3D336-ADEC-C038-0CC2-72F687AFB5BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{29D3D336-ADEC-C038-0CC2-72F687AFB5BB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9B360B7E-B241-7A1A-0367-82E4523110AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B360B7E-B241-7A1A-0367-82E4523110AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B360B7E-B241-7A1A-0367-82E4523110AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B360B7E-B241-7A1A-0367-82E4523110AA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3B1EEA7E-FEBA-4174-CC8D-1EEC121DA200}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B1EEA7E-FEBA-4174-CC8D-1EEC121DA200}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3B1EEA7E-FEBA-4174-CC8D-1EEC121DA200}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3B1EEA7E-FEBA-4174-CC8D-1EEC121DA200}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

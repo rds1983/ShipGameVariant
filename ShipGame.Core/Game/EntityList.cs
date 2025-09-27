@@ -17,6 +17,7 @@ using System.Xml.Serialization;
 using System.Linq;
 using System.Xml;
 using System.Xml.Linq;
+using AssetManagementBase;
 #endregion
 
 namespace ShipGame
@@ -153,13 +154,13 @@ namespace ShipGame
 		/// <summary>
 		/// Static function to load a entity list from a xml file
 		/// </summary>
-		public static EntityList Load(String filename)
+		public static EntityList Load(AssetManager assetManager, String filename)
 		{
 			// open file
 			Stream stream;
 			try
 			{
-				stream = TitleContainer.OpenStream(filename);
+				stream = assetManager.Open(filename);
 			}
 			catch (FileNotFoundException e)
 			{

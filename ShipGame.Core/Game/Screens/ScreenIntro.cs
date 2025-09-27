@@ -8,6 +8,7 @@
 #endregion
 
 #region Using Statements
+using AssetManagementBase;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -50,7 +51,7 @@ namespace ShipGame
 		}
 
 		// called before screen shows or stops showing
-		public override void SetFocus(ContentManager content, bool focus)
+		public override void SetFocus(GraphicsDevice gd, AssetManager content, bool focus)
 		{
 			// if getting focus
 			if (focus)
@@ -58,24 +59,17 @@ namespace ShipGame
 				// load all resources
 				gameManager.GameMode = GameMode.SinglePlayer;
 
-				textureLogo = content.Load<Texture2D>(
-											"screens/intro_logo");
-				textureLens = content.Load<Texture2D>(
-											"screens/intro_lens");
+				textureLogo = content.LoadTexture2DDefault(gd, "screens/intro_logo.tga");
+				textureLens = content.LoadTexture2DDefault(gd, "screens/intro_lens.tga");
 
-				textureCursorAnim = content.Load<Texture2D>(
-											"screens/cursor_anim");
-				textureCursorArrow = content.Load<Texture2D>(
-											"screens/cursor_arrow");
-				textureCursorBullet = content.Load<Texture2D>(
-											"screens/cursor_bullet");
+				textureCursorAnim = content.LoadTexture2DDefault(gd, "screens/cursor_anim.tga");
+				textureCursorArrow = content.LoadTexture2DDefault(gd, "screens/cursor_arrow.tga");
+				textureCursorBullet = content.LoadTexture2DDefault(gd, "screens/cursor_bullet.tga");
 
 				for (int i = 0; i < NumberMenuItems; i++)
 				{
-					textureMenu[i] = content.Load<Texture2D>(
-									"screens/" + menuNames[i]);
-					textureMenuHover[i] = content.Load<Texture2D>(
-									"screens/" + menuNames[i] + "_hover");
+					textureMenu[i] = content.LoadTexture2DDefault(gd, $"screens/{menuNames[i]}.tga");
+					textureMenuHover[i] = content.LoadTexture2DDefault(gd, $"screens/{menuNames[i]}_hover.tga");
 				}
 			}
 			else // loosing focus

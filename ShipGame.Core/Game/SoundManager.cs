@@ -7,6 +7,7 @@
 #endregion
 
 #region Using Statements
+using AssetManagementBase;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using System;
@@ -18,7 +19,7 @@ namespace ShipGame
 	public class SoundManager : IDisposable
 	{
 		Dictionary<string, SoundEffect> sounds = new();     // list of sound effects
-		ContentManager content;                                                     // content manager
+		AssetManager content;                                                     // content manager
 
 		private string[] soundAssets =
 		{
@@ -48,12 +49,12 @@ namespace ShipGame
 		/// <summary>
 		/// Load resources
 		/// </summary>
-		public void LoadContent(ContentManager content)
+		public void LoadContent(AssetManager content)
 		{
 			this.content = content;
 			foreach (string asset in soundAssets)
 			{
-				sounds.Add(asset, content.Load<SoundEffect>($"sounds/{asset}"));
+				sounds.Add(asset, content.LoadSoundEffect($"sounds/{asset}.wav"));
 			}
 
 		}

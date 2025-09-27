@@ -8,6 +8,7 @@
 #endregion
 
 #region Using Statements
+using AssetManagementBase;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -43,19 +44,16 @@ namespace ShipGame
 		}
 
 		// called before screen shows
-		public override void SetFocus(ContentManager content, bool focus)
+		public override void SetFocus(GraphicsDevice gd, AssetManager content, bool focus)
 		{
 			// if getting focus
 			if (focus)
 			{
 				// load all resources
 				for (int i = 0; i < NumberLevels; i++)
-					levelShots[i] = content.Load<Texture2D>(
-							"screens/" + levels[i] + "_screen");
-				selectBack = content.Load<Texture2D>(
-							"screens/select_back");
-				changeLevel = content.Load<Texture2D>(
-							"screens/change_level");
+					levelShots[i] = content.LoadTexture2DDefault(gd, $"screens/{levels[i]}_screen.tga");
+				selectBack = content.LoadTexture2DDefault(gd, "screens/select_back.tga");
+				changeLevel = content.LoadTexture2DDefault(gd, "screens/change_level.tga");
 			}
 			else // loosing focus
 			{

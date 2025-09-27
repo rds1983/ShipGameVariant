@@ -8,6 +8,8 @@
 #endregion
 
 #region Using Statements
+using AssetManagementBase;
+using DigitalRiseModel;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -29,11 +31,11 @@ namespace ShipGame
 		String[] ships = new String[NumberShips] { "ship2", "ship1" };
 
 		// model for each ship
-		Model[] shipModels = new Model[NumberShips];
+		DrModel[] shipModels = new DrModel[NumberShips];
 
-		Model padModel;           // ship pad model
-		Model padHaloModel;       // ship pad halo model
-		Model padSelectModel;     // ship pad select model
+		DrModel padModel;           // ship pad model
+		DrModel padHaloModel;       // ship pad halo model
+		DrModel padSelectModel;     // ship pad select model
 
 		Texture2D textureChangeShip;      // change ship texture
 		Texture2D textureRotateShip;      // rotate ship texture
@@ -69,7 +71,7 @@ namespace ShipGame
 		}
 
 		// called before screen shows
-		public override void SetFocus(ContentManager content, bool focus)
+		public override void SetFocus(GraphicsDevice gd, AssetManager content, bool focus)
 		{
 			// if getting focus
 			if (focus == true)
@@ -81,31 +83,24 @@ namespace ShipGame
 				rotation[0] = Matrix.Identity;
 				rotation[1] = Matrix.Identity;
 
-				lights = LightList.Load(Path.Combine(content.RootDirectory, "screens", "player_lights.xml"));
+				lights = LightList.Load(content, "screens/player_lights.xml");
 
 				for (int i = 0; i < NumberShips; i++)
 				{
-					shipModels[i] = content.Load<Model>(
-											"ships/" + ships[i]);
+					shipModels[i] = content.LoadModel(gd, $"ships/{ships[i]}", ShipGameEffectType.NormalMapping);
 					FixupShip(shipModels[i], "ships/" + ships[i]);
 				}
 
-				padModel = content.Load<Model>("ships/pad");
-				padHaloModel = content.Load<Model>("ships/pad_halo");
-				padSelectModel = content.Load<Model>("ships/pad_select");
+				padModel = content.LoadModel(gd, "ships/pad", ShipGameEffectType.NormalMapping);
+				padHaloModel = content.LoadModel(gd, "ships/pad_halo", ShipGameEffectType.NormalMapping);
+				padSelectModel = content.LoadModel(gd, "ships/pad_select", ShipGameEffectType.NormalMapping);
 
-				textureChangeShip = content.Load<Texture2D>(
-											"screens/change_ship");
-				textureRotateShip = content.Load<Texture2D>(
-											"screens/rotate_ship");
-				textureSelectBack = content.Load<Texture2D>(
-											"screens/select_back");
-				textureSelectCancel = content.Load<Texture2D>(
-											"screens/select_cancel");
-				textureInvertYCheck = content.Load<Texture2D>(
-											"screens/inverty_check");
-				textureInvertYUncheck = content.Load<Texture2D>(
-											"screens/inverty_uncheck");
+				textureChangeShip = content.LoadTexture2DDefault(gd, "screens/change_ship.tga");
+				textureRotateShip = content.LoadTexture2DDefault(gd, "screens/rotate_ship.tga");
+				textureSelectBack = content.LoadTexture2DDefault(gd, "screens/select_back.tga");
+				textureSelectCancel = content.LoadTexture2DDefault(gd, "screens/select_cancel.tga");
+				textureInvertYCheck = content.LoadTexture2DDefault(gd, "screens/inverty_check.tga");
+				textureInvertYUncheck = content.LoadTexture2DDefault(gd, "screens/inverty_uncheck.tga");
 			}
 			else // loosing focus
 			{
@@ -503,17 +498,17 @@ namespace ShipGame
 		/// Performs effect initialization, which is required in XNA 4.0
 		/// </summary>
 		/// <param name="model"></param>
-		private void FixupShip(Model model, string path)
+		private void FixupShip(DrModel model, string path)
 		{
 			ShipGameGame game = ShipGameGame.GetInstance();
 
-			foreach (ModelMesh mesh in model.Meshes)
+			foreach (var mesh in model.Meshes)
 			{
 				// for each mesh part
-				foreach (Effect effect in mesh.Effects)
+/*				foreach (Effect effect in mesh.Effects)
 				{
 					effect.Parameters["Reflect"].SetValue(GetReflectCube());
-				}
+				}*/
 			}
 		}
 

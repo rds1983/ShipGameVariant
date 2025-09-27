@@ -8,6 +8,8 @@
 #endregion
 
 #region Using Statements
+using AssetManagementBase;
+using FontStashSharp;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -29,7 +31,8 @@ namespace ShipGame
 	{
 		GraphicsDevice graphics;    // graphics device
 		SpriteBatch sprite;         // sprite bacth
-		List<SpriteFont> fonts;     // list of sprite fonts
+		FontSystem fontSystem;
+		List<SpriteFontBase> fonts;     // list of sprite fonts
 		bool textMode;              // in text mode?
 
 		/// <summary>
@@ -44,18 +47,19 @@ namespace ShipGame
 
 			graphics = gd;
 			sprite = new SpriteBatch(gd);
-			fonts = new List<SpriteFont>();
+			fonts = new List<SpriteFontBase>();
 			textMode = false;
 		}
 
 		/// <summary>
 		/// Load resources
 		/// </summary>
-		public void LoadContent(ContentManager content)
+		public void LoadContent(AssetManager content)
 		{
-			fonts.Add(content.Load<SpriteFont>("fonts/SmallFont"));
-			fonts.Add(content.Load<SpriteFont>("fonts/MediumFont"));
-			fonts.Add(content.Load<SpriteFont>("fonts/LargeFont"));
+			fontSystem = content.LoadFontSystem("fonts/Roboto-Bold.ttf");
+			fonts.Add(fontSystem.GetFont(14));
+			fonts.Add(fontSystem.GetFont(24));
+			fonts.Add(fontSystem.GetFont(32));
 		}
 
 		/// <summary>

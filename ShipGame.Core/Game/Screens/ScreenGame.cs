@@ -8,6 +8,7 @@
 #endregion
 
 #region Using Statements
+using AssetManagementBase;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -29,13 +30,13 @@ namespace ShipGame
 		}
 
 		// called before screen shows
-		public override void SetFocus(ContentManager content, bool focus)
+		public override void SetFocus(GraphicsDevice gd, AssetManager content, bool focus)
 		{
 			// if getting focus
 			if (focus == true)
 			{
 				// load all resources
-				gameManager.LoadFiles(content);
+				gameManager.LoadFiles(gd, content);
 			}
 			else // loosing focus
 			{

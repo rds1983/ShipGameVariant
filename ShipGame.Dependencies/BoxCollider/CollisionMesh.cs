@@ -8,6 +8,7 @@
 #endregion
 
 #region Using Statements
+using DigitalRiseModel;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
@@ -63,13 +64,13 @@ namespace BoxCollider
 		// tree with meshes faces
 		CollisionTree tree;
 
-		public CollisionMesh(Model model, uint subdivLevel)
+		public CollisionMesh(DrModel model, uint subdivLevel)
 		{
 			int verticesCapacity = 0;
 			int facesCapacity = 0;
-			foreach (ModelMesh mesh in model.Meshes)
+			foreach (var mesh in model.Meshes)
 			{
-				foreach (ModelMeshPart part in mesh.MeshParts)
+				foreach (var part in mesh.MeshParts)
 				{
 					verticesCapacity += part.VertexBuffer.VertexCount;
 					facesCapacity += part.PrimitiveCount;
@@ -82,13 +83,13 @@ namespace BoxCollider
 			int verticesLength = 0;
 			int facesLength = 0;
 
-			Matrix[] modelTransforms = new Matrix[model.Bones.Count];
+			Matrix[] modelTransforms = new Matrix[model.Bones.Length];
 			model.CopyAbsoluteBoneTransformsTo(modelTransforms);
-			foreach (ModelMesh mesh in model.Meshes)
+			foreach (var mesh in model.Meshes)
 			{
 				Matrix meshTransform = modelTransforms[mesh.ParentBone.Index];
 
-				foreach (ModelMeshPart part in mesh.MeshParts)
+				foreach (var part in mesh.MeshParts)
 				{
 					int vertexCount = part.VertexBuffer.VertexCount;
 					CustomVertex[] partVertices = new CustomVertex[vertexCount];

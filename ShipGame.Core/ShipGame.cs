@@ -8,7 +8,12 @@
 #endregion
 
 #region Using Statements
+using AssetManagementBase;
 using Microsoft.Xna.Framework;
+using System;
+using System.IO;
+using System.Reflection;
+
 #endregion
 
 namespace ShipGame
@@ -16,7 +21,7 @@ namespace ShipGame
 	/// <summary>
 	/// This is the main type for your game
 	/// </summary>
-	public class ShipGameGame : Microsoft.Xna.Framework.Game
+	public class ShipGameGame : Game
 	{
 		static ShipGameGame instance;
 
@@ -25,13 +30,25 @@ namespace ShipGame
 		GameManager game;
 		FontManager font;
 		SoundManager soundManager;
-
+		AssetManager assets;
 		bool renderVsync = true;
+
+		private static string ExecutingAssemblyDirectory
+		{
+			get
+			{
+				string codeBase = Assembly.GetExecutingAssembly().Location;
+				UriBuilder uri = new UriBuilder(codeBase);
+				string path = Uri.UnescapeDataString(uri.Path);
+				return Path.GetDirectoryName(path);
+			}
+		}
+
+		public static AssetManager AssetManager => instance.assets;
 
 		public ShipGameGame()
 		{
 			graphics = new GraphicsDeviceManager(this);
-			Content.RootDirectory = "Content";
 			Window.Title = "ShipGame";
 
 			soundManager = new SoundManager();
@@ -65,10 +82,12 @@ namespace ShipGame
 			font = new FontManager(graphics.GraphicsDevice);
 			screen = new ScreenManager(this, font, game);
 
-			soundManager.LoadContent(Content);
-			font.LoadContent(Content);
-			game.LoadContent(graphics.GraphicsDevice, Content);
-			screen.LoadContent(graphics.GraphicsDevice, Content);
+			var path = Path.Combine(ExecutingAssemblyDirectory, "Assets");
+			assets = AssetManager.CreateFileAssetManager(path);
+			soundManager.LoadContent(assets);
+			font.LoadContent(assets);
+			game.LoadContent(graphics.GraphicsDevice, assets);
+			screen.LoadContent(graphics.GraphicsDevice, assets);
 		}
 
 
@@ -97,7 +116,7 @@ namespace ShipGame
 			float ElapsedTimeFloat = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
 			screen.ProcessInput(ElapsedTimeFloat);
-			screen.Update(ElapsedTimeFloat);
+			screen.Update(GraphicsDevice, ElapsedTimeFloat);
 
 			base.Update(gameTime);
 		}

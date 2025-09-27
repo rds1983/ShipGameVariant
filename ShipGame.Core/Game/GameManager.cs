@@ -8,7 +8,9 @@
 #endregion
 
 #region Using Statements
+using AssetManagementBase;
 using BoxCollider;
+using DigitalRiseModel;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -100,7 +102,7 @@ namespace ShipGame
 		Matrix projectionFull;                // full screen projection matrix
 		Matrix projectionSplit;               // split screen projection matrix
 
-		Model levelColor;                // level model
+		DrModel levelColor;                // level model
 		EntityList levelSpawns;          // level spawn points
 		LightList levelLights;           // level lights
 		CollisionMesh levelCollision;    // level collision model
@@ -131,11 +133,11 @@ namespace ShipGame
 
 		// projectile modell files (matches ProjectileType)
 		String[] projectileFiles = new String[] { "blaster", "missile" };
-		Model[] projectileModels;
+		DrModel[] projectileModels;
 
 		// powerup model files (matches PowerupType)
 		String[] powerupFiles = new String[] { "energy", "missile" };
-		Model[] powerupModels;
+		DrModel[] powerupModels;
 
 		Texture2D hudCrosshair;       // hud crosshair texture
 		Texture2D hudEnergy;          // hud energy/shield/boost texture
@@ -231,23 +233,21 @@ namespace ShipGame
 		/// <summary>
 		/// Load the game files (level, ships, wepons, etc...)
 		/// </summary>
-		public void LoadFiles(ContentManager content)
+		public void LoadFiles(GraphicsDevice gd, AssetManager content)
 		{
 			String level = levelFile + "/" + levelFile;
 
 			// load level model
-			levelColor = content.Load<Model>("levels/" + level);
+			levelColor = content.LoadModel(gd, $"levels/{level}", ShipGameEffectType.NormalMapping);
 
 			// load collision model
-			Model collisionModel = content.Load<Model>(
-										"levels/" + level + "_collision");
-			levelCollision = new CollisionMesh(collisionModel,
-										GameOptions.CollisionMeshSubdivisions);
+			var collisionModel = content.LoadModel(gd, $"levels/{level}_collision", ShipGameEffectType.Basic);
+			levelCollision = new CollisionMesh(collisionModel, GameOptions.CollisionMeshSubdivisions);
 			collisionModel = null;
 
 			// load spawns and lights
-			levelSpawns = EntityList.Load(Path.Combine(content.RootDirectory, "levels", level + "_spawns.xml"));
-			levelLights = LightList.Load(Path.Combine(content.RootDirectory, "levels", level + "_lights.xml"));
+			levelSpawns = EntityList.Load(content, $"levels/{level}_spawns.xml");
+			levelLights = LightList.Load(content, $"levels/{level}_lights.xml");
 
 			// load particle textures
 			if (particleTextures == null)
@@ -255,8 +255,7 @@ namespace ShipGame
 				int i, j = particleFiles.GetLength(0);
 				particleTextures = new Texture2D[j];
 				for (i = 0; i < j; i++)
-					particleTextures[i] = content.Load<Texture2D>(
-							"particles/" + particleFiles[i]);
+					particleTextures[i] = content.LoadTexture2DDefault(gd, $"particles/{particleFiles[i]}.tga");
 			}
 
 			// load animated sprite textures
@@ -265,49 +264,42 @@ namespace ShipGame
 				int i, j = animatedSpriteFiles.GetLength(0);
 				animatedSpriteTextures = new Texture2D[j];
 				for (i = 0; i < j; i++)
-					animatedSpriteTextures[i] = content.Load<Texture2D>(
-							"explosions/" + animatedSpriteFiles[i]);
+					animatedSpriteTextures[i] = content.LoadTexture2DDefault(gd, $"explosions/{animatedSpriteFiles[i]}.tga");
 			}
 
 			// load projectile models
 			if (projectileModels == null)
 			{
 				int i, j = projectileFiles.GetLength(0);
-				projectileModels = new Model[j];
+				projectileModels = new DrModel[j];
 				for (i = 0; i < j; i++)
-					projectileModels[i] = content.Load<Model>(
-							"projectiles/" + projectileFiles[i]);
+					projectileModels[i] = content.LoadModel(gd, $"projectiles/{projectileFiles[i]}", ShipGameEffectType.NormalMapping);
 			}
 
 			// load powerup models
 			if (powerupModels == null)
 			{
 				int i, j = powerupFiles.GetLength(0);
-				powerupModels = new Model[j];
+				powerupModels = new DrModel[j];
 				for (i = 0; i < j; i++)
-					powerupModels[i] = content.Load<Model>(
-							"powerups/" + powerupFiles[i]);
+					powerupModels[i] = content.LoadModel(gd, $"powerups/{powerupFiles[i]}", ShipGameEffectType.NormalMapping);
 			}
 
 			// cerate players
 			for (int i = 0; i < GameOptions.MaxPlayers; i++)
 				if (shipFile[i] != null)
 				{
-					Model ShipModel = content.Load<Model>(
-							"ships/" + shipFile[i]);
+					var ShipModel = content.LoadModel(gd, $"ships/{shipFile[i]}", ShipGameEffectType.NormalMapping);
 
-					EntityList ShipEnities = EntityList.Load(
-							"content/ships/" + shipFile[i] + ".xml");
+					var ShipEnities = EntityList.Load(content, $"ships/{shipFile[i]}.xml");
 
-					players[i] = new PlayerShip(this, i,
-						ShipModel, ShipEnities, GameOptions.CollisionBoxRadius);
+					players[i] = new PlayerShip(this, i, ShipModel, ShipEnities, GameOptions.CollisionBoxRadius);
 				}
 				else
 					players[i] = null;
 
 			// create powerups
-			EntityList powerups = EntityList.Load(
-							"content/levels/" + level + "_powerups.xml");
+			EntityList powerups = EntityList.Load(content, $"levels/{level}_powerups.xml");
 
 			foreach (Entity entity in powerups.Entities)
 			{
@@ -325,33 +317,23 @@ namespace ShipGame
 			// load hud textures
 			if (gameMode == GameMode.SinglePlayer)
 			{
-				hudCrosshair = content.Load<Texture2D>(
-									"screens/hud_sp_crosshair");
-				hudEnergy = content.Load<Texture2D>(
-									"screens/hud_sp_energy");
-				hudMissile = content.Load<Texture2D>(
-									"screens/hud_sp_missile");
-				hudScore = content.Load<Texture2D>(
-									"screens/hud_sp_score");
-				hudBars = content.Load<Texture2D>(
-									"screens/hud_sp_bars");
+				hudCrosshair = content.LoadTexture2DDefault(gd, "screens/hud_sp_crosshair.tga");
+				hudEnergy = content.LoadTexture2DDefault(gd, "screens/hud_sp_energy.tga");
+				hudMissile = content.LoadTexture2DDefault(gd, "screens/hud_sp_missile.tga");
+				hudScore = content.LoadTexture2DDefault(gd, "screens/hud_sp_score.tga");
+				hudBars = content.LoadTexture2DDefault(gd, "screens/hud_sp_bars.tga");
 			}
 			else
 			{
-				hudCrosshair = content.Load<Texture2D>(
-									"screens/hud_mp_crosshair");
-				hudEnergy = content.Load<Texture2D>(
-									"screens/hud_mp_energy");
-				hudMissile = content.Load<Texture2D>(
-									"screens/hud_mp_missile");
-				hudScore = content.Load<Texture2D>(
-									"screens/hud_mp_score");
-				hudBars = content.Load<Texture2D>(
-									"screens/hud_mp_bars");
+				hudCrosshair = content.LoadTexture2DDefault(gd, "screens/hud_mp_crosshair.tga");
+				hudEnergy = content.LoadTexture2DDefault(gd, "screens/hud_mp_energy.tga");
+				hudMissile = content.LoadTexture2DDefault(gd, "screens/hud_mp_missile.tga");
+				hudScore = content.LoadTexture2DDefault(gd, "screens/hud_mp_score.tga");
+				hudBars = content.LoadTexture2DDefault(gd, "screens/hud_mp_bars.tga");
 			}
 
 			// load damage indicator texture
-			damageTexture = content.Load<Texture2D>("screens/damage");
+			damageTexture = content.LoadTexture2DDefault(gd, "screens/damage.tga");
 		}
 
 
@@ -908,7 +890,7 @@ namespace ShipGame
 		/// Load content
 		/// </summary>
 		public void LoadContent(GraphicsDevice gd,
-			ContentManager content)
+			AssetManager content)
 		{
 			// load reflection cubemap texture
 			//reflectCube = content.Load<TextureCube>("Reflect");
@@ -1144,7 +1126,7 @@ namespace ShipGame
 		/// <summary>
 		/// Draw a model using given technique and camera settings
 		/// </summary>
-		public void DrawModel(GraphicsDevice gd, Model model,
+		public void DrawModel(GraphicsDevice gd, DrModel model,
 			RenderTechnique technique, Vector3 cameraPosition,
 			Matrix world, Matrix viewProjection, LightList lights)
 		{
@@ -1166,7 +1148,7 @@ namespace ShipGame
 			gd.RasterizerState = RasterizerState.CullNone;
 
 			// for each mesh in model
-			foreach (ModelMesh mesh in model.Meshes)
+			foreach (var mesh in model.Meshes)
 			{
 				// get mesh world matrix
 				Matrix worldBone = bones[mesh.ParentBone.Index] * world;
@@ -1180,7 +1162,7 @@ namespace ShipGame
 				gd.SamplerStates[0] = SamplerState.LinearWrap;
 
 				// for each mesh part
-				foreach (ModelMeshPart meshPart in mesh.MeshParts)
+				foreach (var meshPart in mesh.MeshParts)
 				{
 					// if primitives to render
 					if (meshPart.PrimitiveCount > 0)
@@ -1190,14 +1172,12 @@ namespace ShipGame
 						gd.Indices = meshPart.IndexBuffer;
 
 						// setup effect
-						Effect effect = meshPart.Effect;
+						Effect effect = (Effect)meshPart.Tag;
 						effect.Parameters["WorldViewProj"].SetValue(worldBone * viewProjection);
 						effect.Parameters["CameraPosition"].SetValue(cameraObjectSpace);
 
 						// setup technique
-						effect.CurrentTechnique =
-							meshPart.Effect.Techniques[(int)technique];
-
+						effect.CurrentTechnique = effect.Techniques[(int)technique];
 
 						// if not lights specified
 						if (lights == null)
@@ -1251,7 +1231,6 @@ namespace ShipGame
 							// clear vertices and indices
 							gd.SetVertexBuffer(null);
 							gd.Indices = null;
-
 						}
 
 					}

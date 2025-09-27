@@ -8,6 +8,7 @@
 #endregion
 
 #region Using Statements
+using AssetManagementBase;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -24,7 +25,7 @@ namespace ShipGame
 		GameManager gameManager;             // game manager
 		FontManager fontManager;             // font manager
 		InputManager inputManager;           // input manager
-		ContentManager contentManager;       // content manager
+		AssetManager contentManager;       // content manager
 
 		List<Screen> screens;         // list of available screens
 		Screen current;               // currently active screen
@@ -91,7 +92,7 @@ namespace ShipGame
 		}
 
 		// update for given elapsed time
-		public void Update(float elapsedTime)
+		public void Update(GraphicsDevice gd, float elapsedTime)
 		{
 			// if in a transition
 			if (fade > 0)
@@ -103,11 +104,11 @@ namespace ShipGame
 				if (next != null && fade < 0.5f * fadeTime)
 				{
 					// tell new screen it is getting in focus
-					next.SetFocus(contentManager, true);
+					next.SetFocus(gd, contentManager, true);
 
 					// tell the old screen it lost its focus
 					if (current != null)
-						current.SetFocus(contentManager, false);
+						current.SetFocus(gd, contentManager, false);
 
 					// set new screen as current
 					current = next;
@@ -364,7 +365,7 @@ namespace ShipGame
 
 		// load all content
 		public void LoadContent(GraphicsDevice gd,
-			ContentManager content)
+			AssetManager content)
 		{
 			if (gd == null)
 			{
@@ -372,10 +373,10 @@ namespace ShipGame
 			}
 
 			contentManager = content;
-			textureBackground = content.Load<Texture2D>("screens/intro_bg");
+			textureBackground = content.LoadTexture2DDefault(gd, "screens/intro_bg.tga");
 			// create blur manager
 			blurManager = new BlurManager(gd,
-				content.Load<Effect>("shaders/Blur"),
+				content.LoadEffect2(gd, "shaders/Blur.efb"),
 				GameOptions.GlowResolution, GameOptions.GlowResolution);
 
 			int width = gd.Viewport.Width;

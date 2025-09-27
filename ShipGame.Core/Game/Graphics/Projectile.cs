@@ -8,6 +8,7 @@
 #endregion
 
 #region Using Statements
+using DigitalRiseModel;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -21,7 +22,7 @@ namespace ShipGame
 
 		RenderTechnique technique;      // render technique
 
-		Model model;                    // projectile model
+		DrModel model;                    // projectile model
 		int player;                     // player owning the projectile
 
 		Vector3 sourcePosition;         // source position
@@ -49,7 +50,7 @@ namespace ShipGame
 		/// Create a new projectile
 		/// </summary>
 		public Projectile(
-				ProjectileType type, Model model,
+				ProjectileType type, DrModel model,
 				int player, float velocity, float damage,
 				Matrix source, Vector3 destination,
 				RenderTechnique technique)

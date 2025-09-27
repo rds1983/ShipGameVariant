@@ -6,8 +6,8 @@
 // Copyright (C) Microsoft Corporation. All rights reserved.
 //-----------------------------------------------------------------------------
 #endregion
-
 #region Using Statements
+using AssetManagementBase;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -122,13 +122,13 @@ namespace ShipGame
 		/// <summary>
 		/// Static method to load a light list from a file
 		/// </summary>
-		public static LightList Load(String filename)
+		public static LightList Load(AssetManager assetManager, String filename)
 		{
 			// open file
 			Stream stream;
 			try
 			{
-				stream = TitleContainer.OpenStream(filename);
+				stream = assetManager.Open(filename);
 			}
 			catch (FileNotFoundException e)
 			{

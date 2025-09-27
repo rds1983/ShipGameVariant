@@ -8,8 +8,9 @@
 #endregion
 
 #region Using Statements
+using AssetManagementBase;
+using DigitalRiseModel;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
@@ -22,10 +23,10 @@ namespace ShipGame
 		ScreenManager screenManager;    // screen manager
 		GameManager gameManager;         // game manager
 
-		Model shipModel;          // winner player ship model
+		DrModel shipModel;          // winner player ship model
 
-		Model padModel;           // model for the ship pad
-		Model padHaloModel;       // model for the ship pad halo
+		DrModel padModel;           // model for the ship pad
+		DrModel padHaloModel;       // model for the ship pad halo
 
 		LightList lights;         // lights for scene
 
@@ -42,7 +43,7 @@ namespace ShipGame
 		}
 
 		// called before screen shows
-		public override void SetFocus(ContentManager content, bool focus)
+		public override void SetFocus(GraphicsDevice gd, AssetManager content, bool focus)
 		{
 			// if getting focus
 			if (focus)
@@ -50,21 +51,18 @@ namespace ShipGame
 				// load all resources
 				int winner = gameManager.PlayerWinner;
 
-				shipModel = content.Load<Model>("ships/" +
-								gameManager.GetPlayerShip(winner));
+				shipModel = content.LoadModel(gd, $"ships/{gameManager.GetPlayerShip(winner)}", ShipGameEffectType.NormalMapping);
 
-				padModel = content.Load<Model>("ships/pad");
-				padHaloModel = content.Load<Model>("ships/pad_halo");
+				padModel = content.LoadModel(gd, "ships/pad", ShipGameEffectType.NormalMapping);
+				padHaloModel = content.LoadModel(gd, "ships/pad_halo", ShipGameEffectType.NormalMapping);
 
-				lights = LightList.Load("content/screens/end_lights.xml");
+				lights = LightList.Load(content, "screens/end_lights.xml");
 
-				textureContinue = content.Load<Texture2D>("screens/continue");
+				textureContinue = content.LoadTexture2DDefault(gd, "screens/continue.tga");
 				if (winner == 0)
-					texturePlayerWin = content.Load<Texture2D>(
-											"screens/player1_wins");
+					texturePlayerWin = content.LoadTexture2DDefault(gd, "screens/player1_wins.tga");
 				else
-					texturePlayerWin = content.Load<Texture2D>(
-											"screens/player2_wins");
+					texturePlayerWin = content.LoadTexture2DDefault(gd, "screens/player2_wins.tga");
 			}
 			else // loosing focus
 			{

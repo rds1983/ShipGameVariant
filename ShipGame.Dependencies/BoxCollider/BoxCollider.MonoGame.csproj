@@ -1,9 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>$(MonoGameTargetFramework)</TargetFramework>
+    <DefineConstants>$(DefineConstants);MONOGAME</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="DigitalRiseModel.MonoGame" Version="$(DigitalRiseModelVersion)" />
     <PackageReference Include="MonoGame.Framework.DesktopGL" PrivateAssets="All" Version="$(MonoGameVersion)" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\DigitalRiseModel\Source\DigitalRiseModel\DigitalRiseModel.MonoGame.csproj" />
   </ItemGroup>
 </Project>

@@ -8,8 +8,8 @@
 #endregion
 
 #region Using Statements
+using AssetManagementBase;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -212,8 +212,7 @@ namespace ShipGame
 		/// <summary>
 		/// Load content
 		/// </summary>
-		public void LoadContent(GraphicsDevice gd,
-			ContentManager content)
+		public void LoadContent(GraphicsDevice gd, AssetManager content)
 		{
 			if (gd == null)
 			{
@@ -221,7 +220,7 @@ namespace ShipGame
 			}
 
 			// load effect
-			effect = content.Load<Effect>("shaders/Particle");
+			effect = content.LoadEffect2(gd, "shaders/Particle.efb");
 
 			// get techinque
 			effectTechnique = effect.Techniques["Particle"];
