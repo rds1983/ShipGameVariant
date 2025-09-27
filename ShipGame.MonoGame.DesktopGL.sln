@@ -5,8 +5,6 @@ VisualStudioVersion = 17.8.34322.80
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShipGame.Core.MonoGame", "ShipGame.Core\ShipGame.Core.MonoGame.csproj", "{A437AF89-D900-DEE3-C7FA-274124CD2B13}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BoxCollider", "ShipGame.Dependencies\BoxCollider\BoxCollider.csproj", "{5D0B8ADC-B514-7C35-834D-8568E4C9DEB9}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BoxCollider.MonoGame", "ShipGame.Dependencies\BoxCollider\BoxCollider.MonoGame.csproj", "{5B115CE6-AB69-42BF-0826-4ABF9A07A54B}"
 EndProject
 Global
@@ -19,10 +17,6 @@ Global
 		{A437AF89-D900-DEE3-C7FA-274124CD2B13}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A437AF89-D900-DEE3-C7FA-274124CD2B13}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A437AF89-D900-DEE3-C7FA-274124CD2B13}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5D0B8ADC-B514-7C35-834D-8568E4C9DEB9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5D0B8ADC-B514-7C35-834D-8568E4C9DEB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5D0B8ADC-B514-7C35-834D-8568E4C9DEB9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5D0B8ADC-B514-7C35-834D-8568E4C9DEB9}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5B115CE6-AB69-42BF-0826-4ABF9A07A54B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5B115CE6-AB69-42BF-0826-4ABF9A07A54B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5B115CE6-AB69-42BF-0826-4ABF9A07A54B}.Release|Any CPU.ActiveCfg = Release|Any CPU
