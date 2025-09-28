@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShipGame.Core.MonoGame", "S
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BoxCollider.MonoGame", "ShipGame.Dependencies\BoxCollider\BoxCollider.MonoGame.csproj", "{5B115CE6-AB69-42BF-0826-4ABF9A07A54B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShipGame.MonoGame.DesktopGL", "ShipGame.DesktopGL\ShipGame.MonoGame.DesktopGL.csproj", "{29D3D336-ADEC-C038-0CC2-72F687AFB5BB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShipGame.MonoGame.DesktopGL", "ShipGame.Desktop\ShipGame.MonoGame.DesktopGL.csproj", "{FF161717-72F6-D4EF-A4DE-C74063D20EEE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,10 @@ Global
 		{5B115CE6-AB69-42BF-0826-4ABF9A07A54B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5B115CE6-AB69-42BF-0826-4ABF9A07A54B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5B115CE6-AB69-42BF-0826-4ABF9A07A54B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{29D3D336-ADEC-C038-0CC2-72F687AFB5BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{29D3D336-ADEC-C038-0CC2-72F687AFB5BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{29D3D336-ADEC-C038-0CC2-72F687AFB5BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{29D3D336-ADEC-C038-0CC2-72F687AFB5BB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FF161717-72F6-D4EF-A4DE-C74063D20EEE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF161717-72F6-D4EF-A4DE-C74063D20EEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF161717-72F6-D4EF-A4DE-C74063D20EEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF161717-72F6-D4EF-A4DE-C74063D20EEE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
