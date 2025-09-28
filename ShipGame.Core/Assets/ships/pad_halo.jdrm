@@ -1,0 +1,95 @@
+{
+  "BinaryPath": "pad_halo.bin",
+  "VertexBuffers": [
+    {
+      "VertexCount": 1305,
+      "Elements": [
+        {
+          "Format": "Vector3"
+        },
+        {
+          "Usage": "Normal",
+          "Format": "Vector3"
+        },
+        {
+          "Usage": "TextureCoordinate",
+          "Format": "Vector2"
+        },
+        {
+          "Usage": "Tangent",
+          "Format": "Vector3"
+        },
+        {
+          "Usage": "Binormal",
+          "Format": "Vector3"
+        }
+      ]
+    }
+  ],
+  "IndexBuffer": {
+    "BufferId": 1,
+    "IndexCount": 4608
+  },
+  "Bones": [
+    {
+      "Scale": "1, 1, 1",
+      "Rotation": "-0.70710677, 0, 0, 0.70710677",
+      "Name": "RootNode",
+      "Children": [
+        1
+      ]
+    },
+    {
+      "Scale": "1, 1, 1",
+      "Rotation": "0, 0, 0, 1",
+      "Translation": "-3.6907522E-08, -1.8104911E-06, 9.545294",
+      "Name": "pad_ha_$AssimpFbx$_Translation",
+      "Children": [
+        2
+      ]
+    },
+    {
+      "Scale": "0.9849783, 0.9849783, 0.9849783",
+      "Rotation": "0, 0, 0, 1",
+      "Name": "pad_ha_$AssimpFbx$_Scaling",
+      "Children": [
+        3
+      ]
+    },
+    {
+      "Scale": "1, 1, 1",
+      "Rotation": "0, 0, 0, 1",
+      "Translation": "1.1368684E-13, 0.07168198, -11.993351",
+      "Name": "pad_ha_$AssimpFbx$_GeometricTranslation",
+      "Children": [
+        4
+      ]
+    },
+    {
+      "Scale": "1, 1, 1",
+      "Rotation": "0, 0, 0, 1",
+      "Name": "pad_ha",
+      "Mesh": {
+        "MeshParts": [
+          {
+            "VertexCount": 1305,
+            "PrimitiveCount": 1536,
+            "BoundingBox": {
+              "Min": "-29.68365, -28.609682, 3.0870285",
+              "Max": "29.761475, 28.466328, 13.62198"
+            }
+          }
+        ]
+      },
+      "Children": []
+    }
+  ],
+  "Materials": [
+    {
+      "DiffuseColor": "150, 150, 150, 255",
+      "SpecularColor": "229, 229, 229, 255",
+      "SpecularPower": 1.9999999,
+      "DiffuseTexturePath": "pad_halo.tga"
+    }
+  ]
+}

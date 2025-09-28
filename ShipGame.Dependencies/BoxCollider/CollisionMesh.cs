@@ -114,9 +114,7 @@ namespace BoxCollider
 
 					verticesLength += vertexCount;
 					facesLength += part.PrimitiveCount;
-
 				}
-
 			}
 
 			CollisionBox box = new CollisionBox(float.MaxValue, -float.MaxValue);

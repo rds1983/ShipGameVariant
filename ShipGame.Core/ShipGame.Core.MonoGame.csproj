@@ -2,14 +2,12 @@
   <PropertyGroup>
     <TargetFramework>$(MonoGameTargetFramework)</TargetFramework>
     <DefineConstants>$(DefineConstants);MONOGAME</DefineConstants>
+    <OutputPath>bin\MonoGame\$(Configuration)</OutputPath>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="FontStashSharp.MonoGame" Version="1.4.1" />
+    <PackageReference Include="DigitalRiseModel.Gltf.MonoGame" Version="$(DigitalRiseModelVersion)" />
+    <PackageReference Include="XNAssets.FontStashSharp.MonoGame" Version="$(XNAssetsVersion)" />
     <PackageReference Include="MonoGame.Framework.DesktopGL" PrivateAssets="All" Version="$(MonoGameVersion)" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\DigitalRiseModel\Source\DigitalRiseModel.Gltf\DigitalRiseModel.Gltf.MonoGame.csproj" />
-    <ProjectReference Include="..\ShipGame.Dependencies\BoxCollider\BoxCollider.MonoGame.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Update="Assets\**\*.*">

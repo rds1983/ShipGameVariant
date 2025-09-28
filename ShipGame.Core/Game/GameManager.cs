@@ -1167,10 +1167,6 @@ namespace ShipGame
 					// if primitives to render
 					if (meshPart.PrimitiveCount > 0)
 					{
-						// setup vertices and indices
-						gd.SetVertexBuffer(meshPart.VertexBuffer);
-						gd.Indices = meshPart.IndexBuffer;
-
 						// setup effect
 						Effect effect = (Effect)meshPart.Tag;
 						effect.Parameters["WorldViewProj"].SetValue(worldBone * viewProjection);
@@ -1185,10 +1181,7 @@ namespace ShipGame
 							// begin effect
 							effect.CurrentTechnique.Passes[0].Apply();
 							// draw with plain mapping
-							gd.DrawIndexedPrimitives(PrimitiveType.TriangleList,
-								meshPart.VertexOffset, meshPart.StartIndex, meshPart.PrimitiveCount);
-							gd.SetVertexBuffer(null);
-							gd.Indices = null;
+							meshPart.Draw(gd);
 						}
 						else
 						{
@@ -1217,8 +1210,7 @@ namespace ShipGame
 								// begin effect
 								effect.CurrentTechnique.Passes[0].Apply();
 								// draw primitives
-								gd.DrawIndexedPrimitives(PrimitiveType.TriangleList,
-									meshPart.VertexOffset, meshPart.StartIndex, meshPart.PrimitiveCount);
+								meshPart.Draw(gd);
 
 								// setup additive blending with no depth write
 								gd.DepthStencilState = DepthStencilState.DepthRead;
@@ -1227,12 +1219,11 @@ namespace ShipGame
 								// clear ambinet light (applied in first pass only)
 								ambient = Vector3.Zero;
 							}
-
-							// clear vertices and indices
-							gd.SetVertexBuffer(null);
-							gd.Indices = null;
 						}
 
+						// clear vertices and indices
+						gd.SetVertexBuffer(null);
+						gd.Indices = null;
 					}
 				}
 			}
