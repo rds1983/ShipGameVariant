@@ -198,7 +198,7 @@ namespace ShipGame
 			}
 
 			// load effect
-			effect = content.LoadEffect2(gd, "shaders/AnimSprite.efb");
+			effect = content.LoadEffect2(gd, "AnimSprite.efb");
 
 			// get techinque
 			effectTechnique = effect.Techniques["AnimSprite"];

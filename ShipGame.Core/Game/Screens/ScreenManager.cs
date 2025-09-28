@@ -376,7 +376,7 @@ namespace ShipGame
 			textureBackground = content.LoadTexture2DDefault(gd, "screens/intro_bg.tga");
 			// create blur manager
 			blurManager = new BlurManager(gd,
-				content.LoadEffect2(gd, "shaders/Blur.efb"),
+				content.LoadEffect2(gd, "Blur.efb"),
 				GameOptions.GlowResolution, GameOptions.GlowResolution);
 
 			int width = gd.Viewport.Width;

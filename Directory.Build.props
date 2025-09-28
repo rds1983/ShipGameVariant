@@ -12,6 +12,6 @@
     <MonoGameVersion>3.8.0.1641</MonoGameVersion>
     <AppMonoGameVersion>3.8.4</AppMonoGameVersion>
     <DigitalRiseModelVersion>0.5.3</DigitalRiseModelVersion>
-    <XNAssetsVersion>0.5.3</XNAssetsVersion>
+    <XNAssetsVersion>0.7.7</XNAssetsVersion>
   </PropertyGroup>
 </Project>

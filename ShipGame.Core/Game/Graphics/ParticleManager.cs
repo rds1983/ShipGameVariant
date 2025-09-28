@@ -220,7 +220,7 @@ namespace ShipGame
 			}
 
 			// load effect
-			effect = content.LoadEffect2(gd, "shaders/Particle.efb");
+			effect = content.LoadEffect2(gd, "Particle.efb");
 
 			// get techinque
 			effectTechnique = effect.Techniques["Particle"];

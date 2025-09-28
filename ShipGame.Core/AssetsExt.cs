@@ -7,12 +7,21 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
 
+#if MONOGAME
+using MonoGame.Framework.Utilities;
+#endif
+
 namespace ShipGame
 {
 	internal static class AssetsExt
 	{
 		public static void UnloadAsset(this AssetManager content, string name)
 		{
+			if (name == null)
+			{
+				return;
+			}
+
 			object asset;
 			if (!content.Cache.TryGetValue(name, out asset))
 			{
@@ -78,10 +87,10 @@ namespace ShipGame
 							continue;
 						}
 
-						var effect = manager.LoadEffect2(device, "/shaders/NormalMapping.efb").Clone();
+						var effect = manager.LoadEffect2(device, "NormalMapping.efb").Clone();
 						foreach(var pair in meshPartMaterials)
 						{
-							effect.Parameters[pair.Key].SetValue(manager.LoadTexture2DDefault(device, pair.Value));
+							effect.Parameters[pair.Key].SetValue(manager.LoadTexture2D(device, pair.Value));
 						}
 
 						part.Tag = effect;
@@ -100,13 +109,20 @@ namespace ShipGame
 
 		public static Effect LoadEffect2(this AssetManager manager, GraphicsDevice graphicsDevice, string assetName)
 		{
-			var folder = Path.GetDirectoryName(assetName);
 			var file = Path.GetFileName(assetName);
 
+			string path;
 #if FNA
-			var path = folder + "/FNA/" + file;
+			path = "/shaders/FNA/" + file;
 #else
-			var path = folder + "/MonoGameOGL/" + file;
+			if (PlatformInfo.GraphicsBackend == GraphicsBackend.OpenGL)
+			{
+				path = "/shaders/MonoGameOGL/" + file;
+			}
+			else
+			{
+				path = "/shaders/MonoGameDX/" + file;
+			}
 #endif
 
 			return manager.LoadEffect(graphicsDevice, path);
