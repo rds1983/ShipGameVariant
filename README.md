@@ -24,6 +24,11 @@ this repo|
 
 Then open ShipGame.FNA.Core.sln in the IDE.
 
+## Credits
+[MonoGame](https://github.com/MonoGame/MonoGame)
+[MonoGame Samples](https://github.com/MonoGame/MonoGame.Samples)
+[FNA](https://github.com/FNA-XNA/FNA)
+
 
 
 
