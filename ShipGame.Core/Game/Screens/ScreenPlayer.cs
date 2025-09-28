@@ -87,13 +87,13 @@ namespace ShipGame
 
 				for (int i = 0; i < NumberShips; i++)
 				{
-					shipModels[i] = content.LoadModel(gd, $"ships/{ships[i]}", ShipGameEffectType.NormalMapping);
+					shipModels[i] = content.LoadModel(gd, $"ships/{ships[i]}");
 					FixupShip(shipModels[i], "ships/" + ships[i]);
 				}
 
-				padModel = content.LoadModel(gd, "ships/pad", ShipGameEffectType.NormalMapping);
-				padHaloModel = content.LoadModel(gd, "ships/pad_halo", ShipGameEffectType.NormalMapping);
-				padSelectModel = content.LoadModel(gd, "ships/pad_select", ShipGameEffectType.NormalMapping);
+				padModel = content.LoadModel(gd, "ships/pad");
+				padHaloModel = content.LoadModel(gd, "ships/pad_halo");
+				padSelectModel = content.LoadModel(gd, "ships/pad_select");
 
 				textureChangeShip = content.LoadTexture2DDefault(gd, "screens/change_ship.tga");
 				textureRotateShip = content.LoadTexture2DDefault(gd, "screens/rotate_ship.tga");

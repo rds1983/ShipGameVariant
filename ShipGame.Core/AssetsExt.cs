@@ -1,19 +1,14 @@
 ﻿using AssetManagementBase;
 using DigitalRiseModel;
-using FontStashSharp;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Text.Json;
 
 namespace ShipGame
 {
-	public enum ShipGameEffectType
-	{
-		Basic,
-		NormalMapping
-	}
-
 	internal static class AssetsExt
 	{
 		public static void UnloadAsset(this AssetManager content, string name)
@@ -47,76 +42,60 @@ namespace ShipGame
 			content.Cache.Clear();
 		}
 
-		private class ModelSettings
-		{
-			public GraphicsDevice GraphicsDevice;
-			public ShipGameEffectType Effect;
-
-			public ModelSettings(GraphicsDevice device, ShipGameEffectType effect)
-			{
-				GraphicsDevice = device;
-				Effect = effect;
-			}
-		}
-
 		public static Texture2D LoadTexture2DDefault(this AssetManager manager, GraphicsDevice gd, string assetName)
 		{
 			return manager.LoadTexture2D(gd, assetName, premultiplyAlpha: true, colorKey: new Color(255, 0, 255, 255));
 		}
 
-		private static Texture2D LoadModelTexture(GraphicsDevice gd, AssetManager manager, string assetName, string postfix, string nullPath)
-		{
-			var path = $"{assetName}_{postfix}.tga";
-			if (!manager.Exists(path))
-			{
-				path = $"{assetName}_{postfix}.jpg";
-
-				if (!manager.Exists(path))
-				{
-					path = nullPath;
-				}
-			}
-
-			return manager.LoadTexture2DDefault(gd, path);
-		}
-
 		private static AssetLoader<DrModel> _modelLoader = (manager, assetName, settings, tag) =>
 		{
 			// Load gltf
-			var modelSettings = (ModelSettings)tag;
-			var device = modelSettings.GraphicsDevice;
+			var device = (GraphicsDevice)tag;
 
 			var model = manager.LoadGltf(device, Path.ChangeExtension(assetName, "glb"));
 
-			Effect effect;
-			if (modelSettings.Effect == ShipGameEffectType.NormalMapping)
+			var materialName = Path.ChangeExtension(assetName, "material");
+			if (manager.Exists(materialName))
 			{
-				effect = manager.LoadEffect2(device, "/shaders/NormalMapping.efb").Clone();
+				var json = manager.ReadAsString(materialName);
+				var materialInfo = JsonSerializer.Deserialize<Dictionary<string, Dictionary<int, Dictionary<string, string>>>>(json);
 
-				effect.Parameters["Texture"].SetValue(LoadModelTexture(device, manager, assetName, "c", "/null_color.tga"));
-				effect.Parameters["Bump0"].SetValue(LoadModelTexture(device, manager, assetName, "n", "/null_normal.tga"));
-				effect.Parameters["Specular0"].SetValue(LoadModelTexture(device, manager, assetName, "s", "/null_specular.tga"));
-				effect.Parameters["Emissive0"].SetValue(LoadModelTexture(device, manager, assetName, "g", "/null_glow.tga"));
-			}
-			else
-			{
-				effect = new BasicEffect(device);
-			}
-
-			foreach (var mesh in model.Meshes)
-			{
-				foreach (var part in mesh.MeshParts)
+				foreach (var mesh in model.Meshes)
 				{
-					part.Tag = effect;
+					Dictionary<int, Dictionary<string, string>> meshMaterials;
+					if (mesh.Name == null || !materialInfo.TryGetValue(mesh.Name, out meshMaterials))
+					{
+						continue;
+					}
+
+					for(var partIndex = 0; partIndex < mesh.MeshParts.Count; ++partIndex)
+					{
+						var part = mesh.MeshParts[partIndex];
+
+						Dictionary<string, string> meshPartMaterials;
+						if (!meshMaterials.TryGetValue(partIndex, out meshPartMaterials))
+						{
+							continue;
+						}
+
+						var effect = manager.LoadEffect2(device, "/shaders/NormalMapping.efb").Clone();
+						foreach(var pair in meshPartMaterials)
+						{
+							effect.Parameters[pair.Key].SetValue(manager.LoadTexture2DDefault(device, pair.Value));
+						}
+
+						part.Tag = effect;
+					}
 				}
+
 			}
 
 			return model;
 		};
 
-		public static DrModel LoadModel(this AssetManager assetManager, GraphicsDevice graphicsDevice, string assetName, ShipGameEffectType effect)
+		public static DrModel LoadModel(this AssetManager assetManager, GraphicsDevice graphicsDevice, string assetName)
 		{
-			return assetManager.UseLoader(_modelLoader, assetName, tag: new ModelSettings(graphicsDevice, effect));
+			return assetManager.UseLoader(_modelLoader, assetName, tag: graphicsDevice);
 		}
 
 		public static Effect LoadEffect2(this AssetManager manager, GraphicsDevice graphicsDevice, string assetName)

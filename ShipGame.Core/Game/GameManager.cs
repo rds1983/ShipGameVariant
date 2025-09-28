@@ -238,10 +238,10 @@ namespace ShipGame
 			String level = levelFile + "/" + levelFile;
 
 			// load level model
-			levelColor = content.LoadModel(gd, $"levels/{level}", ShipGameEffectType.NormalMapping);
+			levelColor = content.LoadModel(gd, $"levels/{level}");
 
 			// load collision model
-			var collisionModel = content.LoadModel(gd, $"levels/{level}_collision", ShipGameEffectType.Basic);
+			var collisionModel = content.LoadModel(gd, $"levels/{level}_collision");
 			levelCollision = new CollisionMesh(collisionModel, GameOptions.CollisionMeshSubdivisions);
 			collisionModel = null;
 
@@ -273,7 +273,7 @@ namespace ShipGame
 				int i, j = projectileFiles.GetLength(0);
 				projectileModels = new DrModel[j];
 				for (i = 0; i < j; i++)
-					projectileModels[i] = content.LoadModel(gd, $"projectiles/{projectileFiles[i]}", ShipGameEffectType.NormalMapping);
+					projectileModels[i] = content.LoadModel(gd, $"projectiles/{projectileFiles[i]}");
 			}
 
 			// load powerup models
@@ -282,14 +282,14 @@ namespace ShipGame
 				int i, j = powerupFiles.GetLength(0);
 				powerupModels = new DrModel[j];
 				for (i = 0; i < j; i++)
-					powerupModels[i] = content.LoadModel(gd, $"powerups/{powerupFiles[i]}", ShipGameEffectType.NormalMapping);
+					powerupModels[i] = content.LoadModel(gd, $"powerups/{powerupFiles[i]}");
 			}
 
 			// cerate players
 			for (int i = 0; i < GameOptions.MaxPlayers; i++)
 				if (shipFile[i] != null)
 				{
-					var ShipModel = content.LoadModel(gd, $"ships/{shipFile[i]}", ShipGameEffectType.NormalMapping);
+					var ShipModel = content.LoadModel(gd, $"ships/{shipFile[i]}");
 
 					var ShipEnities = EntityList.Load(content, $"ships/{shipFile[i]}.xml");
 

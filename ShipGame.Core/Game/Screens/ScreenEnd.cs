@@ -51,10 +51,10 @@ namespace ShipGame
 				// load all resources
 				int winner = gameManager.PlayerWinner;
 
-				shipModel = content.LoadModel(gd, $"ships/{gameManager.GetPlayerShip(winner)}", ShipGameEffectType.NormalMapping);
+				shipModel = content.LoadModel(gd, $"ships/{gameManager.GetPlayerShip(winner)}");
 
-				padModel = content.LoadModel(gd, "ships/pad", ShipGameEffectType.NormalMapping);
-				padHaloModel = content.LoadModel(gd, "ships/pad_halo", ShipGameEffectType.NormalMapping);
+				padModel = content.LoadModel(gd, "ships/pad");
+				padHaloModel = content.LoadModel(gd, "ships/pad_halo");
 
 				lights = LightList.Load(content, "screens/end_lights.xml");
 
