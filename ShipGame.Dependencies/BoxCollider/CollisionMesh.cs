@@ -8,7 +8,7 @@
 #endregion
 
 #region Using Statements
-using DigitalRiseModel;
+using NursiaModel;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
@@ -64,7 +64,7 @@ namespace BoxCollider
 		// tree with meshes faces
 		CollisionTree tree;
 
-		public CollisionMesh(DrModel model, uint subdivLevel)
+		public CollisionMesh(NrmModel model, uint subdivLevel)
 		{
 			int verticesCapacity = 0;
 			int facesCapacity = 0;

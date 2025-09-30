@@ -5,7 +5,6 @@
     <OutputPath>bin\FNA\$(Configuration)</OutputPath>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\DigitalRiseModel\Source\DigitalRiseModel.Gltf\DigitalRiseModel.Gltf.FNA.Core.csproj" />
     <ProjectReference Include="..\..\XNAssets\src\XNAssets.FontStashSharp\XNAssets.FontStashSharp.FNA.Core.csproj" />
     <ProjectReference Include="..\ShipGame.Dependencies\BoxCollider\BoxCollider.FNA.Core.csproj" />
   </ItemGroup>

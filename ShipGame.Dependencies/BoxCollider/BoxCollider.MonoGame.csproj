@@ -5,7 +5,7 @@
     <OutputPath>bin\MonoGame\$(Configuration)</OutputPath>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="DigitalRiseModel.MonoGame" Version="$(DigitalRiseModelVersion)" />
     <PackageReference Include="MonoGame.Framework.DesktopGL" PrivateAssets="All" Version="$(MonoGameVersion)" />
+    <PackageReference Include="NursiaModel.MonoGame" Version="$(NursiaModelVersion)" />
   </ItemGroup>
 </Project>
