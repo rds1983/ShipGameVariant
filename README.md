@@ -19,7 +19,7 @@ Link|Description
 https://github.com/FNA-XNA/FNA|FNA
 https://github.com/rds1983/XNAssets|Asset management library
 https://github.com/FontStashSharp/FontStashSharp|Text rendering library
-https://github.com/Nursia3D/NursiaModel|3D model library
+https://github.com/rds1983/DigitalRiseModel|3D model library
 this repo|
 
 Then open ShipGame.FNA.Core.sln in the IDE.
