@@ -9,7 +9,7 @@
 
 #region Using Statements
 using BoxCollider;
-using NursiaModel;
+using DigitalRiseModel;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -41,7 +41,7 @@ namespace ShipGame
 		int playerIndex;                // the player index for this ship
 		int score;                 // the player current score
 
-		NrmModel shipModel = null;            // player ship model
+		DrModel shipModel = null;            // player ship model
 		EntityList shipEntities = null;    // player ship model entities 
 										   // (blaster, missile, engine locations)
 
@@ -77,7 +77,7 @@ namespace ShipGame
 		public PlayerShip(
 			GameManager game,        // game manager
 			int player,              // player id
-			NrmModel model,             // model for player ship
+			DrModel model,             // model for player ship
 			EntityList entities,     // entity list for ship model
 			float radius)            // collision box radius
 		{

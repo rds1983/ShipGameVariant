@@ -9,7 +9,7 @@
 
 #region Using Statements
 using AssetManagementBase;
-using NursiaModel;
+using DigitalRiseModel;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -23,10 +23,10 @@ namespace ShipGame
 		ScreenManager screenManager;    // screen manager
 		GameManager gameManager;         // game manager
 
-		NrmModel shipModel;          // winner player ship model
+		DrModel shipModel;          // winner player ship model
 
-		NrmModel padModel;           // model for the ship pad
-		NrmModel padHaloModel;       // model for the ship pad halo
+		DrModel padModel;           // model for the ship pad
+		DrModel padHaloModel;       // model for the ship pad halo
 
 		LightList lights;         // lights for scene
 

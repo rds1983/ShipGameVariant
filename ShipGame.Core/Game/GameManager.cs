@@ -10,7 +10,7 @@
 #region Using Statements
 using AssetManagementBase;
 using BoxCollider;
-using NursiaModel;
+using DigitalRiseModel;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -102,7 +102,7 @@ namespace ShipGame
 		Matrix projectionFull;                // full screen projection matrix
 		Matrix projectionSplit;               // split screen projection matrix
 
-		NrmModel levelColor;                // level model
+		DrModel levelColor;                // level model
 		EntityList levelSpawns;          // level spawn points
 		LightList levelLights;           // level lights
 		CollisionMesh levelCollision;    // level collision model
@@ -133,11 +133,11 @@ namespace ShipGame
 
 		// projectile modell files (matches ProjectileType)
 		String[] projectileFiles = new String[] { "blaster", "missile" };
-		NrmModel[] projectileModels;
+		DrModel[] projectileModels;
 
 		// powerup model files (matches PowerupType)
 		String[] powerupFiles = new String[] { "energy", "missile" };
-		NrmModel[] powerupModels;
+		DrModel[] powerupModels;
 
 		Texture2D hudCrosshair;       // hud crosshair texture
 		Texture2D hudEnergy;          // hud energy/shield/boost texture
@@ -271,7 +271,7 @@ namespace ShipGame
 			if (projectileModels == null)
 			{
 				int i, j = projectileFiles.GetLength(0);
-				projectileModels = new NrmModel[j];
+				projectileModels = new DrModel[j];
 				for (i = 0; i < j; i++)
 					projectileModels[i] = content.LoadModel(gd, $"projectiles/{projectileFiles[i]}");
 			}
@@ -280,7 +280,7 @@ namespace ShipGame
 			if (powerupModels == null)
 			{
 				int i, j = powerupFiles.GetLength(0);
-				powerupModels = new NrmModel[j];
+				powerupModels = new DrModel[j];
 				for (i = 0; i < j; i++)
 					powerupModels[i] = content.LoadModel(gd, $"powerups/{powerupFiles[i]}");
 			}
@@ -1126,7 +1126,7 @@ namespace ShipGame
 		/// <summary>
 		/// Draw a model using given technique and camera settings
 		/// </summary>
-		public void DrawModel(GraphicsDevice gd, NrmModel model,
+		public void DrawModel(GraphicsDevice gd, DrModel model,
 			RenderTechnique technique, Vector3 cameraPosition,
 			Matrix world, Matrix viewProjection, LightList lights)
 		{

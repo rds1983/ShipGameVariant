@@ -19,7 +19,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShipGame.Core.FNA.Core", "S
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShipGame.FNA.Core", "ShipGame.Desktop\ShipGame.FNA.Core.csproj", "{652D59FA-87DF-4017-EB6D-885233D96FE6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NursiaModel.FNA.Core", "..\NursiaModel\Source\NursiaModel.FNA.Core.csproj", "{8511EDB0-5B98-D8F4-6F4E-7DCD96A50732}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DigitalRiseModel.FNA.Core", "..\DigitalRiseModel\Source\DigitalRiseModel.FNA.Core.csproj", "{8511EDB0-5B98-D8F4-6F4E-7DCD96A50732}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

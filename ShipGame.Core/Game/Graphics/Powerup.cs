@@ -8,7 +8,7 @@
 #endregion
 
 #region Using Statements
-using NursiaModel;
+using DigitalRiseModel;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -23,7 +23,7 @@ namespace ShipGame
 		Matrix transform;       // powerup position and orientation
 		Matrix bobbing;         // powerup bobbing transform
 
-		NrmModel model;            // powerup model
+		DrModel model;            // powerup model
 
 		float elapsedTime;      // elapsed time since spawned
 		float waitTime;         // time to wait until respawn 
@@ -35,7 +35,7 @@ namespace ShipGame
 		public Powerup(
 				PowerupType type,
 				Matrix transform,
-				NrmModel model)
+				DrModel model)
 		{
 			powerupType = type;
 			this.transform = transform;

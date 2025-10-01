@@ -11,7 +11,7 @@
     <Version>1.0.0</Version>
     <MonoGameVersion>3.8.0.1641</MonoGameVersion>
     <AppMonoGameVersion>3.8.4</AppMonoGameVersion>
-    <NursiaModelVersion>0.6.1</NursiaModelVersion>
+    <DigitalRiseModelVersion>0.6.0</DigitalRiseModelVersion>
     <XNAssetsVersion>0.7.7</XNAssetsVersion>
   </PropertyGroup>
 </Project>

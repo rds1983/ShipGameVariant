@@ -1,5 +1,5 @@
 ﻿using AssetManagementBase;
-using NursiaModel;
+using DigitalRiseModel;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -56,7 +56,7 @@ namespace ShipGame
 			return manager.LoadTexture2D(gd, assetName, premultiplyAlpha: true, colorKey: new Color(255, 0, 255, 255));
 		}
 
-		private static AssetLoader<NrmModel> _modelLoader = (manager, assetName, settings, tag) =>
+		private static AssetLoader<DrModel> _modelLoader = (manager, assetName, settings, tag) =>
 		{
 			// Load gltf
 			var device = (GraphicsDevice)tag;
@@ -102,7 +102,7 @@ namespace ShipGame
 			return model;
 		};
 
-		public static NrmModel LoadModel(this AssetManager assetManager, GraphicsDevice graphicsDevice, string assetName)
+		public static DrModel LoadModel(this AssetManager assetManager, GraphicsDevice graphicsDevice, string assetName)
 		{
 			return assetManager.UseLoader(_modelLoader, assetName, tag: graphicsDevice);
 		}

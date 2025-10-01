@@ -9,7 +9,7 @@
 
 #region Using Statements
 using AssetManagementBase;
-using NursiaModel;
+using DigitalRiseModel;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -31,11 +31,11 @@ namespace ShipGame
 		String[] ships = new String[NumberShips] { "ship2", "ship1" };
 
 		// model for each ship
-		NrmModel[] shipModels = new NrmModel[NumberShips];
+		DrModel[] shipModels = new DrModel[NumberShips];
 
-		NrmModel padModel;           // ship pad model
-		NrmModel padHaloModel;       // ship pad halo model
-		NrmModel padSelectModel;     // ship pad select model
+		DrModel padModel;           // ship pad model
+		DrModel padHaloModel;       // ship pad halo model
+		DrModel padSelectModel;     // ship pad select model
 
 		Texture2D textureChangeShip;      // change ship texture
 		Texture2D textureRotateShip;      // rotate ship texture
@@ -498,7 +498,7 @@ namespace ShipGame
 		/// Performs effect initialization, which is required in XNA 4.0
 		/// </summary>
 		/// <param name="model"></param>
-		private void FixupShip(NrmModel model, string path)
+		private void FixupShip(DrModel model, string path)
 		{
 			ShipGameGame game = ShipGameGame.GetInstance();
 
