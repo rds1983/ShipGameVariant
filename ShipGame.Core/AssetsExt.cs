@@ -61,7 +61,7 @@ namespace ShipGame
 			// Load gltf
 			var device = (GraphicsDevice)tag;
 
-			var model = manager.LoadGltf(device, Path.ChangeExtension(assetName, "glb"));
+			var model = DigitalRiseModelAssetsExt.LoadModel(manager, device, Path.ChangeExtension(assetName, "glb"), ModelLoadFlags.EnsureUVs);
 
 			var materialName = Path.ChangeExtension(assetName, "material");
 			if (manager.Exists(materialName))

@@ -241,7 +241,7 @@ namespace ShipGame
 			levelColor = content.LoadModel(gd, $"levels/{level}");
 
 			// load collision model
-			var collisionModel = content.LoadModel(gd, $"levels/{level}_collision");
+			var collisionModel = content.LoadModel(gd, $"levels/{level}_collision.glb",  ModelLoadFlags.ReadableBuffers);
 			levelCollision = new CollisionMesh(collisionModel, GameOptions.CollisionMeshSubdivisions);
 			collisionModel = null;
 
