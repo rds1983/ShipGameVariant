@@ -21,7 +21,6 @@ namespace ShipGame
 	public class ScreenLevel : Screen
 	{
 		ScreenManager screenManager;    // screen manager
-		GameManager gameManager;         // game manager
 
 		const int NumberLevels = 2;   // number of available levels to choose from
 
@@ -37,10 +36,9 @@ namespace ShipGame
 		int selection = 0;
 
 		// constructor
-		public ScreenLevel(ScreenManager manager, GameManager game)
+		public ScreenLevel(ScreenManager manager)
 		{
 			screenManager = manager;
-			gameManager = game;
 		}
 
 		// called before screen shows
@@ -74,6 +72,7 @@ namespace ShipGame
 				throw new ArgumentNullException("input");
 			}
 
+			var gameManager = SG.GameManager;
 			int i, j = (int)gameManager.GameMode;
 			for (i = 0; i < j; i++)
 			{

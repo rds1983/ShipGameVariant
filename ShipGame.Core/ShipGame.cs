@@ -27,18 +27,13 @@ namespace ShipGame
 
 		GraphicsDeviceManager graphics;
 		ScreenManager screen;
-		GameManager game;
 		FontManager font;
-		SoundManager soundManager;
 		bool renderVsync = true;
 
 		public ShipGameGame()
 		{
 			graphics = new GraphicsDeviceManager(this);
 			Window.Title = "ShipGame";
-
-			soundManager = new SoundManager();
-			game = new GameManager(soundManager);
 
 			graphics.PreferredBackBufferWidth = GameOptions.ScreenWidth;
 			graphics.PreferredBackBufferHeight = GameOptions.ScreenHeight;
@@ -68,11 +63,9 @@ namespace ShipGame
 			SG.Initialize(GraphicsDevice);
 
 			font = new FontManager();
-			screen = new ScreenManager(this, font, game);
+			screen = new ScreenManager(this, font);
 
-			soundManager.LoadContent();
 			font.LoadContent();
-			game.LoadContent();
 			screen.LoadContent();
 		}
 
@@ -82,9 +75,7 @@ namespace ShipGame
 		/// </summary>
 		protected override void UnloadContent()
 		{
-			soundManager.UnloadContent();
 			screen.UnloadContent();
-			game.UnloadContent();
 			font.UnloadContent();
 
 			screen = null;

@@ -21,7 +21,6 @@ namespace ShipGame
 	public class ScreenIntro : Screen
 	{
 		ScreenManager screenManager;    // screen manager
-		GameManager gameManager;        // game manager
 
 		int menuSelection;              // current menu selection
 		float menuTime;                 // menu time for animation
@@ -44,10 +43,9 @@ namespace ShipGame
 		Texture2D[] textureMenuHover = new Texture2D[NumberMenuItems];
 
 		// constructor
-		public ScreenIntro(ScreenManager manager, GameManager game)
+		public ScreenIntro(ScreenManager manager)
 		{
 			screenManager = manager;
-			gameManager = game;
 		}
 
 		// called before screen shows or stops showing
@@ -57,7 +55,7 @@ namespace ShipGame
 			if (focus)
 			{
 				// load all resources
-				gameManager.GameMode = GameMode.SinglePlayer;
+				SG.GameManager.GameMode = GameMode.SinglePlayer;
 
 				var content = SG.Assets;
 				textureLogo = content.LoadTexture2DDefault("screens/intro_logo.tga");
@@ -100,6 +98,7 @@ namespace ShipGame
 
 			for (int i = 0; i < 2; i++)
 			{
+				var gameManager = SG.GameManager;
 				// A button or enter to select menu option
 				if (input.IsButtonPressedA(i) ||
 					input.IsButtonPressedStart(i) ||

@@ -37,7 +37,6 @@ namespace ShipGame
 								   // (0.0 for no damage screen)
 		Vector4 damageColor;       // current damage screen color
 
-		GameManager gameManager;          // the game manager
 		int playerIndex;                // the player index for this ship
 		int score;                 // the player current score
 
@@ -75,23 +74,17 @@ namespace ShipGame
 		/// Create a new player ship
 		/// </summary>
 		public PlayerShip(
-			GameManager game,        // game manager
 			int player,              // player id
 			DrModel model,             // model for player ship
 			EntityList entities,     // entity list for ship model
 			float radius)            // collision box radius
 		{
-			if (game == null)
-			{
-				throw new ArgumentNullException("game");
-			}
 			if (entities == null)
 			{
 				throw new ArgumentNullException("entities");
 			}
 
 			// save parameters
-			gameManager = game;
 			shipModel = model;
 			shipEntities = entities;
 			playerIndex = player;
@@ -104,7 +97,7 @@ namespace ShipGame
 			collisionSound = true;
 
 			// create engine particle system with infinite life time
-			particleBoost = gameManager.AddParticleSystem(
+			particleBoost = SG.GameManager.AddParticleSystem(
 												ParticleSystemType.ShipTrail,
 												transform);
 			particleBoost.SetTotalTime(1e10f);
@@ -153,7 +146,7 @@ namespace ShipGame
 			if (value < 0 && shieldUse)
 			{
 				// play shield collide sound and return (no damage)
-				gameManager.PlaySound("shield_collide");
+				SG.GameManager.PlaySound("shield_collide");
 				return;
 			}
 
@@ -313,6 +306,7 @@ namespace ShipGame
 		/// </summary>
 		public void FireProjectile(ProjectileType projectile, float velocity)
 		{
+			var gameManager = SG.GameManager;
 			switch (projectile)
 			{
 				case ProjectileType.Blaster:
@@ -387,6 +381,7 @@ namespace ShipGame
 			movement.ProcessInput(elapsedTime, input.CurrentState, player);
 
 			// if player invert Y is enabled, invert X rotation force
+			var gameManager = SG.GameManager;
 			if (gameManager.GetInvertY(player))
 				movement.rotationForce.X = -movement.rotationForce.X;
 
@@ -492,6 +487,7 @@ namespace ShipGame
 			damageTime = Math.Max(0.0f, damageTime - elapsedTime);
 
 			// if player dead
+			var gameManager = SG.GameManager;
 			if (IsAlive == false)
 			{
 				// disable engine particle system
@@ -689,7 +685,7 @@ namespace ShipGame
 			if (deadTime == 0.0f)
 			{
 				// render ship model
-				gameManager.DrawModel(shipModel, technique, cameraPosition,
+				SG.GameManager.DrawModel(shipModel, technique, cameraPosition,
 					bobbing * transform, viewProjection, lights);
 			}
 		}

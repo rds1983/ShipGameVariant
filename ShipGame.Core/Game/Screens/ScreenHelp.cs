@@ -21,17 +21,15 @@ namespace ShipGame
 	public class ScreenHelp : Screen
 	{
 		ScreenManager screenManager;    // screen manager
-		GameManager gameManager;         // game manager
 
 		Texture2D textureControls;    // controlls text texture
 		Texture2D textureDisplay;     // controller texture
 		Texture2D textureContinue;    // continue text texture
 
 		// constructor
-		public ScreenHelp(ScreenManager manager, GameManager game)
+		public ScreenHelp(ScreenManager manager)
 		{
 			screenManager = manager;
-			gameManager = game;
 		}
 
 		// called before screen shows
@@ -81,7 +79,7 @@ namespace ShipGame
 					input.IsKeyPressed(i, Keys.Space))
 				{
 					screenManager.SetNextScreen(ScreenType.ScreenIntro);
-					gameManager.PlaySound("menu_cancel");
+					SG.GameManager.PlaySound("menu_cancel");
 				}
 			}
 		}

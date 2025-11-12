@@ -17,8 +17,6 @@ namespace ShipGame
 {
 	public class PowerupManager
 	{
-		GameManager game;        // game manager
-
 		// linked list of active powerups
 		LinkedList<Powerup> powerups;
 
@@ -28,10 +26,8 @@ namespace ShipGame
 		/// <summary>
 		/// Create a new powerup manager
 		/// </summary>
-		public PowerupManager(GameManager game)
+		public PowerupManager()
 		{
-			this.game = game;
-
 			powerups = new LinkedList<Powerup>();
 			deletePowerups = new List<LinkedListNode<Powerup>>();
 		}
@@ -65,7 +61,7 @@ namespace ShipGame
 			while (Node != null)
 			{
 				// update powerup
-				bool running = Node.Value.Update(game, elapsedTime);
+				bool running = Node.Value.Update(elapsedTime);
 
 				// if finished running add to delete list
 				if (running == false)
@@ -88,7 +84,9 @@ namespace ShipGame
 		{
 			// draw all powerups
 			foreach (Powerup p in powerups)
-				p.Draw(game, technique, cameraPosition, viewProjection, lights);
+			{
+				p.Draw(technique, cameraPosition, viewProjection, lights);
+			}
 		}
 	}
 }

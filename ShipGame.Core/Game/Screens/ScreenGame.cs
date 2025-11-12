@@ -20,19 +20,18 @@ namespace ShipGame
 	public class ScreenGame : Screen
 	{
 		ScreenManager screenManager;    // screen manager
-		GameManager gameManager;         // game manager
 
 		// constructor
-		public ScreenGame(ScreenManager manager, GameManager game)
+		public ScreenGame(ScreenManager manager)
 		{
 			screenManager = manager;
-			gameManager = game;
 		}
 
 		// called before screen shows
 		public override void SetFocus(bool focus)
 		{
 			// if getting focus
+			var gameManager = SG.GameManager;
 			if (focus == true)
 			{
 				// load all resources
@@ -53,6 +52,7 @@ namespace ShipGame
 				throw new ArgumentNullException("input");
 			}
 
+			var gameManager = SG.GameManager;
 			gameManager.ProcessInput(elapsedTime, input);
 
 			int i, j = (int)gameManager.GameMode;
@@ -69,6 +69,7 @@ namespace ShipGame
 		public override void Update(float elapsedTime)
 		{
 			// update game
+			var gameManager = SG.GameManager;
 			gameManager.Update(elapsedTime);
 
 			// check if any player have reached the score limit
@@ -84,14 +85,14 @@ namespace ShipGame
 		public override void Draw3D()
 		{
 			// draw the 3d game scene
-			gameManager.Draw3D();
+			SG.GameManager.Draw3D();
 		}
 
 		// draw 2D gui
 		public override void Draw2D(FontManager font)
 		{
 			// draw 2D game gui
-			gameManager.Draw2D(font);
+			SG.GameManager.Draw2D(font);
 		}
 	}
 }

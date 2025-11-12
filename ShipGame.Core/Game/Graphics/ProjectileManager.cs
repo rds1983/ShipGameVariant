@@ -17,8 +17,6 @@ namespace ShipGame
 {
 	public class ProjectileManager
 	{
-		GameManager game;        // game manager
-
 		// linked list of active projectiles
 		LinkedList<Projectile> projectiles;
 
@@ -28,10 +26,8 @@ namespace ShipGame
 		/// <summary>
 		/// Create a new projetcile manager
 		/// </summary>
-		public ProjectileManager(GameManager game)
+		public ProjectileManager()
 		{
-			this.game = game;
-
 			projectiles = new LinkedList<Projectile>();
 			deleteProjectiles = new List<LinkedListNode<Projectile>>();
 		}
@@ -57,7 +53,7 @@ namespace ShipGame
 			while (Node != null)
 			{
 				// update projectile
-				bool running = Node.Value.Update(elapsedTime, game);
+				bool running = Node.Value.Update(elapsedTime);
 
 				// if finished running add to delete list
 				if (running == false)
@@ -80,7 +76,9 @@ namespace ShipGame
 		{
 			// draw all projectiles
 			foreach (Projectile p in projectiles)
-				p.Draw(game, technique, cameraPosition, viewProjection, lights);
+			{
+				p.Draw(technique, cameraPosition, viewProjection, lights);
+			}
 		}
 	}
 }

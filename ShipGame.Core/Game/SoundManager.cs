@@ -65,7 +65,8 @@ namespace ShipGame
 			{
 				SG.Assets.UnloadAsset($"sounds/{asset}");
 			}
-			foreach (SoundEffect sound in sounds.Values)
+
+			foreach (var sound in sounds.Values)
 			{
 				SG.Assets.UnloadAsset(sound.Name);
 				sound.Dispose();

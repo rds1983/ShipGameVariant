@@ -99,13 +99,8 @@ namespace ShipGame
 		/// <summary>
 		/// Update projectile
 		/// </summary>
-		public bool Update(float elapsedTime, GameManager game)
+		public bool Update(float elapsedTime)
 		{
-			if (game == null)
-			{
-				throw new ArgumentNullException("game");
-			}
-
 			// add elapsed time for this frame
 			this.elapsedTime += elapsedTime;
 
@@ -124,6 +119,7 @@ namespace ShipGame
 				system.SetTransform(systemTransform * transform);
 
 			// check if projectile hit any player
+			var game = SG.GameManager;
 			int playerHit = game.GetPlayerAtPosition(position);
 
 			// if a player is hit or reached destination explode projectile
@@ -183,15 +179,10 @@ namespace ShipGame
 		/// <summary>
 		/// Draw projectile
 		/// </summary>
-		public void Draw(GameManager game,
-			RenderTechnique defaultTechnique, Vector3 cameraPosition,
+		public void Draw(RenderTechnique defaultTechnique, Vector3 cameraPosition,
 			Matrix viewProjection, LightList lights)
 		{
-			if (game == null)
-			{
-				throw new ArgumentNullException("game");
-			}
-
+			var game = SG.GameManager;
 			if (technique == RenderTechnique.ViewMapping)
 			{
 				game.DrawModel(model, technique,

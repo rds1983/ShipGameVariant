@@ -21,7 +21,6 @@ namespace ShipGame
 	public class ScreenEnd : Screen
 	{
 		ScreenManager screenManager;    // screen manager
-		GameManager gameManager;         // game manager
 
 		DrModel shipModel;          // winner player ship model
 
@@ -36,10 +35,9 @@ namespace ShipGame
 		float elapsedTime;        // elapsed time for rotation animation
 
 		// constructor
-		public ScreenEnd(ScreenManager manager, GameManager game)
+		public ScreenEnd(ScreenManager manager)
 		{
 			screenManager = manager;
-			gameManager = game;
 		}
 
 		// called before screen shows
@@ -49,6 +47,7 @@ namespace ShipGame
 			if (focus)
 			{
 				// load all resources
+				var gameManager = SG.GameManager;
 				int winner = gameManager.PlayerWinner;
 
 				var content = SG.Assets;
@@ -87,6 +86,7 @@ namespace ShipGame
 				throw new ArgumentNullException("input");
 			}
 
+			var gameManager = SG.GameManager;
 			int i, j = (int)gameManager.GameMode;
 			for (i = 0; i < j; i++)
 			{
@@ -146,6 +146,7 @@ namespace ShipGame
 			Matrix translation = Matrix.CreateTranslation(0, -40, 0);
 
 			// draw ship model
+			var gameManager = SG.GameManager;
 			gameManager.DrawModel(shipModel, RenderTechnique.NormalMapping,
 				cameraPosition, rotation, viewProjection, lights);
 

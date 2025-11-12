@@ -17,6 +17,13 @@ namespace ShipGame
 
 			var path = Path.Combine(Utility.ExecutingAssemblyDirectory, "Assets");
 			Assets = AssetManager.CreateFileAssetManager(path);
+
+			GameManager.LoadContent();
+		}
+
+		public static void Uninitialize()
+		{
+			GameManager.UnloadContent();
 		}
 	}
 }

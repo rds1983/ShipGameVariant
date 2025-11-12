@@ -22,7 +22,6 @@ namespace ShipGame
 	public class ScreenManager : IDisposable
 	{
 		ShipGameGame shipGame;            // xna game
-		GameManager gameManager;             // game manager
 		FontManager fontManager;             // font manager
 		InputManager inputManager;           // input manager
 
@@ -49,22 +48,21 @@ namespace ShipGame
 		float backgroundTime = 0.0f;  // time for background animation used on menus
 
 		// constructor
-		public ScreenManager(ShipGameGame shipGame, FontManager font, GameManager game)
+		public ScreenManager(ShipGameGame shipGame, FontManager font)
 		{
 			this.shipGame = shipGame;
-			gameManager = game;
 			fontManager = font;
 
 			screens = new List<Screen>();
 			inputManager = new InputManager();
 
 			// add all screens
-			screens.Add(new ScreenIntro(this, game));
-			screens.Add(new ScreenHelp(this, game));
-			screens.Add(new ScreenPlayer(this, game));
-			screens.Add(new ScreenLevel(this, game));
-			screens.Add(new ScreenGame(this, game));
-			screens.Add(new ScreenEnd(this, game));
+			screens.Add(new ScreenIntro(this));
+			screens.Add(new ScreenHelp(this));
+			screens.Add(new ScreenPlayer(this));
+			screens.Add(new ScreenLevel(this));
+			screens.Add(new ScreenGame(this));
+			screens.Add(new ScreenEnd(this));
 
 			// fade in to intro screen
 			SetNextScreen(ScreenType.ScreenIntro,
@@ -75,8 +73,7 @@ namespace ShipGame
 		// process input
 		public void ProcessInput(float elapsedTime)
 		{
-			inputManager.BeginInputProcessing(
-				gameManager.GameMode == GameMode.SinglePlayer);
+			inputManager.BeginInputProcessing(SG.GameManager.GameMode == GameMode.SinglePlayer);
 
 			// process input for currently active screen
 			if (current != null && next == null)
@@ -145,7 +142,7 @@ namespace ShipGame
 
 			// if in game screen and split screen mode
 			if (current == ScreenGame &&
-				gameManager.GameMode == GameMode.MultiPlayer)
+				SG.GameManager.GameMode == GameMode.MultiPlayer)
 			{
 				// blur horizontal with split horizontal blur shader
 				gd.SetRenderTarget(glowRT1);

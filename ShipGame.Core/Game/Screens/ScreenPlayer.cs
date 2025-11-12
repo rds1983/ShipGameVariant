@@ -23,7 +23,6 @@ namespace ShipGame
 	public class ScreenPlayer : Screen
 	{
 		ScreenManager screenManager;    // screen manager
-		GameManager gameManager;         // game manager
 
 		const int NumberShips = 2;    // number of available ships to choose from
 
@@ -64,10 +63,9 @@ namespace ShipGame
 		float elapsedTime = 0.0f;
 
 		// constructor
-		public ScreenPlayer(ScreenManager manager, GameManager game)
+		public ScreenPlayer(ScreenManager manager)
 		{
 			screenManager = manager;
-			gameManager = game;
 		}
 
 		// called before screen shows
@@ -78,7 +76,7 @@ namespace ShipGame
 			{
 				// load all resources
 				confirmed[0] = false;
-				confirmed[1] = (gameManager.GameMode == GameMode.SinglePlayer);
+				confirmed[1] = (SG.GameManager.GameMode == GameMode.SinglePlayer);
 
 				rotation[0] = Matrix.Identity;
 				rotation[1] = Matrix.Identity;
@@ -133,6 +131,7 @@ namespace ShipGame
 
 			const float rotationVelocity = 3.0f;
 
+			var gameManager = SG.GameManager;
 			int i, j = (int)gameManager.GameMode;
 
 			for (i = 0; i < j; i++)
@@ -245,6 +244,7 @@ namespace ShipGame
 			Matrix transform = Matrix.CreateTranslation(0, -40, 0);
 
 			// if single player mode
+			var gameManager = SG.GameManager;
 			if (gameManager.GameMode == GameMode.SinglePlayer)
 			{
 				// draw ship model
@@ -382,7 +382,7 @@ namespace ShipGame
 			int screenSizeY = gd.Viewport.Height;
 
 			// if single player mode
-			if (gameManager.GameMode == GameMode.SinglePlayer)
+			if (SG.GameManager.GameMode == GameMode.SinglePlayer)
 			{
 				rect.Width = textureSelectBack.Width;
 				rect.Height = textureSelectBack.Height;
