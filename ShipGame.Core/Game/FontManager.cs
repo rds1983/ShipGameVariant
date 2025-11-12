@@ -54,9 +54,9 @@ namespace ShipGame
 		/// <summary>
 		/// Load resources
 		/// </summary>
-		public void LoadContent(AssetManager content)
+		public void LoadContent()
 		{
-			fontSystem = content.LoadFontSystem("fonts/Roboto-Bold.ttf");
+			fontSystem = SG.Assets.LoadFontSystem("fonts/Roboto-Bold.ttf");
 			fonts.Add(fontSystem.GetFont(14));
 			fonts.Add(fontSystem.GetFont(24));
 			fonts.Add(fontSystem.GetFont(32));

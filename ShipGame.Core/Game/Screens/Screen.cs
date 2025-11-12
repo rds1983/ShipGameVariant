@@ -27,7 +27,7 @@ namespace ShipGame
 	public abstract class Screen
 	{
 		// called when screen gets or looses focus
-		public abstract void SetFocus(GraphicsDevice gd, AssetManager content, bool focus);
+		public abstract void SetFocus(bool focus);
 
 		// called to update input
 		public abstract void ProcessInput(float elapsedTime, InputManager input);
@@ -36,9 +36,9 @@ namespace ShipGame
 		public abstract void Update(float elapsedTime);
 
 		// called to draw the 3D world
-		public abstract void Draw3D(GraphicsDevice gd);
+		public abstract void Draw3D();
 
 		// called to draw the 2D info text and hud
-		public abstract void Draw2D(GraphicsDevice gd, FontManager font);
+		public abstract void Draw2D(FontManager font);
 	}
 }

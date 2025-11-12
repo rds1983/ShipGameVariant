@@ -233,11 +233,13 @@ namespace ShipGame
 		/// <summary>
 		/// Load the game files (level, ships, wepons, etc...)
 		/// </summary>
-		public void LoadFiles(GraphicsDevice gd, AssetManager content)
+		public void LoadFiles()
 		{
 			String level = levelFile + "/" + levelFile;
 
 			// load level model
+			var gd = SG.GraphicsDevice;
+			var content = SG.Assets;
 			levelColor = content.LoadModel(gd, $"levels/{level}");
 
 			// load collision model
@@ -604,12 +606,9 @@ namespace ShipGame
 		/// <summary>
 		/// Draw the 3D game screen
 		/// </summary>
-		public void Draw3D(GraphicsDevice gd)
+		public void Draw3D()
 		{
-			if (gd == null)
-			{
-				throw new ArgumentNullException("gd");
-			}
+			var gd = SG.GraphicsDevice;
 
 			// clear background
 			gd.Clear(Color.Black);
@@ -889,18 +888,19 @@ namespace ShipGame
 		/// <summary>
 		/// Load content
 		/// </summary>
-		public void LoadContent(GraphicsDevice gd,
-			AssetManager content)
+		public void LoadContent()
 		{
 			// load reflection cubemap texture
 			//reflectCube = content.Load<TextureCube>("Reflect");
 
+
 			// load content for animated sprite manager
-			animatedSprite.LoadContent(gd, content);
+			animatedSprite.LoadContent();
 
 			// load content for particle system manager
-			particle.LoadContent(gd, content);
+			particle.LoadContent();
 
+			var gd = SG.GraphicsDevice;
 			// set up projection matrix for full and slpit screen
 			float aspect = (float)gd.Viewport.Width / (float)gd.Viewport.Height;
 			projectionFull = Matrix.CreatePerspectiveFieldOfView(

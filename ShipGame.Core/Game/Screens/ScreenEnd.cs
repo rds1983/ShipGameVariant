@@ -43,7 +43,7 @@ namespace ShipGame
 		}
 
 		// called before screen shows
-		public override void SetFocus(GraphicsDevice gd, AssetManager content, bool focus)
+		public override void SetFocus(bool focus)
 		{
 			// if getting focus
 			if (focus)
@@ -51,6 +51,8 @@ namespace ShipGame
 				// load all resources
 				int winner = gameManager.PlayerWinner;
 
+				var gd = SG.GraphicsDevice;
+				var content = SG.Assets;
 				shipModel = content.LoadModel(gd, $"ships/{gameManager.GetPlayerShip(winner)}");
 
 				padModel = content.LoadModel(gd, "ships/pad");
@@ -118,18 +120,14 @@ namespace ShipGame
 		}
 
 		// draw 3D scene
-		public override void Draw3D(GraphicsDevice gd)
+		public override void Draw3D()
 		{
-			if (gd == null)
-			{
-				throw new ArgumentNullException("gd");
-			}
-
+			var gd = SG.GraphicsDevice;
 			// clear background
 			gd.Clear(ClearOptions.Target | ClearOptions.DepthBuffer, Color.Black, 1, 0);
 
 			// draw background animation
-			screenManager.DrawBackground(gd);
+			screenManager.DrawBackground();
 
 			// screen aspect
 			float aspect = (float)gd.Viewport.Width / (float)gd.Viewport.Height;
@@ -176,15 +174,11 @@ namespace ShipGame
 		}
 
 		// draw 2D gui
-		public override void Draw2D(GraphicsDevice gd, FontManager font)
+		public override void Draw2D(FontManager font)
 		{
-			if (gd == null)
-			{
-				throw new ArgumentNullException("gd");
-			}
-
 			Rectangle rect = new Rectangle(0, 0, 0, 0);
 
+			var gd = SG.GraphicsDevice;
 			int screenSizeX = gd.Viewport.Width;
 			int screenSizeY = gd.Viewport.Height;
 

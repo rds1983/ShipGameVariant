@@ -71,7 +71,7 @@ namespace ShipGame
 		}
 
 		// called before screen shows
-		public override void SetFocus(GraphicsDevice gd, AssetManager content, bool focus)
+		public override void SetFocus(bool focus)
 		{
 			// if getting focus
 			if (focus == true)
@@ -83,6 +83,8 @@ namespace ShipGame
 				rotation[0] = Matrix.Identity;
 				rotation[1] = Matrix.Identity;
 
+				var gd = SG.GraphicsDevice;
+				var content = SG.Assets;
 				lights = LightList.Load(content, "screens/player_lights.xml");
 
 				for (int i = 0; i < NumberShips; i++)
@@ -218,18 +220,15 @@ namespace ShipGame
 			this.elapsedTime += elapsedTime;
 		}
 
-		public override void Draw3D(GraphicsDevice gd)
+		public override void Draw3D()
 		{
-			if (gd == null)
-			{
-				throw new ArgumentNullException("gd");
-			}
-
+			var gd = SG.GraphicsDevice;
+			
 			// clear backgournd
 			gd.Clear(Color.Black);
 
 			// draw background animation
-			screenManager.DrawBackground(gd);
+			screenManager.DrawBackground();
 
 			// screen aspect
 			float aspect = (float)gd.Viewport.Width / (float)gd.Viewport.Height;
@@ -375,15 +374,11 @@ namespace ShipGame
 			}
 		}
 
-		public override void Draw2D(GraphicsDevice gd, FontManager font)
+		public override void Draw2D(FontManager font)
 		{
-			if (gd == null)
-			{
-				throw new ArgumentNullException("gd");
-			}
-
 			Rectangle rect = new Rectangle(0, 0, 0, 0);
 
+			var gd = SG.GraphicsDevice;
 			int screenSizeX = gd.Viewport.Width;
 			int screenSizeY = gd.Viewport.Height;
 

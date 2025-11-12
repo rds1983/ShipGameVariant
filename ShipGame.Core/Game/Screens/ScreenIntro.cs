@@ -51,7 +51,7 @@ namespace ShipGame
 		}
 
 		// called before screen shows or stops showing
-		public override void SetFocus(GraphicsDevice gd, AssetManager content, bool focus)
+		public override void SetFocus(bool focus)
 		{
 			// if getting focus
 			if (focus)
@@ -59,6 +59,8 @@ namespace ShipGame
 				// load all resources
 				gameManager.GameMode = GameMode.SinglePlayer;
 
+				var gd = SG.GraphicsDevice;
+				var content = SG.Assets;
 				textureLogo = content.LoadTexture2DDefault(gd, "screens/intro_logo.tga");
 				textureLens = content.LoadTexture2DDefault(gd, "screens/intro_lens.tga");
 
@@ -156,18 +158,15 @@ namespace ShipGame
 		}
 
 		// draw 3D scene
-		public override void Draw3D(GraphicsDevice gd)
+		public override void Draw3D()
 		{
-			if (gd == null)
-			{
-				throw new ArgumentNullException("gd");
-			}
+			var gd = SG.GraphicsDevice;
 
 			// clear background
 			gd.Clear(Color.Black);
 
 			// draw background animation
-			screenManager.DrawBackground(gd);
+			screenManager.DrawBackground();
 		}
 
 		// draw the animated cursor
@@ -203,14 +202,10 @@ namespace ShipGame
 		}
 
 		// draw 2D gui
-		public override void Draw2D(GraphicsDevice gd, FontManager font)
+		public override void Draw2D(FontManager font)
 		{
-			if (gd == null)
-			{
-				throw new ArgumentNullException("gd");
-			}
-
 			// screen rect
+			var gd = SG.GraphicsDevice;
 			Rectangle rect = new Rectangle(gd.Viewport.X, gd.Viewport.Y,
 							gd.Viewport.Width, gd.Viewport.Height);
 

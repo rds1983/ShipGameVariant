@@ -30,13 +30,13 @@ namespace ShipGame
 		}
 
 		// called before screen shows
-		public override void SetFocus(GraphicsDevice gd, AssetManager content, bool focus)
+		public override void SetFocus(bool focus)
 		{
 			// if getting focus
 			if (focus == true)
 			{
 				// load all resources
-				gameManager.LoadFiles(gd, content);
+				gameManager.LoadFiles();
 			}
 			else // loosing focus
 			{
@@ -81,14 +81,14 @@ namespace ShipGame
 		}
 
 		// draw 3D scene
-		public override void Draw3D(GraphicsDevice gd)
+		public override void Draw3D()
 		{
 			// draw the 3d game scene
-			gameManager.Draw3D(gd);
+			gameManager.Draw3D();
 		}
 
 		// draw 2D gui
-		public override void Draw2D(GraphicsDevice gd, FontManager font)
+		public override void Draw2D(FontManager font)
 		{
 			// draw 2D game gui
 			gameManager.Draw2D(font);

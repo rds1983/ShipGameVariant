@@ -25,7 +25,6 @@ namespace ShipGame
 		GameManager gameManager;             // game manager
 		FontManager fontManager;             // font manager
 		InputManager inputManager;           // input manager
-		AssetManager contentManager;       // content manager
 
 		List<Screen> screens;         // list of available screens
 		Screen current;               // currently active screen
@@ -104,11 +103,11 @@ namespace ShipGame
 				if (next != null && fade < 0.5f * fadeTime)
 				{
 					// tell new screen it is getting in focus
-					next.SetFocus(gd, contentManager, true);
+					next.SetFocus(true);
 
 					// tell the old screen it lost its focus
 					if (current != null)
-						current.SetFocus(gd, contentManager, false);
+						current.SetFocus(false);
 
 					// set new screen as current
 					current = next;
@@ -249,12 +248,9 @@ namespace ShipGame
 		}
 
 		// draw the background animated image
-		public void DrawBackground(GraphicsDevice gd)
+		public void DrawBackground()
 		{
-			if (gd == null)
-			{
-				throw new ArgumentNullException("gd");
-			}
+			var gd = SG.GraphicsDevice;
 
 			const float animationTime = 3.0f;
 			const float animationLength = 0.4f;
@@ -313,7 +309,7 @@ namespace ShipGame
 				gd.SetRenderTarget(colorRT);
 
 				// draw the screen 3D scene
-				current.Draw3D(gd);
+				current.Draw3D();
 
 				// resolve the color render target
 				gd.SetRenderTarget(null);
@@ -331,7 +327,7 @@ namespace ShipGame
 				fontManager.BeginText();
 
 				// draw the 2D scene 
-				current.Draw2D(gd, fontManager);
+				current.Draw2D(fontManager);
 
 				// draw fps
 				//fontManager.DrawText(
@@ -364,15 +360,10 @@ namespace ShipGame
 		}
 
 		// load all content
-		public void LoadContent(GraphicsDevice gd,
-			AssetManager content)
+		public void LoadContent()
 		{
-			if (gd == null)
-			{
-				throw new ArgumentNullException("gd");
-			}
-
-			contentManager = content;
+			var gd = SG.GraphicsDevice;
+			var content = SG.Assets;
 			textureBackground = content.LoadTexture2DDefault(gd, "screens/intro_bg.tga");
 			// create blur manager
 			blurManager = new BlurManager(gd,

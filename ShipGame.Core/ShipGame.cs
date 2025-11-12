@@ -30,21 +30,7 @@ namespace ShipGame
 		GameManager game;
 		FontManager font;
 		SoundManager soundManager;
-		AssetManager assets;
 		bool renderVsync = true;
-
-		private static string ExecutingAssemblyDirectory
-		{
-			get
-			{
-				string codeBase = Assembly.GetExecutingAssembly().Location;
-				UriBuilder uri = new UriBuilder(codeBase);
-				string path = Uri.UnescapeDataString(uri.Path);
-				return Path.GetDirectoryName(path);
-			}
-		}
-
-		public static AssetManager AssetManager => instance.assets;
 
 		public ShipGameGame()
 		{
@@ -79,15 +65,15 @@ namespace ShipGame
 		/// </summary>
 		protected override void LoadContent()
 		{
+			SG.Initialize(GraphicsDevice);
+
 			font = new FontManager(graphics.GraphicsDevice);
 			screen = new ScreenManager(this, font, game);
 
-			var path = Path.Combine(ExecutingAssemblyDirectory, "Assets");
-			assets = AssetManager.CreateFileAssetManager(path);
-			soundManager.LoadContent(assets);
-			font.LoadContent(assets);
-			game.LoadContent(graphics.GraphicsDevice, assets);
-			screen.LoadContent(graphics.GraphicsDevice, assets);
+			soundManager.LoadContent();
+			font.LoadContent();
+			game.LoadContent();
+			screen.LoadContent();
 		}
 
 

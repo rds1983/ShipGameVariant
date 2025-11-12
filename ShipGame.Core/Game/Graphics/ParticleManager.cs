@@ -212,15 +212,11 @@ namespace ShipGame
 		/// <summary>
 		/// Load content
 		/// </summary>
-		public void LoadContent(GraphicsDevice gd, AssetManager content)
+		public void LoadContent()
 		{
-			if (gd == null)
-			{
-				throw new ArgumentNullException("gd");
-			}
-
+			var gd = SG.GraphicsDevice;
 			// load effect
-			effect = content.LoadEffect2(gd, "Particle.efb");
+			effect = SG.Assets.LoadEffect2(gd, "Particle.efb");
 
 			// get techinque
 			effectTechnique = effect.Techniques["Particle"];
