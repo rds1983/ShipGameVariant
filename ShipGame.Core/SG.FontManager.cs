@@ -29,7 +29,7 @@ namespace ShipGame
 			/// </summary>
 			public FontManagerType()
 			{
-				sprite = new SpriteBatch(SG.GraphicsDevice);
+				sprite = new SpriteBatch(GraphicsDevice);
 				fonts = new List<SpriteFontBase>();
 				textMode = false;
 			}
@@ -39,7 +39,7 @@ namespace ShipGame
 			/// </summary>
 			public void LoadContent()
 			{
-				fontSystem = SG.Assets.LoadFontSystem("fonts/Roboto-Bold.ttf");
+				fontSystem = Assets.LoadFontSystem("fonts/Roboto-Bold.ttf");
 				fonts.Add(fontSystem.GetFont(14));
 				fonts.Add(fontSystem.GetFont(24));
 				fonts.Add(fontSystem.GetFont(32));
@@ -60,7 +60,7 @@ namespace ShipGame
 			{
 				get
 				{
-					var graphics = SG.GraphicsDevice;
+					var graphics = GraphicsDevice;
 					return new Rectangle(graphics.Viewport.X, graphics.Viewport.Y,
 						graphics.Viewport.Width, graphics.Viewport.Height);
 				}

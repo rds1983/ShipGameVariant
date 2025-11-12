@@ -228,11 +228,11 @@ namespace ShipGame
 				String level = levelFile + "/" + levelFile;
 
 				// load level model
-				var content = SG.Assets;
+				var content = Assets;
 				levelColor = content.LoadModel2($"levels/{level}");
 
 				// load collision model
-				var collisionModel = content.LoadModel(SG.GraphicsDevice, $"levels/{level}_collision.glb", ModelLoadFlags.ReadableBuffers);
+				var collisionModel = content.LoadModel(GraphicsDevice, $"levels/{level}_collision.glb", ModelLoadFlags.ReadableBuffers);
 				levelCollision = new CollisionMesh(collisionModel, GameOptions.CollisionMeshSubdivisions);
 				collisionModel = null;
 
@@ -597,7 +597,7 @@ namespace ShipGame
 			/// </summary>
 			public void Draw3D()
 			{
-				var gd = SG.GraphicsDevice;
+				var gd = GraphicsDevice;
 
 				// clear background
 				gd.Clear(Color.Black);
@@ -758,7 +758,7 @@ namespace ShipGame
 			/// </summary>
 			void DrawScene(RenderTechnique technique)
 			{
-				var gd = SG.GraphicsDevice;
+				var gd = GraphicsDevice;
 				if (gameMode == GameMode.SinglePlayer)
 				{
 					// camera position and view projection matrix
@@ -882,7 +882,7 @@ namespace ShipGame
 				// load content for particle system manager
 				particle.LoadContent();
 
-				var gd = SG.GraphicsDevice;
+				var gd = GraphicsDevice;
 				// set up projection matrix for full and slpit screen
 				float aspect = (float)gd.Viewport.Width / (float)gd.Viewport.Height;
 				projectionFull = Matrix.CreatePerspectiveFieldOfView(
@@ -1117,7 +1117,7 @@ namespace ShipGame
 				// get model bones
 				model.CopyAbsoluteBoneTransformsTo(bones);
 
-				var gd = SG.GraphicsDevice;
+				var gd = GraphicsDevice;
 				BlendState bs = gd.BlendState;
 				DepthStencilState ds = gd.DepthStencilState;
 
