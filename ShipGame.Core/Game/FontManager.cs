@@ -29,7 +29,6 @@ namespace ShipGame
 
 	public class FontManager : IDisposable
 	{
-		GraphicsDevice graphics;    // graphics device
 		SpriteBatch sprite;         // sprite bacth
 		FontSystem fontSystem;
 		List<SpriteFontBase> fonts;     // list of sprite fonts
@@ -38,15 +37,9 @@ namespace ShipGame
 		/// <summary>
 		/// Create a new font manager
 		/// </summary>
-		public FontManager(GraphicsDevice gd)
+		public FontManager()
 		{
-			if (gd == null)
-			{
-				throw new ArgumentNullException("gd");
-			}
-
-			graphics = gd;
-			sprite = new SpriteBatch(gd);
+			sprite = new SpriteBatch(SG.GraphicsDevice);
 			fonts = new List<SpriteFontBase>();
 			textMode = false;
 		}
@@ -77,6 +70,7 @@ namespace ShipGame
 		{
 			get
 			{
+				var graphics = SG.GraphicsDevice;
 				return new Rectangle(graphics.Viewport.X, graphics.Viewport.Y,
 					graphics.Viewport.Width, graphics.Viewport.Height);
 			}

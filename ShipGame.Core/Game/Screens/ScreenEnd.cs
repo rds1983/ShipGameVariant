@@ -51,20 +51,19 @@ namespace ShipGame
 				// load all resources
 				int winner = gameManager.PlayerWinner;
 
-				var gd = SG.GraphicsDevice;
 				var content = SG.Assets;
-				shipModel = content.LoadModel(gd, $"ships/{gameManager.GetPlayerShip(winner)}");
+				shipModel = content.LoadModel2($"ships/{gameManager.GetPlayerShip(winner)}");
 
-				padModel = content.LoadModel(gd, "ships/pad");
-				padHaloModel = content.LoadModel(gd, "ships/pad_halo");
+				padModel = content.LoadModel2("ships/pad");
+				padHaloModel = content.LoadModel2("ships/pad_halo");
 
 				lights = LightList.Load(content, "screens/end_lights.xml");
 
-				textureContinue = content.LoadTexture2DDefault(gd, "screens/continue.tga");
+				textureContinue = content.LoadTexture2DDefault("screens/continue.tga");
 				if (winner == 0)
-					texturePlayerWin = content.LoadTexture2DDefault(gd, "screens/player1_wins.tga");
+					texturePlayerWin = content.LoadTexture2DDefault("screens/player1_wins.tga");
 				else
-					texturePlayerWin = content.LoadTexture2DDefault(gd, "screens/player2_wins.tga");
+					texturePlayerWin = content.LoadTexture2DDefault("screens/player2_wins.tga");
 			}
 			else // loosing focus
 			{
@@ -147,11 +146,11 @@ namespace ShipGame
 			Matrix translation = Matrix.CreateTranslation(0, -40, 0);
 
 			// draw ship model
-			gameManager.DrawModel(gd, shipModel, RenderTechnique.NormalMapping,
+			gameManager.DrawModel(shipModel, RenderTechnique.NormalMapping,
 				cameraPosition, rotation, viewProjection, lights);
 
 			// draw pad model
-			gameManager.DrawModel(gd, padModel, RenderTechnique.NormalMapping,
+			gameManager.DrawModel(padModel, RenderTechnique.NormalMapping,
 				cameraPosition, translation, viewProjection, lights);
 
 			// set additive blend with no glow (zero on alpha)
@@ -165,7 +164,7 @@ namespace ShipGame
 			//gd.RenderState.AlphaDestinationBlend = Blend.Zero;
 
 			// draw pad halo model
-			gameManager.DrawModel(gd, padHaloModel, RenderTechnique.PlainMapping,
+			gameManager.DrawModel(padHaloModel, RenderTechnique.PlainMapping,
 				cameraPosition, translation, viewProjection, null);
 
 			// restore blend modes

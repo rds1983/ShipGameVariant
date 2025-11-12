@@ -41,11 +41,10 @@ namespace ShipGame
 			if (focus)
 			{
 				// load all resources
-				var gd = SG.GraphicsDevice;
 				var content = SG.Assets;
-				textureControls = content.LoadTexture2DDefault(gd, "screens/controls.tga");
-				textureDisplay = content.LoadTexture2DDefault(gd, "screens/controls_display.tga");
-				textureContinue = content.LoadTexture2DDefault(gd, "screens/continue.tga");
+				textureControls = content.LoadTexture2DDefault("screens/controls.tga");
+				textureDisplay = content.LoadTexture2DDefault("screens/controls_display.tga");
+				textureContinue = content.LoadTexture2DDefault("screens/continue.tga");
 			}
 			else  // loosing focus
 			{

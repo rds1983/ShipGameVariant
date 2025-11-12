@@ -121,7 +121,7 @@ namespace ShipGame
 		/// <summary>
 		/// Draw powerup
 		/// </summary>
-		public void Draw(GameManager game, GraphicsDevice gd,
+		public void Draw(GameManager game,
 			RenderTechnique technique, Vector3 cameraPosition,
 			Matrix viewProjection, LightList lights)
 		{
@@ -134,7 +134,7 @@ namespace ShipGame
 			if (waitTime == 0)
 			{
 				// draw powerup model
-				game.DrawModel(gd, model, technique, cameraPosition,
+				game.DrawModel(model, technique, cameraPosition,
 					bobbing * transform, viewProjection, lights);
 			}
 		}

@@ -83,12 +83,12 @@ namespace ShipGame
 		/// <summary>
 		/// Draw all powerups
 		/// </summary>
-		public void Draw(GraphicsDevice gd, RenderTechnique technique,
+		public void Draw(RenderTechnique technique,
 			Vector3 cameraPosition, Matrix viewProjection, LightList lights)
 		{
 			// draw all powerups
 			foreach (Powerup p in powerups)
-				p.Draw(game, gd, technique, cameraPosition, viewProjection, lights);
+				p.Draw(game, technique, cameraPosition, viewProjection, lights);
 		}
 	}
 }

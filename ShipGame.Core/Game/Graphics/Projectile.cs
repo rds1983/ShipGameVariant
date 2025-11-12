@@ -183,7 +183,7 @@ namespace ShipGame
 		/// <summary>
 		/// Draw projectile
 		/// </summary>
-		public void Draw(GameManager game, GraphicsDevice gd,
+		public void Draw(GameManager game,
 			RenderTechnique defaultTechnique, Vector3 cameraPosition,
 			Matrix viewProjection, LightList lights)
 		{
@@ -194,12 +194,12 @@ namespace ShipGame
 
 			if (technique == RenderTechnique.ViewMapping)
 			{
-				game.DrawModel(gd, model, technique,
+				game.DrawModel(model, technique,
 						cameraPosition, transform, viewProjection, null);
 			}
 			else
 			{
-				game.DrawModel(gd, model, defaultTechnique,
+				game.DrawModel(model, defaultTechnique,
 						cameraPosition, transform, viewProjection, lights);
 			}
 		}

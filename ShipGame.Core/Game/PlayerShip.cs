@@ -682,14 +682,14 @@ namespace ShipGame
 		/// Renders the player ship model and 
 		/// blaster and missile if available and charged
 		/// </summary>
-		public void Draw(GraphicsDevice gd, RenderTechnique technique,
+		public void Draw(RenderTechnique technique,
 			Vector3 cameraPosition, Matrix viewProjection, LightList lights)
 		{
 			// if not dead
 			if (deadTime == 0.0f)
 			{
 				// render ship model
-				gameManager.DrawModel(gd, shipModel, technique, cameraPosition,
+				gameManager.DrawModel(shipModel, technique, cameraPosition,
 					bobbing * transform, viewProjection, lights);
 			}
 		}

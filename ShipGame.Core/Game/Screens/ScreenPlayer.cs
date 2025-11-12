@@ -83,26 +83,25 @@ namespace ShipGame
 				rotation[0] = Matrix.Identity;
 				rotation[1] = Matrix.Identity;
 
-				var gd = SG.GraphicsDevice;
 				var content = SG.Assets;
 				lights = LightList.Load(content, "screens/player_lights.xml");
 
 				for (int i = 0; i < NumberShips; i++)
 				{
-					shipModels[i] = content.LoadModel(gd, $"ships/{ships[i]}");
+					shipModels[i] = content.LoadModel2($"ships/{ships[i]}");
 					FixupShip(shipModels[i], "ships/" + ships[i]);
 				}
 
-				padModel = content.LoadModel(gd, "ships/pad");
-				padHaloModel = content.LoadModel(gd, "ships/pad_halo");
-				padSelectModel = content.LoadModel(gd, "ships/pad_select");
+				padModel = content.LoadModel2("ships/pad");
+				padHaloModel = content.LoadModel2("ships/pad_halo");
+				padSelectModel = content.LoadModel2("ships/pad_select");
 
-				textureChangeShip = content.LoadTexture2DDefault(gd, "screens/change_ship.tga");
-				textureRotateShip = content.LoadTexture2DDefault(gd, "screens/rotate_ship.tga");
-				textureSelectBack = content.LoadTexture2DDefault(gd, "screens/select_back.tga");
-				textureSelectCancel = content.LoadTexture2DDefault(gd, "screens/select_cancel.tga");
-				textureInvertYCheck = content.LoadTexture2DDefault(gd, "screens/inverty_check.tga");
-				textureInvertYUncheck = content.LoadTexture2DDefault(gd, "screens/inverty_uncheck.tga");
+				textureChangeShip = content.LoadTexture2DDefault("screens/change_ship.tga");
+				textureRotateShip = content.LoadTexture2DDefault("screens/rotate_ship.tga");
+				textureSelectBack = content.LoadTexture2DDefault("screens/select_back.tga");
+				textureSelectCancel = content.LoadTexture2DDefault("screens/select_cancel.tga");
+				textureInvertYCheck = content.LoadTexture2DDefault("screens/inverty_check.tga");
+				textureInvertYUncheck = content.LoadTexture2DDefault("screens/inverty_uncheck.tga");
 			}
 			else // loosing focus
 			{
@@ -249,11 +248,11 @@ namespace ShipGame
 			if (gameManager.GameMode == GameMode.SinglePlayer)
 			{
 				// draw ship model
-				gameManager.DrawModel(gd, shipModels[selection[0]],
+				gameManager.DrawModel(shipModels[selection[0]],
 					RenderTechnique.NormalMapping,
 					cameraPosition, rotation[0], viewProjection, lights);
 				// draw pad model
-				gameManager.DrawModel(gd, padModel,
+				gameManager.DrawModel(padModel,
 					RenderTechnique.NormalMapping,
 					cameraPosition, transform, viewProjection, lights);
 
@@ -269,7 +268,7 @@ namespace ShipGame
 				//gd.RenderState.AlphaDestinationBlend = Blend.Zero;
 
 				// draw pad halo model
-				gameManager.DrawModel(gd, padHaloModel, RenderTechnique.PlainMapping,
+				gameManager.DrawModel(padHaloModel, RenderTechnique.PlainMapping,
 					cameraPosition, transform, viewProjection, null);
 
 				// enable glow (alpha not zero)
@@ -283,7 +282,7 @@ namespace ShipGame
 					float scale = 1.0f + 0.03f * (float)Math.Cos(elapsedTime * 7);
 					transform = transform * Matrix.CreateScale(scale);
 					transform.M42 = -10;
-					gameManager.DrawModel(gd, padSelectModel,
+					gameManager.DrawModel(padSelectModel,
 						RenderTechnique.PlainMapping, cameraPosition, transform,
 						viewProjection, null);
 				}
@@ -298,22 +297,22 @@ namespace ShipGame
 				Matrix transform2 = rotation[1] * Matrix.CreateTranslation(-90, 0, 0);
 
 				// draw ship model for player 1
-				gameManager.DrawModel(gd, shipModels[selection[0]],
+				gameManager.DrawModel(shipModels[selection[0]],
 					RenderTechnique.NormalMapping,
 					cameraPosition, transform1, viewProjection, lights);
 				// draw ship model for player 2
-				gameManager.DrawModel(gd, shipModels[selection[1]],
+				gameManager.DrawModel(shipModels[selection[1]],
 					RenderTechnique.NormalMapping,
 					cameraPosition, transform2, viewProjection, lights);
 
 				// draw pad model for player 1
 				transform.M41 = 90;
-				gameManager.DrawModel(gd, padModel, RenderTechnique.NormalMapping,
+				gameManager.DrawModel(padModel, RenderTechnique.NormalMapping,
 					cameraPosition, transform, viewProjection, lights);
 
 				// draw pad model for player 2
 				transform.M41 = -90;
-				gameManager.DrawModel(gd, padModel, RenderTechnique.NormalMapping,
+				gameManager.DrawModel(padModel, RenderTechnique.NormalMapping,
 					cameraPosition, transform, viewProjection, lights);
 
 				// set additive blend
@@ -328,12 +327,12 @@ namespace ShipGame
 
 				// draw pad halo model for player 1
 				transform.M41 = 90;
-				gameManager.DrawModel(gd, padHaloModel, RenderTechnique.NormalMapping,
+				gameManager.DrawModel(padHaloModel, RenderTechnique.NormalMapping,
 					cameraPosition, transform, viewProjection, null);
 
 				// draw pad halo model for player 2
 				transform.M41 = -90;
-				gameManager.DrawModel(gd, padHaloModel, RenderTechnique.NormalMapping,
+				gameManager.DrawModel(padHaloModel, RenderTechnique.NormalMapping,
 					cameraPosition, transform, viewProjection, null);
 
 				// enable glow (alpha not zero)
@@ -349,7 +348,7 @@ namespace ShipGame
 					transform = transform * Matrix.CreateScale(scale);
 					transform.M41 = 90;
 					transform.M42 = -10;
-					gameManager.DrawModel(gd, padSelectModel,
+					gameManager.DrawModel(padSelectModel,
 						RenderTechnique.PlainMapping, cameraPosition, transform,
 						viewProjection, null);
 				}
@@ -362,7 +361,7 @@ namespace ShipGame
 					transform = transform * Matrix.CreateScale(scale);
 					transform.M41 = -90;
 					transform.M42 = -10;
-					gameManager.DrawModel(gd, padSelectModel,
+					gameManager.DrawModel(padSelectModel,
 						RenderTechnique.PlainMapping, cameraPosition, transform,
 						viewProjection, null);
 				}

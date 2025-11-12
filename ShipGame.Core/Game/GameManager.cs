@@ -238,12 +238,11 @@ namespace ShipGame
 			String level = levelFile + "/" + levelFile;
 
 			// load level model
-			var gd = SG.GraphicsDevice;
 			var content = SG.Assets;
-			levelColor = content.LoadModel(gd, $"levels/{level}");
+			levelColor = content.LoadModel2($"levels/{level}");
 
 			// load collision model
-			var collisionModel = content.LoadModel(gd, $"levels/{level}_collision.glb",  ModelLoadFlags.ReadableBuffers);
+			var collisionModel = content.LoadModel(SG.GraphicsDevice, $"levels/{level}_collision.glb", ModelLoadFlags.ReadableBuffers);
 			levelCollision = new CollisionMesh(collisionModel, GameOptions.CollisionMeshSubdivisions);
 			collisionModel = null;
 
@@ -257,7 +256,7 @@ namespace ShipGame
 				int i, j = particleFiles.GetLength(0);
 				particleTextures = new Texture2D[j];
 				for (i = 0; i < j; i++)
-					particleTextures[i] = content.LoadTexture2DDefault(gd, $"particles/{particleFiles[i]}.tga");
+					particleTextures[i] = content.LoadTexture2DDefault($"particles/{particleFiles[i]}.tga");
 			}
 
 			// load animated sprite textures
@@ -266,7 +265,7 @@ namespace ShipGame
 				int i, j = animatedSpriteFiles.GetLength(0);
 				animatedSpriteTextures = new Texture2D[j];
 				for (i = 0; i < j; i++)
-					animatedSpriteTextures[i] = content.LoadTexture2DDefault(gd, $"explosions/{animatedSpriteFiles[i]}.tga");
+					animatedSpriteTextures[i] = content.LoadTexture2DDefault($"explosions/{animatedSpriteFiles[i]}.tga");
 			}
 
 			// load projectile models
@@ -275,7 +274,7 @@ namespace ShipGame
 				int i, j = projectileFiles.GetLength(0);
 				projectileModels = new DrModel[j];
 				for (i = 0; i < j; i++)
-					projectileModels[i] = content.LoadModel(gd, $"projectiles/{projectileFiles[i]}");
+					projectileModels[i] = content.LoadModel2($"projectiles/{projectileFiles[i]}");
 			}
 
 			// load powerup models
@@ -284,14 +283,14 @@ namespace ShipGame
 				int i, j = powerupFiles.GetLength(0);
 				powerupModels = new DrModel[j];
 				for (i = 0; i < j; i++)
-					powerupModels[i] = content.LoadModel(gd, $"powerups/{powerupFiles[i]}");
+					powerupModels[i] = content.LoadModel2($"powerups/{powerupFiles[i]}");
 			}
 
 			// cerate players
 			for (int i = 0; i < GameOptions.MaxPlayers; i++)
 				if (shipFile[i] != null)
 				{
-					var ShipModel = content.LoadModel(gd, $"ships/{shipFile[i]}");
+					var ShipModel = content.LoadModel2($"ships/{shipFile[i]}");
 
 					var ShipEnities = EntityList.Load(content, $"ships/{shipFile[i]}.xml");
 
@@ -319,23 +318,23 @@ namespace ShipGame
 			// load hud textures
 			if (gameMode == GameMode.SinglePlayer)
 			{
-				hudCrosshair = content.LoadTexture2DDefault(gd, "screens/hud_sp_crosshair.tga");
-				hudEnergy = content.LoadTexture2DDefault(gd, "screens/hud_sp_energy.tga");
-				hudMissile = content.LoadTexture2DDefault(gd, "screens/hud_sp_missile.tga");
-				hudScore = content.LoadTexture2DDefault(gd, "screens/hud_sp_score.tga");
-				hudBars = content.LoadTexture2DDefault(gd, "screens/hud_sp_bars.tga");
+				hudCrosshair = content.LoadTexture2DDefault("screens/hud_sp_crosshair.tga");
+				hudEnergy = content.LoadTexture2DDefault("screens/hud_sp_energy.tga");
+				hudMissile = content.LoadTexture2DDefault("screens/hud_sp_missile.tga");
+				hudScore = content.LoadTexture2DDefault("screens/hud_sp_score.tga");
+				hudBars = content.LoadTexture2DDefault("screens/hud_sp_bars.tga");
 			}
 			else
 			{
-				hudCrosshair = content.LoadTexture2DDefault(gd, "screens/hud_mp_crosshair.tga");
-				hudEnergy = content.LoadTexture2DDefault(gd, "screens/hud_mp_energy.tga");
-				hudMissile = content.LoadTexture2DDefault(gd, "screens/hud_mp_missile.tga");
-				hudScore = content.LoadTexture2DDefault(gd, "screens/hud_mp_score.tga");
-				hudBars = content.LoadTexture2DDefault(gd, "screens/hud_mp_bars.tga");
+				hudCrosshair = content.LoadTexture2DDefault("screens/hud_mp_crosshair.tga");
+				hudEnergy = content.LoadTexture2DDefault("screens/hud_mp_energy.tga");
+				hudMissile = content.LoadTexture2DDefault("screens/hud_mp_missile.tga");
+				hudScore = content.LoadTexture2DDefault("screens/hud_mp_score.tga");
+				hudBars = content.LoadTexture2DDefault("screens/hud_mp_bars.tga");
 			}
 
 			// load damage indicator texture
-			damageTexture = content.LoadTexture2DDefault(gd, "screens/damage.tga");
+			damageTexture = content.LoadTexture2DDefault("screens/damage.tga");
 		}
 
 
@@ -614,7 +613,7 @@ namespace ShipGame
 			gd.Clear(Color.Black);
 
 			// draw scene
-			DrawScene(gd, RenderTechnique.NormalMapping);
+			DrawScene(RenderTechnique.NormalMapping);
 		}
 
 		/// <summary>
@@ -771,13 +770,9 @@ namespace ShipGame
 		/// <summary>
 		/// Draw the 3D game scene
 		/// </summary>
-		void DrawScene(GraphicsDevice gd, RenderTechnique technique)
+		void DrawScene(RenderTechnique technique)
 		{
-			if (gd == null)
-			{
-				throw new ArgumentNullException("gd");
-			}
-
+			var gd = SG.GraphicsDevice;
 			if (gameMode == GameMode.SinglePlayer)
 			{
 				// camera position and view projection matrix
@@ -785,28 +780,28 @@ namespace ShipGame
 				Matrix viewProjection = players[0].ViewMatrix * projectionFull;
 
 				// draw the level geomery
-				DrawModel(gd, levelColor, technique, cameraPosition,
+				DrawModel(levelColor, technique, cameraPosition,
 					Matrix.Identity, viewProjection, levelLights);
 
 				// if in 3rd person mode draw player ship
 				bool camera3rdPerson = players[0].Camera3rdPerson;
 				if (camera3rdPerson)
-					players[0].Draw(gd, technique,
+					players[0].Draw(technique,
 						cameraPosition, viewProjection, levelLights);
 
 				// draw projectiles
-				projectile.Draw(gd, technique, cameraPosition, viewProjection,
+				projectile.Draw(technique, cameraPosition, viewProjection,
 					levelLights);
 
 				// draw powerups
-				powerup.Draw(gd, technique, cameraPosition, viewProjection, levelLights);
+				powerup.Draw(technique, cameraPosition, viewProjection, levelLights);
 
 				// draw animated sprites
-				animatedSprite.Draw(gd, cameraPosition, players[0].ViewUp,
+				animatedSprite.Draw(cameraPosition, players[0].ViewUp,
 					viewProjection, 0, camera3rdPerson);
 
 				// draw particle systems
-				particle.Draw(gd, viewProjection);
+				particle.Draw(viewProjection);
 
 				gd.BlendState = BlendState.Opaque;
 				gd.DepthStencilState = DepthStencilState.Default;
@@ -821,32 +816,32 @@ namespace ShipGame
 				Matrix viewProjection = players[0].ViewMatrix * projectionSplit;
 
 				// draw the level geomery
-				DrawModel(gd, levelColor, technique, cameraPosition,
+				DrawModel(levelColor, technique, cameraPosition,
 					Matrix.Identity, viewProjection, levelLights);
 
 				// draw player 2 ship
-				players[1].Draw(gd, technique, cameraPosition, viewProjection,
+				players[1].Draw(technique, cameraPosition, viewProjection,
 					levelLights);
 
 				// if in 3rd person mode draw player 1 ship
 				bool camera3rdPerson = players[0].Camera3rdPerson;
 				if (camera3rdPerson)
-					players[0].Draw(gd, technique,
+					players[0].Draw(technique,
 						cameraPosition, viewProjection, levelLights);
 
 				// draw projectiles
-				projectile.Draw(gd, technique, cameraPosition, viewProjection,
+				projectile.Draw(technique, cameraPosition, viewProjection,
 					levelLights);
 
 				// draw powerups
-				powerup.Draw(gd, technique, cameraPosition, viewProjection, levelLights);
+				powerup.Draw(technique, cameraPosition, viewProjection, levelLights);
 
 				// draw animated sprites
-				animatedSprite.Draw(gd, cameraPosition, players[0].ViewUp,
+				animatedSprite.Draw(cameraPosition, players[0].ViewUp,
 					viewProjection, 0, camera3rdPerson);
 
 				// draw particle systems
-				particle.Draw(gd, viewProjection);
+				particle.Draw(viewProjection);
 
 				// setup right viewport
 				gd.Viewport = viewportRight;
@@ -856,32 +851,32 @@ namespace ShipGame
 				viewProjection = players[1].ViewMatrix * projectionSplit;
 
 				// draw the level geomery
-				DrawModel(gd, levelColor, technique, cameraPosition,
+				DrawModel(levelColor, technique, cameraPosition,
 					Matrix.Identity, viewProjection, levelLights);
 
 				// draw player 1 ship
-				players[0].Draw(gd, technique, cameraPosition, viewProjection,
+				players[0].Draw(technique, cameraPosition, viewProjection,
 					levelLights);
 
 				// if in 3rd person mode draw player 2 ship
 				camera3rdPerson = players[1].Camera3rdPerson;
 				if (camera3rdPerson)
-					players[1].Draw(gd, technique,
+					players[1].Draw(technique,
 						cameraPosition, viewProjection, levelLights);
 
 				// draw projectiles
-				projectile.Draw(gd, technique, cameraPosition, viewProjection,
+				projectile.Draw(technique, cameraPosition, viewProjection,
 					levelLights);
 
 				// draw powerups
-				powerup.Draw(gd, technique, cameraPosition, viewProjection, levelLights);
+				powerup.Draw(technique, cameraPosition, viewProjection, levelLights);
 
 				// draw animated sprites
-				animatedSprite.Draw(gd, cameraPosition, players[1].ViewUp,
+				animatedSprite.Draw(cameraPosition, players[1].ViewUp,
 					viewProjection, 1, camera3rdPerson);
 
 				// draw particle systems
-				particle.Draw(gd, viewProjection);
+				particle.Draw(viewProjection);
 			}
 		}
 
@@ -1115,31 +1110,25 @@ namespace ShipGame
 		/// <summary>
 		/// Draw a projectile
 		/// </summary>
-		public void DrawProjectile(GraphicsDevice gd, ProjectileType p,
+		public void DrawProjectile(ProjectileType p,
 			RenderTechnique technique, Vector3 cameraPosition,
 			Matrix world, Matrix viewProjection, LightList lights)
 		{
-			DrawModel(gd, projectileModels[(int)p], technique,
+			DrawModel(projectileModels[(int)p], technique,
 				cameraPosition, world, viewProjection, lights);
 		}
 
 		/// <summary>
 		/// Draw a model using given technique and camera settings
 		/// </summary>
-		public void DrawModel(GraphicsDevice gd, DrModel model,
+		public void DrawModel(DrModel model,
 			RenderTechnique technique, Vector3 cameraPosition,
 			Matrix world, Matrix viewProjection, LightList lights)
 		{
-
-
-			if (gd == null)
-			{
-				throw new ArgumentNullException("gd");
-			}
-
 			// get model bones
 			model.CopyAbsoluteBoneTransformsTo(bones);
 
+			var gd = SG.GraphicsDevice;
 			BlendState bs = gd.BlendState;
 			DepthStencilState ds = gd.DepthStencilState;
 

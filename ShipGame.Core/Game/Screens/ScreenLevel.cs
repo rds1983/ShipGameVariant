@@ -49,14 +49,13 @@ namespace ShipGame
 			// if getting focus
 			if (focus)
 			{
-				var gd = SG.GraphicsDevice;
 				var content = SG.Assets;
 
 				// load all resources
 				for (int i = 0; i < NumberLevels; i++)
-					levelShots[i] = content.LoadTexture2DDefault(gd, $"screens/{levels[i]}_screen.tga");
-				selectBack = content.LoadTexture2DDefault(gd, "screens/select_back.tga");
-				changeLevel = content.LoadTexture2DDefault(gd, "screens/change_level.tga");
+					levelShots[i] = content.LoadTexture2DDefault($"screens/{levels[i]}_screen.tga");
+				selectBack = content.LoadTexture2DDefault("screens/select_back.tga");
+				changeLevel = content.LoadTexture2DDefault("screens/change_level.tga");
 			}
 			else // loosing focus
 			{

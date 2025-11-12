@@ -75,12 +75,12 @@ namespace ShipGame
 		/// <summary>
 		/// Draw all projectiles
 		/// </summary>
-		public void Draw(GraphicsDevice gd, RenderTechnique technique,
+		public void Draw(RenderTechnique technique,
 			Vector3 cameraPosition, Matrix viewProjection, LightList lights)
 		{
 			// draw all projectiles
 			foreach (Projectile p in projectiles)
-				p.Draw(game, gd, technique, cameraPosition, viewProjection, lights);
+				p.Draw(game, technique, cameraPosition, viewProjection, lights);
 		}
 	}
 }

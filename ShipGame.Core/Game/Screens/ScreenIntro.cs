@@ -59,19 +59,18 @@ namespace ShipGame
 				// load all resources
 				gameManager.GameMode = GameMode.SinglePlayer;
 
-				var gd = SG.GraphicsDevice;
 				var content = SG.Assets;
-				textureLogo = content.LoadTexture2DDefault(gd, "screens/intro_logo.tga");
-				textureLens = content.LoadTexture2DDefault(gd, "screens/intro_lens.tga");
+				textureLogo = content.LoadTexture2DDefault("screens/intro_logo.tga");
+				textureLens = content.LoadTexture2DDefault("screens/intro_lens.tga");
 
-				textureCursorAnim = content.LoadTexture2DDefault(gd, "screens/cursor_anim.tga");
-				textureCursorArrow = content.LoadTexture2DDefault(gd, "screens/cursor_arrow.tga");
-				textureCursorBullet = content.LoadTexture2DDefault(gd, "screens/cursor_bullet.tga");
+				textureCursorAnim = content.LoadTexture2DDefault("screens/cursor_anim.tga");
+				textureCursorArrow = content.LoadTexture2DDefault("screens/cursor_arrow.tga");
+				textureCursorBullet = content.LoadTexture2DDefault("screens/cursor_bullet.tga");
 
 				for (int i = 0; i < NumberMenuItems; i++)
 				{
-					textureMenu[i] = content.LoadTexture2DDefault(gd, $"screens/{menuNames[i]}.tga");
-					textureMenuHover[i] = content.LoadTexture2DDefault(gd, $"screens/{menuNames[i]}_hover.tga");
+					textureMenu[i] = content.LoadTexture2DDefault($"screens/{menuNames[i]}.tga");
+					textureMenuHover[i] = content.LoadTexture2DDefault($"screens/{menuNames[i]}_hover.tga");
 				}
 			}
 			else // loosing focus

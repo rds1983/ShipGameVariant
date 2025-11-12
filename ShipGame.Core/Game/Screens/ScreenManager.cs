@@ -91,7 +91,7 @@ namespace ShipGame
 		}
 
 		// update for given elapsed time
-		public void Update(GraphicsDevice gd, float elapsedTime)
+		public void Update(float elapsedTime)
 		{
 			// if in a transition
 			if (fade > 0)
@@ -133,16 +133,12 @@ namespace ShipGame
 		}
 
 		// blur the color render target using the alpha channel and blur intensity
-		void BlurGlowRenterTarget(GraphicsDevice gd)
+		void BlurGlowRenterTarget()
 		{
-			if (gd == null)
-			{
-				throw new ArgumentNullException("gd");
-			}
-
 			//DepthStencilState ds = new DepthStencilState() { DepthBufferEnable = true, DepthBufferWriteEnable = true };
 			//gd.DepthStencilState = ds;
 
+			var gd = SG.GraphicsDevice;
 			gd.DepthStencilState = DepthStencilState.None;
 			//gd.BlendState = BlendState.Opaque;
 
@@ -153,21 +149,18 @@ namespace ShipGame
 			{
 				// blur horizontal with split horizontal blur shader
 				gd.SetRenderTarget(glowRT1);
-				blurManager.RenderScreenQuad(gd, BlurTechnique.BlurHorizontalSplit,
-							colorRT, Vector4.One);
+				blurManager.RenderScreenQuad(BlurTechnique.BlurHorizontalSplit, colorRT, Vector4.One);
 			}
 			else
 			{
 				// blur horizontal with regular horizontal blur shader
 				gd.SetRenderTarget(glowRT1);
-				blurManager.RenderScreenQuad(gd, BlurTechnique.BlurHorizontal,
-							colorRT, Vector4.One);
+				blurManager.RenderScreenQuad(BlurTechnique.BlurHorizontal, colorRT, Vector4.One);
 			}
 
 			// blur vertical with regular vertical blur shader
 			gd.SetRenderTarget(glowRT2);
-			blurManager.RenderScreenQuad(gd, BlurTechnique.BlurVertical,
-							glowRT1, Vector4.One);
+			blurManager.RenderScreenQuad(BlurTechnique.BlurVertical, glowRT1, Vector4.One);
 
 			//ds = new DepthStencilState() { DepthBufferEnable = false, DepthBufferWriteEnable = false };
 			//gd.DepthStencilState = ds;
@@ -178,16 +171,10 @@ namespace ShipGame
 
 		// draw render target as fullscreen texture with given intensity and blend mode
 		void DrawRenderTargetTexture(
-			GraphicsDevice gd,
 			RenderTarget2D renderTarget,
 			float intensity,
 			bool additiveBlend)
 		{
-			if (gd == null)
-			{
-				throw new ArgumentNullException("gd");
-			}
-
 			// set up render state and blend mode
 			//BlendState bs = gd.BlendState;
 			//gd.DepthStencilState = DepthStencilState.Default;
@@ -196,15 +183,15 @@ namespace ShipGame
 			//    gd.BlendState = BlendState.Additive;
 			//}
 
+			var gd = SG.GraphicsDevice;
 			gd.DepthStencilState = DepthStencilState.None;
 			if (additiveBlend)
 			{
 				gd.BlendState = BlendState.Additive;
 			}
 
-
 			// draw render tareget as fullscreen texture
-			blurManager.RenderScreenQuad(gd, BlurTechnique.ColorTexture,
+			blurManager.RenderScreenQuad(BlurTechnique.ColorTexture,
 				renderTarget, new Vector4(intensity));
 
 			// restore render state and blend mode
@@ -250,8 +237,6 @@ namespace ShipGame
 		// draw the background animated image
 		public void DrawBackground()
 		{
-			var gd = SG.GraphicsDevice;
-
 			const float animationTime = 3.0f;
 			const float animationLength = 0.4f;
 			const int numberLayers = 2;
@@ -261,6 +246,7 @@ namespace ShipGame
 			float normalizedTime = ((backgroundTime / animationTime) % 1.0f);
 
 			// set render states
+			var gd = SG.GraphicsDevice;
 			DepthStencilState ds = gd.DepthStencilState;
 			BlendState bs = gd.BlendState;
 			gd.DepthStencilState = DepthStencilState.DepthRead;
@@ -280,8 +266,7 @@ namespace ShipGame
 
 				scale = 1 + normalizedTime * animationLength;
 
-				blurManager.RenderScreenQuad(gd,
-					BlurTechnique.ColorTexture, textureBackground, color, scale);
+				blurManager.RenderScreenQuad(BlurTechnique.ColorTexture, textureBackground, color, scale);
 
 				normalizedTime = (normalizedTime + layerDistance) % 1.0f;
 			}
@@ -293,16 +278,12 @@ namespace ShipGame
 		}
 
 		// draws the currently active screen
-		public void Draw(GraphicsDevice gd)
+		public void Draw()
 		{
-			if (gd == null)
-			{
-				throw new ArgumentNullException("gd");
-			}
-
 			frameRateCount++;
 
 			// if a valid current screen is set
+			var gd = SG.GraphicsDevice;
 			if (current != null)
 			{
 				// set the color render target
@@ -315,13 +296,13 @@ namespace ShipGame
 				gd.SetRenderTarget(null);
 
 				// blur the glow render target
-				BlurGlowRenterTarget(gd);
+				BlurGlowRenterTarget();
 
 				// draw the 3D scene texture
-				DrawRenderTargetTexture(gd, colorRT, 1.0f, false);
+				DrawRenderTargetTexture(colorRT, 1.0f, false);
 
 				// draw the glow texture with additive blending
-				DrawRenderTargetTexture(gd, glowRT2, 2.0f, true);
+				DrawRenderTargetTexture(glowRT2, 2.0f, true);
 
 				// begin text mode
 				fontManager.BeginText();
@@ -351,7 +332,7 @@ namespace ShipGame
 				gd.BlendState = BlendState.AlphaBlend;
 
 				// draw transition fade color
-				blurManager.RenderScreenQuad(gd, BlurTechnique.Color, null, fadeColor);
+				blurManager.RenderScreenQuad(BlurTechnique.Color, null, fadeColor);
 
 				// restore render states
 				gd.DepthStencilState = DepthStencilState.Default;
@@ -362,17 +343,15 @@ namespace ShipGame
 		// load all content
 		public void LoadContent()
 		{
-			var gd = SG.GraphicsDevice;
 			var content = SG.Assets;
-			textureBackground = content.LoadTexture2DDefault(gd, "screens/intro_bg.tga");
+			textureBackground = content.LoadTexture2DDefault("screens/intro_bg.tga");
 			// create blur manager
-			blurManager = new BlurManager(gd,
-				content.LoadEffect2(gd, "Blur.efb"),
+			blurManager = new BlurManager(content.LoadEffect2("Blur.efb"),
 				GameOptions.GlowResolution, GameOptions.GlowResolution);
 
+			var gd = SG.GraphicsDevice;
 			int width = gd.Viewport.Width;
 			int height = gd.Viewport.Height;
-
 
 			// create render targets
 			colorRT = new RenderTarget2D(gd, width, height,

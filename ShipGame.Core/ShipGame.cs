@@ -67,7 +67,7 @@ namespace ShipGame
 		{
 			SG.Initialize(GraphicsDevice);
 
-			font = new FontManager(graphics.GraphicsDevice);
+			font = new FontManager();
 			screen = new ScreenManager(this, font, game);
 
 			soundManager.LoadContent();
@@ -102,7 +102,7 @@ namespace ShipGame
 			float ElapsedTimeFloat = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
 			screen.ProcessInput(ElapsedTimeFloat);
-			screen.Update(GraphicsDevice, ElapsedTimeFloat);
+			screen.Update(ElapsedTimeFloat);
 
 			base.Update(gameTime);
 		}
@@ -114,7 +114,7 @@ namespace ShipGame
 		/// <param name="gameTime">Provides a snapshot of timing values.</param>
 		protected override void Draw(GameTime gameTime)
 		{
-			screen.Draw(graphics.GraphicsDevice);
+			screen.Draw();
 
 			base.Draw(gameTime);
 		}
