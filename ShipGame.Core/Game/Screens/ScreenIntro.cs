@@ -157,19 +157,18 @@ namespace ShipGame
 		}
 
 		// draw the animated cursor
-		void DrawCursor(int x, int y)
+		void DrawCursor(RenderContext2D context, int x, int y)
 		{
 			Rectangle rect = new Rectangle(0, 0, 0, 0);
 
 			float rotation = menuTime * 2;
 
 			// draw animated cursor texture
-			var fontManager = SG.FontManager;
 			rect.X = x - textureCursorAnim.Width / 2;
 			rect.Y = y - textureCursorAnim.Height / 2;
 			rect.Width = textureCursorAnim.Width;
 			rect.Height = textureCursorAnim.Height;
-			fontManager.DrawTexture(textureCursorAnim, rect, rotation,
+			context.DrawTexture(textureCursorAnim, rect, rotation,
 				Color.White, BlendState.AlphaBlend);
 
 			// draw bullet cursor texture
@@ -177,7 +176,7 @@ namespace ShipGame
 			rect.Y = y - textureCursorBullet.Height / 2;
 			rect.Width = textureCursorBullet.Width;
 			rect.Height = textureCursorBullet.Height;
-			fontManager.DrawTexture(textureCursorBullet, rect,
+			context.DrawTexture(textureCursorBullet, rect,
 				Color.White, BlendState.AlphaBlend);
 
 			// draw arrow cursor texture
@@ -185,12 +184,12 @@ namespace ShipGame
 			rect.Y = y - textureCursorArrow.Height / 2;
 			rect.Width = textureCursorArrow.Width;
 			rect.Height = textureCursorArrow.Height;
-			fontManager.DrawTexture(textureCursorArrow, rect,
+			context.DrawTexture(textureCursorArrow, rect,
 				Color.White, BlendState.AlphaBlend);
 		}
 
 		// draw 2D gui
-		public override void Draw2D()
+		public override void Draw2D(RenderContext2D context)
 		{
 			// screen rect
 			var gd = SG.GraphicsDevice;
@@ -198,12 +197,11 @@ namespace ShipGame
 							gd.Viewport.Width, gd.Viewport.Height);
 
 			// draw lens flare texture
-			var fontManager = SG.FontManager;
-			fontManager.DrawTexture(textureLens, rect,
+			context.DrawTexture(textureLens, rect,
 				Color.White, BlendState.Additive);
 
 			// draw logo texture
-			fontManager.DrawTexture(textureLogo, rect,
+			context.DrawTexture(textureLogo, rect,
 				Color.White, BlendState.AlphaBlend);
 
 			// draw menu itens
@@ -217,11 +215,11 @@ namespace ShipGame
 					rect.Y = Y;
 					rect.Width = textureMenuHover[i].Width;
 					rect.Height = textureMenuHover[i].Height;
-					fontManager.DrawTexture(textureMenuHover[i], rect,
+					context.DrawTexture(textureMenuHover[i], rect,
 						Color.White, BlendState.AlphaBlend);
 
 					// draw cursor left of selected item
-					DrawCursor(rect.X - 60, rect.Y + 19);
+					DrawCursor(context, rect.X - 60, rect.Y + 19);
 
 					Y += 50;
 				}
@@ -232,7 +230,7 @@ namespace ShipGame
 					rect.Width = textureMenu[i].Width;
 					rect.Height = textureMenu[i].Height;
 
-					fontManager.DrawTexture(textureMenu[i], rect,
+					context.DrawTexture(textureMenu[i], rect,
 						Color.White, BlendState.AlphaBlend);
 
 					Y += 40;

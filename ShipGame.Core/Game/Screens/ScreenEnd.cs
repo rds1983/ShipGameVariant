@@ -163,7 +163,7 @@ namespace ShipGame
 		}
 
 		// draw 2D gui
-		public override void Draw2D()
+		public override void Draw2D(RenderContext2D context)
 		{
 			Rectangle rect = new Rectangle(0, 0, 0, 0);
 
@@ -177,8 +177,7 @@ namespace ShipGame
 			rect.Y = screenSizeY - rect.Height - 60;
 			rect.X = screenSizeX / 2 - rect.Width / 2;
 
-			var fontManager = SG.FontManager;
-			fontManager.DrawTexture(textureContinue, rect,
+			context.DrawTexture(textureContinue, rect,
 				Color.White, BlendState.AlphaBlend);
 
 			// deaw winning player number
@@ -186,7 +185,7 @@ namespace ShipGame
 			rect.Height = texturePlayerWin.Height;
 			rect.Y = 20;
 			rect.X = screenSizeX / 2 - rect.Width / 2;
-			fontManager.DrawTexture(texturePlayerWin, rect,
+			context.DrawTexture(texturePlayerWin, rect,
 				Color.White, BlendState.AlphaBlend);
 		}
 	}

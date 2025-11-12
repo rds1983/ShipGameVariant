@@ -128,14 +128,6 @@ namespace ShipGame
 			String[] powerupFiles = new String[] { "energy", "missile" };
 			DrModel[] powerupModels;
 
-			Texture2D hudCrosshair;       // hud crosshair texture
-			Texture2D hudEnergy;          // hud energy/shield/boost texture
-			Texture2D hudMissile;         // hud missile texture
-			Texture2D hudScore;           // hud score texture
-			Texture2D hudBars;            // hud energy/shield/boost bars texture
-
-			Texture2D damageTexture;      // damage indication texture
-
 			// global bone array used by DrawModel method
 			Matrix[] bones = new Matrix[GameOptions.MaxBonesPerModel];
 
@@ -304,27 +296,6 @@ namespace ShipGame
 							break;
 					}
 				}
-
-				// load hud textures
-				if (gameMode == GameMode.SinglePlayer)
-				{
-					hudCrosshair = content.LoadTexture2DDefault("screens/hud_sp_crosshair.tga");
-					hudEnergy = content.LoadTexture2DDefault("screens/hud_sp_energy.tga");
-					hudMissile = content.LoadTexture2DDefault("screens/hud_sp_missile.tga");
-					hudScore = content.LoadTexture2DDefault("screens/hud_sp_score.tga");
-					hudBars = content.LoadTexture2DDefault("screens/hud_sp_bars.tga");
-				}
-				else
-				{
-					hudCrosshair = content.LoadTexture2DDefault("screens/hud_mp_crosshair.tga");
-					hudEnergy = content.LoadTexture2DDefault("screens/hud_mp_energy.tga");
-					hudMissile = content.LoadTexture2DDefault("screens/hud_mp_missile.tga");
-					hudScore = content.LoadTexture2DDefault("screens/hud_mp_score.tga");
-					hudBars = content.LoadTexture2DDefault("screens/hud_mp_bars.tga");
-				}
-
-				// load damage indicator texture
-				damageTexture = content.LoadTexture2DDefault("screens/damage.tga");
 			}
 
 
@@ -356,16 +327,6 @@ namespace ShipGame
 						players[i].Dispose();
 					players[i] = null;
 				}
-
-				// unload hud
-				hudCrosshair = null;
-				hudEnergy = null;
-				hudMissile = null;
-				hudScore = null;
-				hudBars = null;
-
-				// unload damage texture
-				damageTexture = null;
 
 				// unload powerups
 				powerup.Clear();
@@ -604,153 +565,6 @@ namespace ShipGame
 
 				// draw scene
 				DrawScene(RenderTechnique.NormalMapping);
-			}
-
-			/// <summary>
-			/// Draw the HUD interface
-			/// </summary>
-			void DrawHud(Rectangle rect, Vector3 bars, int barsLeft, int barsWidth, bool crosshair)
-			{
-				Rectangle r = new Rectangle(0, 0, 0, 0);
-
-				// if crosshair enabled
-				var font = FontManager;
-				if (crosshair)
-				{
-					// draw crosshair hud texture
-					r.X = rect.X + (rect.Width - hudCrosshair.Width) / 2;
-					r.Y = rect.Y + (rect.Height - hudCrosshair.Height) / 2;
-					r.Width = hudCrosshair.Width;
-					r.Height = hudCrosshair.Height;
-					font.DrawTexture(hudCrosshair, r,
-						Color.White, BlendState.AlphaBlend);
-				}
-
-				// draw score hud texture
-				r.X = rect.X + (rect.Width - hudScore.Width) / 2;
-				r.Y = rect.Y;
-				r.Width = hudScore.Width;
-				r.Height = hudScore.Height;
-				font.DrawTexture(hudScore, r, Color.White, BlendState.AlphaBlend);
-
-				// draw missile hud texture
-				r.X = rect.X + rect.Width - hudMissile.Width;
-				r.Y = rect.Y + rect.Height - hudMissile.Height;
-				r.Width = hudMissile.Width;
-				r.Height = hudMissile.Height;
-				font.DrawTexture(hudMissile, r, Color.White, BlendState.AlphaBlend);
-
-				// draw energy hud texture
-				r.X = rect.X;
-				r.Y = rect.Y + rect.Height - hudEnergy.Height;
-				r.Width = hudEnergy.Width;
-				r.Height = hudEnergy.Height;
-				font.DrawTexture(hudEnergy, r, Color.White, BlendState.AlphaBlend);
-
-				// get hud bars
-				Rectangle s = new Rectangle(0, 0, hudBars.Width, hudBars.Height);
-
-				// draw the energy bar
-				r.Width = s.Width = barsLeft + (int)(barsWidth * bars.X);
-				font.DrawTexture(hudBars, r, s, Color.Red, BlendState.Additive);
-
-				// draw the shield bar
-				r.Width = s.Width = barsLeft + (int)(barsWidth * bars.Y);
-				font.DrawTexture(hudBars, r, s, Color.Green, BlendState.Additive);
-
-				// draw the boost bar
-				r.Width = s.Width = barsLeft + (int)(barsWidth * bars.Z);
-				font.DrawTexture(hudBars, r, s, Color.Blue, BlendState.Additive);
-			}
-
-			/// <summary>
-			/// Draw the 2D game screen
-			/// </summary>
-			public void Draw2D()
-			{
-				var font = FontManager;
-				Rectangle rect = font.ScreenRectangle;
-
-				// if in single player mode
-				if (gameMode == GameMode.SinglePlayer)
-				{
-					if (players[0].IsAlive)
-					{
-						// draw hud 
-						DrawHud(rect, players[0].Bars, 70, 120,
-							players[0].Camera3rdPerson == false);
-
-						// draw missile count
-						font.DrawText(FontType.MediumFont,
-							players[0].MissileCount.ToString(),
-							new Vector2(rect.Right - 138, rect.Bottom - 120),
-							Color.LightCyan);
-					}
-
-					// draw damage indicator
-					Color DamageColor = players[0].DamageColor;
-					if (DamageColor.A > 0)
-						font.DrawTexture(damageTexture, rect,
-							DamageColor, BlendState.AlphaBlend);
-				}
-				else
-				{
-					// multiplayer half horizontal screen
-					rect.Width /= 2;
-
-					// if player is alive
-					if (players[0].IsAlive)
-					{
-						// draw hud 
-						DrawHud(rect, players[0].Bars, 80, 100,
-							players[0].Camera3rdPerson == false);
-
-						// draw missile count
-						font.DrawText(FontType.MediumFont,
-							players[0].MissileCount.ToString(),
-							new Vector2(rect.Right - 138, rect.Bottom - 125),
-							Color.LightCyan);
-					}
-
-					// draw damage indicator
-					Color damageColor = players[0].DamageColor;
-					if (damageColor.A > 0)
-						font.DrawTexture(damageTexture, rect,
-							damageColor, BlendState.AlphaBlend);
-
-					// second player on second horizontal half
-					rect.X += rect.Width;
-
-					// if player is alive
-					if (players[1].IsAlive)
-					{
-						// draw hud
-						DrawHud(rect, players[1].Bars, 80, 100,
-							players[1].Camera3rdPerson == false);
-
-						// draw missile count
-						font.DrawText(FontType.MediumFont,
-							players[1].MissileCount.ToString(),
-							new Vector2(rect.Right - 138, rect.Bottom - 125),
-							Color.LightCyan);
-					}
-
-					// draw damage indicator
-					damageColor = players[1].DamageColor;
-					if (damageColor.A > 0)
-						font.DrawTexture(damageTexture, rect,
-							damageColor, BlendState.AlphaBlend);
-
-					// draw score
-					font.DrawText(FontType.LargeFont,
-						players[0].Score.ToString(),
-						new Vector2(rect.Width / 2 - 20, 20),
-						Color.LightCyan);
-					font.DrawText(FontType.LargeFont,
-						players[1].Score.ToString(),
-						new Vector2(rect.Width * 3 / 2 - 20, 20),
-						Color.LightCyan);
-				}
 			}
 
 			/// <summary>

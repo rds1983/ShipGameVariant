@@ -95,7 +95,7 @@ namespace ShipGame
 		}
 
 		// draw 2D gui
-		public override void Draw2D()
+		public override void Draw2D(RenderContext2D context)
 		{
 			Rectangle rect = new Rectangle(0, 0, 0, 0);
 
@@ -109,8 +109,7 @@ namespace ShipGame
 			rect.X = screenSizeX / 2 - rect.Width / 2;
 			rect.Y = 40;
 
-			var fontManager = SG.FontManager;
-			fontManager.DrawTexture(textureControls, rect,
+			context.DrawTexture(textureControls, rect,
 				Color.White, BlendState.AlphaBlend);
 
 			// draw controller texture centered in screen
@@ -118,7 +117,7 @@ namespace ShipGame
 			rect.Height = textureDisplay.Height;
 			rect.X = screenSizeX / 2 - rect.Width / 2;
 			rect.Y = screenSizeY / 2 - rect.Height / 2 + 10;
-			fontManager.DrawTexture(textureDisplay, rect,
+			context.DrawTexture(textureDisplay, rect,
 				Color.White, BlendState.AlphaBlend);
 
 			// draw continue message aligned to bottom of screen
@@ -126,7 +125,7 @@ namespace ShipGame
 			rect.Height = textureContinue.Height;
 			rect.X = screenSizeX / 2 - rect.Width / 2;
 			rect.Y = screenSizeY - rect.Height - 60;
-			fontManager.DrawTexture(textureContinue, rect,
+			context.DrawTexture(textureContinue, rect,
 				Color.White, BlendState.AlphaBlend);
 		}
 	}

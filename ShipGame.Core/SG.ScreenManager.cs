@@ -23,6 +23,7 @@ namespace ShipGame
 			RenderTarget2D glowRT1;   // render target for glow horizontal blur
 			RenderTarget2D glowRT2;   // render target for glow vertical blur
 
+			RenderContext2D context2D;
 			BlurManager blurManager;     // blur manager
 
 			int frameRate;        // current game frame rate (in frames per sec)
@@ -49,6 +50,8 @@ namespace ShipGame
 				SetNextScreen(ScreenType.ScreenIntro,
 					GameOptions.FadeColor, GameOptions.FadeTime);
 				fade = fadeTime * 0.5f;
+
+				context2D = new RenderContext2D();
 			}
 
 			// process input
@@ -251,10 +254,10 @@ namespace ShipGame
 					DrawRenderTargetTexture(glowRT2, 2.0f, true);
 
 					// begin text mode
-					FontManager.BeginText();
+					context2D.BeginText();
 
 					// draw the 2D scene 
-					current.Draw2D();
+					current.Draw2D(context2D);
 
 					// draw fps
 					//fontManager.DrawText(
@@ -263,7 +266,7 @@ namespace ShipGame
 					//    new Vector2(gd.Viewport.Width - 80, 0), Color.White);
 
 					// end text mode
-					FontManager.EndText();
+					context2D.EndText();
 				}
 
 				// if in a transition
@@ -307,6 +310,8 @@ namespace ShipGame
 				glowRT2 = new RenderTarget2D(gd, GameOptions.GlowResolution, GameOptions.GlowResolution,
 					true, SurfaceFormat.Color, DepthFormat.Depth24);
 
+				context2D.LoadContent();
+
 			}
 
 			// unload all content
@@ -334,6 +339,8 @@ namespace ShipGame
 					glowRT2.Dispose();
 					glowRT2 = null;
 				}
+
+				context2D.UnloadContent();
 			}
 
 			// starts a transition to a new screen
@@ -420,6 +427,8 @@ namespace ShipGame
 				if (disposing && !isDisposed)
 				{
 					UnloadContent();
+
+					context2D.Dispose();
 				}
 			}
 			#endregion

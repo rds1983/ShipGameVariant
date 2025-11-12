@@ -12,8 +12,6 @@ namespace ShipGame
 		public static AssetManager Assets { get; private set; }
 
 
-		public static FontManagerType FontManager { get; private set; }
-
 		public static GameManagerType GameManager { get; private set; }
 
 		public static ScreenManagerType ScreenManager { get; private set; }
@@ -27,9 +25,6 @@ namespace ShipGame
 			var path = Path.Combine(Utility.ExecutingAssemblyDirectory, "Assets");
 			Assets = AssetManager.CreateFileAssetManager(path);
 
-			FontManager = new FontManagerType();
-			FontManager.LoadContent();
-
 			GameManager = new GameManagerType();
 			GameManager.LoadContent();
 
@@ -41,10 +36,6 @@ namespace ShipGame
 
 		public static void Uninitialize()
 		{
-			FontManager.UnloadContent();
-			FontManager.Dispose();
-			FontManager = null;
-			
 			GameManager.UnloadContent();
 			GameManager.Dispose();
 			GameManager = null;

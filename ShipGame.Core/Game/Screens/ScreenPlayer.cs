@@ -362,7 +362,7 @@ namespace ShipGame
 			}
 		}
 
-		public override void Draw2D()
+		public override void Draw2D(RenderContext2D context)
 		{
 			Rectangle rect = new Rectangle(0, 0, 0, 0);
 
@@ -371,7 +371,6 @@ namespace ShipGame
 			int screenSizeY = gd.Viewport.Height;
 
 			// if single player mode
-			var fontManager = SG.FontManager;
 			if (SG.GameManager.GameMode == GameMode.SinglePlayer)
 			{
 				rect.Width = textureSelectBack.Width;
@@ -382,11 +381,11 @@ namespace ShipGame
 				{
 					rect.Width = textureSelectCancel.Width;
 					rect.Height = textureSelectCancel.Height;
-					fontManager.DrawTexture(textureSelectCancel, rect,
+					context.DrawTexture(textureSelectCancel, rect,
 						Color.White, BlendState.AlphaBlend);
 				}
 				else
-					fontManager.DrawTexture(textureSelectBack, rect,
+					context.DrawTexture(textureSelectBack, rect,
 						Color.White, BlendState.AlphaBlend);
 
 				rect.Width = textureInvertYCheck.Width;
@@ -394,24 +393,24 @@ namespace ShipGame
 				rect.Y = screenSizeY - rect.Height - 30;
 				rect.X = screenSizeX / 2 - rect.Width / 2;
 				if ((invertY & 1) == 0)
-					fontManager.DrawTexture(textureInvertYUncheck, rect,
+					context.DrawTexture(textureInvertYUncheck, rect,
 						Color.White, BlendState.AlphaBlend);
 				else
-					fontManager.DrawTexture(textureInvertYCheck, rect,
+					context.DrawTexture(textureInvertYCheck, rect,
 						Color.White, BlendState.AlphaBlend);
 
 				rect.Width = textureChangeShip.Width;
 				rect.Height = textureChangeShip.Height;
 				rect.X = screenSizeX / 5 - rect.Width / 2;
 				rect.Y = 60;
-				fontManager.DrawTexture(textureChangeShip, rect,
+				context.DrawTexture(textureChangeShip, rect,
 					Color.White, BlendState.AlphaBlend);
 
 				rect.Width = textureRotateShip.Width;
 				rect.Height = textureRotateShip.Height;
 				rect.X = screenSizeX * 4 / 5 - rect.Width / 2;
 				rect.Y = 60;
-				fontManager.DrawTexture(textureRotateShip, rect,
+				context.DrawTexture(textureRotateShip, rect,
 					Color.White, BlendState.AlphaBlend);
 			}
 			else // if multi player mode
@@ -420,14 +419,14 @@ namespace ShipGame
 				rect.Height = textureChangeShip.Height;
 				rect.X = (screenSizeX - rect.Width) / 2;
 				rect.Y = 40;
-				fontManager.DrawTexture(textureChangeShip, rect,
+				context.DrawTexture(textureChangeShip, rect,
 					Color.White, BlendState.AlphaBlend);
 
 				rect.Width = textureRotateShip.Width;
 				rect.Height = textureRotateShip.Height;
 				rect.X = (screenSizeX - rect.Width) / 2;
 				rect.Y = 40 + textureChangeShip.Height;
-				fontManager.DrawTexture(textureRotateShip, rect,
+				context.DrawTexture(textureRotateShip, rect,
 					Color.White, BlendState.AlphaBlend);
 
 				rect.Width = textureInvertYCheck.Width;
@@ -435,17 +434,17 @@ namespace ShipGame
 				rect.Y = screenSizeY - rect.Height - 30;
 				rect.X = screenSizeX / 4 - rect.Width / 2;
 				if ((invertY & 1) == 0)
-					fontManager.DrawTexture(textureInvertYUncheck, rect,
+					context.DrawTexture(textureInvertYUncheck, rect,
 						Color.White, BlendState.AlphaBlend);
 				else
-					fontManager.DrawTexture(textureInvertYCheck, rect,
+					context.DrawTexture(textureInvertYCheck, rect,
 						Color.White, BlendState.AlphaBlend);
 				rect.X = screenSizeX * 3 / 4 - rect.Width / 2;
 				if ((invertY & 2) == 0)
-					fontManager.DrawTexture(textureInvertYUncheck, rect,
+					context.DrawTexture(textureInvertYUncheck, rect,
 						Color.White, BlendState.AlphaBlend);
 				else
-					fontManager.DrawTexture(textureInvertYCheck, rect,
+					context.DrawTexture(textureInvertYCheck, rect,
 						Color.White, BlendState.AlphaBlend);
 
 				rect.Width = textureSelectBack.Width;
@@ -456,11 +455,11 @@ namespace ShipGame
 				{
 					rect.Width = textureSelectCancel.Width;
 					rect.Height = textureSelectCancel.Height;
-					fontManager.DrawTexture(textureSelectCancel, rect,
+					context.DrawTexture(textureSelectCancel, rect,
 						Color.White, BlendState.AlphaBlend);
 				}
 				else
-					fontManager.DrawTexture(textureSelectBack, rect,
+					context.DrawTexture(textureSelectBack, rect,
 						Color.White, BlendState.AlphaBlend);
 				rect.Width = textureSelectBack.Width;
 				rect.Height = textureSelectBack.Height;
@@ -470,11 +469,11 @@ namespace ShipGame
 				{
 					rect.Width = textureSelectCancel.Width;
 					rect.Height = textureSelectCancel.Height;
-					fontManager.DrawTexture(textureSelectCancel, rect,
+					context.DrawTexture(textureSelectCancel, rect,
 						Color.White, BlendState.AlphaBlend);
 				}
 				else
-					fontManager.DrawTexture(textureSelectBack, rect,
+					context.DrawTexture(textureSelectBack, rect,
 						Color.White, BlendState.AlphaBlend);
 			}
 		}

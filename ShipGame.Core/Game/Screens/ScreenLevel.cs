@@ -119,7 +119,7 @@ namespace ShipGame
 			SG.ScreenManager.DrawBackground();
 		}
 
-		public override void Draw2D()
+		public override void Draw2D(RenderContext2D context)
 		{
 			var gd = SG.GraphicsDevice;
 			int screenSizeX = gd.Viewport.Width;
@@ -133,8 +133,7 @@ namespace ShipGame
 			rect.X = (screenSizeX - rect.Width) / 2;
 			rect.Y = (screenSizeY - rect.Height) / 2 + 30;
 
-			var fontManager = SG.FontManager;
-			fontManager.DrawTexture(levelShots[selection], rect,
+			context.DrawTexture(levelShots[selection], rect,
 				Color.White, BlendState.AlphaBlend);
 
 			// draw back and select buttons
@@ -142,7 +141,7 @@ namespace ShipGame
 			rect.Height = selectBack.Height;
 			rect.X = (screenSizeX - rect.Width) / 2;
 			rect.Y = 30;
-			fontManager.DrawTexture(selectBack, rect,
+			context.DrawTexture(selectBack, rect,
 				Color.White, BlendState.AlphaBlend);
 
 			// draw change level text
@@ -150,7 +149,7 @@ namespace ShipGame
 			rect.Height = changeLevel.Height;
 			rect.X = (screenSizeX - rect.Width) / 2;
 			rect.Y = screenSizeY - rect.Height - 30;
-			fontManager.DrawTexture(changeLevel, rect,
+			context.DrawTexture(changeLevel, rect,
 				Color.White, BlendState.AlphaBlend);
 		}
 	}

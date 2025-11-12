@@ -39,6 +39,6 @@ namespace ShipGame
 		public abstract void Draw3D();
 
 		// called to draw the 2D info text and hud
-		public abstract void Draw2D();
+		public abstract void Draw2D(RenderContext2D context);
 	}
 }
