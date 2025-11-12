@@ -30,7 +30,7 @@ namespace ShipGame
 		public abstract void SetFocus(bool focus);
 
 		// called to update input
-		public abstract void ProcessInput(float elapsedTime, InputManager input);
+		public abstract void ProcessInput(float elapsedTime);
 
 		// called to update state
 		public abstract void Update(float elapsedTime);

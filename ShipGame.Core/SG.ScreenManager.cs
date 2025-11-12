@@ -10,8 +10,6 @@ namespace ShipGame
 	{
 		public class ScreenManagerType : IDisposable
 		{
-			InputManager inputManager;           // input manager
-
 			List<Screen> screens;         // list of available screens
 			Screen current;               // currently active screen
 			Screen next;                  // next screen on a transition 
@@ -38,7 +36,6 @@ namespace ShipGame
 			public ScreenManagerType()
 			{
 				screens = new List<Screen>();
-				inputManager = new InputManager();
 
 				// add all screens
 				screens.Add(new ScreenIntro());
@@ -57,18 +54,18 @@ namespace ShipGame
 			// process input
 			public void ProcessInput(float elapsedTime)
 			{
-				inputManager.BeginInputProcessing(SG.GameManager.GameMode == GameMode.SinglePlayer);
+				InputManager.BeginInputProcessing(SG.GameManager.GameMode == GameMode.SinglePlayer);
 
 				// process input for currently active screen
 				if (current != null && next == null)
-					current.ProcessInput(elapsedTime, inputManager);
+					current.ProcessInput(elapsedTime);
 
 				// toggle full screen with F5 key
-				if (inputManager.IsKeyPressed(0, Keys.F5) ||
-					inputManager.IsKeyPressed(1, Keys.F5))
+				if (InputManager.IsKeyPressed(0, Keys.F5) ||
+					InputManager.IsKeyPressed(1, Keys.F5))
 					ShipGameGame.ToggleFullScreen();
 
-				inputManager.EndInputProcessing();
+				InputManager.EndInputProcessing();
 			}
 
 			// update for given elapsed time

@@ -37,24 +37,22 @@ namespace ShipGame
 		}
 
 		// process input
-		public override void ProcessInput(float elapsedTime, InputManager input)
+		public override void ProcessInput(float elapsedTime)
 		{
-			if (input == null)
-			{
-				throw new ArgumentNullException("input");
-			}
-
 			var gameManager = SG.GameManager;
-			gameManager.ProcessInput(elapsedTime, input);
+			gameManager.ProcessInput(elapsedTime);
 
 			int i, j = (int)gameManager.GameMode;
+			var input = SG.InputManager;
 			for (i = 0; i < j; i++)
+			{
 				if (input.IsKeyPressed(i, Keys.Escape) || input.IsButtonPressedBack(i))
 				{
 					gameManager.GetPlayer(i).Score = -1;
 					SG.ScreenManager.SetNextScreen(ScreenType.ScreenEnd);
 					gameManager.PlaySound("menu_cancel");
 				}
+			}
 		}
 
 		// update screen

@@ -364,13 +364,8 @@ namespace ShipGame
 		/// <summary>
 		/// Process input for player ship (movement and weapons)
 		/// </summary>
-		public void ProcessInput(float elapsedTime, InputManager input, int player)
+		public void ProcessInput(float elapsedTime, int player)
 		{
-			if (input == null)
-			{
-				throw new ArgumentNullException("input");
-			}
-
 			// if dead, don't process input for player
 			if (IsAlive == false)
 			{
@@ -378,6 +373,7 @@ namespace ShipGame
 			}
 
 			// process movement related inputs
+			var input = SG.InputManager;
 			movement.ProcessInput(elapsedTime, input.CurrentState, player);
 
 			// if player invert Y is enabled, invert X rotation force

@@ -491,14 +491,14 @@ namespace ShipGame
 			/// <summary>
 			/// Process game input
 			/// </summary>
-			public void ProcessInput(float elapsedTime, InputManager input)
+			public void ProcessInput(float elapsedTime)
 			{
 				// process input for player 1
-				players[0].ProcessInput(elapsedTime, input, 0);
+				players[0].ProcessInput(elapsedTime, 0);
 
 				// if in multiplayer mode, process input for player 2
 				if (gameMode == GameMode.MultiPlayer)
-					players[1].ProcessInput(elapsedTime, input, 1);
+					players[1].ProcessInput(elapsedTime, 1);
 			}
 
 			/// <summary>

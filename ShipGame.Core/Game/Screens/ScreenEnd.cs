@@ -71,15 +71,12 @@ namespace ShipGame
 		}
 
 		// process input
-		public override void ProcessInput(float elapsedTime, InputManager input)
+		public override void ProcessInput(float elapsedTime)
 		{
-			if (input == null)
-			{
-				throw new ArgumentNullException("input");
-			}
-
 			var gameManager = SG.GameManager;
 			int i, j = (int)gameManager.GameMode;
+
+			var input = SG.InputManager;
 			for (i = 0; i < j; i++)
 			{
 				// Any key/button to go back

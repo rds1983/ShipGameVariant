@@ -114,15 +114,11 @@ namespace ShipGame
 			}
 		}
 
-		public override void ProcessInput(float elapsedTime, InputManager input)
+		public override void ProcessInput(float elapsedTime)
 		{
-			if (input == null)
-			{
-				throw new ArgumentNullException("input");
-			}
-
 			const float rotationVelocity = 3.0f;
 
+			var input = SG.InputManager;
 			var gameManager = SG.GameManager;
 			var screenManager = SG.ScreenManager;
 
@@ -214,7 +210,7 @@ namespace ShipGame
 		public override void Draw3D()
 		{
 			var gd = SG.GraphicsDevice;
-			
+
 			// clear backgournd
 			gd.Clear(Color.Black);
 
@@ -491,10 +487,10 @@ namespace ShipGame
 			foreach (var mesh in model.Meshes)
 			{
 				// for each mesh part
-/*				foreach (Effect effect in mesh.Effects)
-				{
-					effect.Parameters["Reflect"].SetValue(GetReflectCube());
-				}*/
+				/*				foreach (Effect effect in mesh.Effects)
+								{
+									effect.Parameters["Reflect"].SetValue(GetReflectCube());
+								}*/
 			}
 		}
 

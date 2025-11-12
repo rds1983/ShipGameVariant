@@ -17,6 +17,7 @@ namespace ShipGame
 		public static GameManagerType GameManager { get; private set; }
 
 		public static ScreenManagerType ScreenManager { get; private set; }
+		public static InputManagerType InputManager { get; private set; }
 
 
 		public static void Initialize(GraphicsDevice device)
@@ -34,6 +35,8 @@ namespace ShipGame
 
 			ScreenManager = new ScreenManagerType();
 			ScreenManager.LoadContent();
+
+			InputManager = new InputManagerType();
 		}
 
 		public static void Uninitialize()
@@ -49,6 +52,8 @@ namespace ShipGame
 			ScreenManager.UnloadContent();
 			ScreenManager.Dispose();
 			ScreenManager = null;
+
+			InputManager = null;
 		}
 
 		public static void Update(GameTime gameTime)
