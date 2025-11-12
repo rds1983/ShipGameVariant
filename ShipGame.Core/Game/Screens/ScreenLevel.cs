@@ -8,9 +8,7 @@
 #endregion
 
 #region Using Statements
-using AssetManagementBase;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
@@ -18,7 +16,7 @@ using System;
 
 namespace ShipGame
 {
-	public class ScreenLevel : Screen
+	public class ScreenLevel : IScreen
 	{
 		const int NumberLevels = 2;   // number of available levels to choose from
 
@@ -33,31 +31,27 @@ namespace ShipGame
 
 		int selection = 0;
 
-		// called before screen shows
-		public override void SetFocus(bool focus)
+		public void Set()
 		{
-			// if getting focus
-			if (focus)
-			{
-				var content = SG.Assets;
+			var content = SG.Assets;
 
-				// load all resources
-				for (int i = 0; i < NumberLevels; i++)
-					levelShots[i] = content.LoadTexture2DDefault($"screens/{levels[i]}_screen.tga");
-				selectBack = content.LoadTexture2DDefault("screens/select_back.tga");
-				changeLevel = content.LoadTexture2DDefault("screens/change_level.tga");
-			}
-			else // loosing focus
-			{
-				// free all resources
-				for (int i = 0; i < NumberLevels; i++)
-					levelShots[i] = null;
-				selectBack = null;
-				changeLevel = null;
-			}
+			// load all resources
+			for (int i = 0; i < NumberLevels; i++)
+				levelShots[i] = content.LoadTexture2DDefault($"screens/{levels[i]}_screen.tga");
+			selectBack = content.LoadTexture2DDefault("screens/select_back.tga");
+			changeLevel = content.LoadTexture2DDefault("screens/change_level.tga");
 		}
 
-		public override void ProcessInput(float elapsedTime)
+		public void Unset()
+		{
+			// free all resources
+			for (int i = 0; i < NumberLevels; i++)
+				levelShots[i] = null;
+			selectBack = null;
+			changeLevel = null;
+		}
+
+		public void ProcessInput(float elapsedTime)
 		{
 			var input = SG.InputManager;
 			var gameManager = SG.GameManager;
@@ -104,14 +98,14 @@ namespace ShipGame
 			}
 		}
 
-		public override void Update(float elapsedTime)
+		public void Update(float elapsedTime)
 		{
 		}
 
-		public override void Draw3D()
+		public void Draw3D()
 		{
 			var gd = SG.GraphicsDevice;
-			
+
 			// clear background
 			gd.Clear(Color.Black);
 
@@ -119,7 +113,7 @@ namespace ShipGame
 			SG.ScreenManager.DrawBackground();
 		}
 
-		public override void Draw2D(RenderContext2D context)
+		public void Draw2D(RenderContext2D context)
 		{
 			var gd = SG.GraphicsDevice;
 			int screenSizeX = gd.Viewport.Width;

@@ -20,7 +20,7 @@ using System.IO;
 
 namespace ShipGame
 {
-	public class ScreenPlayer : Screen
+	public class ScreenPlayer : IScreen
 	{
 		const int NumberShips = 2;    // number of available ships to choose from
 
@@ -60,61 +60,58 @@ namespace ShipGame
 		// total elapsed time for ship model rotation
 		float elapsedTime = 0.0f;
 
-		// called before screen shows
-		public override void SetFocus(bool focus)
+		public void Set()
 		{
-			// if getting focus
-			if (focus == true)
+			// load all resources
+			confirmed[0] = false;
+			confirmed[1] = (SG.GameManager.GameMode == GameMode.SinglePlayer);
+
+			rotation[0] = Matrix.Identity;
+			rotation[1] = Matrix.Identity;
+
+			var content = SG.Assets;
+			lights = LightList.Load(content, "screens/player_lights.xml");
+
+			for (int i = 0; i < NumberShips; i++)
 			{
-				// load all resources
-				confirmed[0] = false;
-				confirmed[1] = (SG.GameManager.GameMode == GameMode.SinglePlayer);
-
-				rotation[0] = Matrix.Identity;
-				rotation[1] = Matrix.Identity;
-
-				var content = SG.Assets;
-				lights = LightList.Load(content, "screens/player_lights.xml");
-
-				for (int i = 0; i < NumberShips; i++)
-				{
-					shipModels[i] = content.LoadModel2($"ships/{ships[i]}");
-					FixupShip(shipModels[i], "ships/" + ships[i]);
-				}
-
-				padModel = content.LoadModel2("ships/pad");
-				padHaloModel = content.LoadModel2("ships/pad_halo");
-				padSelectModel = content.LoadModel2("ships/pad_select");
-
-				textureChangeShip = content.LoadTexture2DDefault("screens/change_ship.tga");
-				textureRotateShip = content.LoadTexture2DDefault("screens/rotate_ship.tga");
-				textureSelectBack = content.LoadTexture2DDefault("screens/select_back.tga");
-				textureSelectCancel = content.LoadTexture2DDefault("screens/select_cancel.tga");
-				textureInvertYCheck = content.LoadTexture2DDefault("screens/inverty_check.tga");
-				textureInvertYUncheck = content.LoadTexture2DDefault("screens/inverty_uncheck.tga");
+				shipModels[i] = content.LoadModel2($"ships/{ships[i]}");
+				FixupShip(shipModels[i], "ships/" + ships[i]);
 			}
-			else // loosing focus
-			{
-				// free all resources
-				lights = null;
 
-				for (int i = 0; i < NumberShips; i++)
-					shipModels[i] = null;
+			padModel = content.LoadModel2("ships/pad");
+			padHaloModel = content.LoadModel2("ships/pad_halo");
+			padSelectModel = content.LoadModel2("ships/pad_select");
 
-				padModel = null;
-				padHaloModel = null;
-				padSelectModel = null;
-
-				textureChangeShip = null;
-				textureRotateShip = null;
-				textureSelectBack = null;
-				textureSelectCancel = null;
-				textureInvertYCheck = null;
-				textureInvertYUncheck = null;
-			}
+			textureChangeShip = content.LoadTexture2DDefault("screens/change_ship.tga");
+			textureRotateShip = content.LoadTexture2DDefault("screens/rotate_ship.tga");
+			textureSelectBack = content.LoadTexture2DDefault("screens/select_back.tga");
+			textureSelectCancel = content.LoadTexture2DDefault("screens/select_cancel.tga");
+			textureInvertYCheck = content.LoadTexture2DDefault("screens/inverty_check.tga");
+			textureInvertYUncheck = content.LoadTexture2DDefault("screens/inverty_uncheck.tga");
 		}
 
-		public override void ProcessInput(float elapsedTime)
+		public void Unset()
+		{
+			// free all resources
+			lights = null;
+
+			for (int i = 0; i < NumberShips; i++)
+				shipModels[i] = null;
+
+			padModel = null;
+			padHaloModel = null;
+			padSelectModel = null;
+
+			textureChangeShip = null;
+			textureRotateShip = null;
+			textureSelectBack = null;
+			textureSelectCancel = null;
+			textureInvertYCheck = null;
+			textureInvertYUncheck = null;
+		}
+
+
+		public void ProcessInput(float elapsedTime)
 		{
 			const float rotationVelocity = 3.0f;
 
@@ -201,13 +198,13 @@ namespace ShipGame
 			}
 		}
 
-		public override void Update(float elapsedTime)
+		public void Update(float elapsedTime)
 		{
 			// accumulate elapsed time
 			this.elapsedTime += elapsedTime;
 		}
 
-		public override void Draw3D()
+		public void Draw3D()
 		{
 			var gd = SG.GraphicsDevice;
 
@@ -362,7 +359,7 @@ namespace ShipGame
 			}
 		}
 
-		public override void Draw2D(RenderContext2D context)
+		public void Draw2D(RenderContext2D context)
 		{
 			Rectangle rect = new Rectangle(0, 0, 0, 0);
 

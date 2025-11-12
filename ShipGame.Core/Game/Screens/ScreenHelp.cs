@@ -8,9 +8,7 @@
 #endregion
 
 #region Using Statements
-using AssetManagementBase;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
@@ -18,40 +16,31 @@ using System;
 
 namespace ShipGame
 {
-	public class ScreenHelp : Screen
+	public class ScreenHelp : IScreen
 	{
 		Texture2D textureControls;    // controlls text texture
 		Texture2D textureDisplay;     // controller texture
 		Texture2D textureContinue;    // continue text texture
 
-		// constructor
-		public ScreenHelp()
+		public void Set()
 		{
+			// load all resources
+			var content = SG.Assets;
+			textureControls = content.LoadTexture2DDefault("screens/controls.tga");
+			textureDisplay = content.LoadTexture2DDefault("screens/controls_display.tga");
+			textureContinue = content.LoadTexture2DDefault("screens/continue.tga");
 		}
 
-		// called before screen shows
-		public override void SetFocus(bool focus)
+		public void Unset()
 		{
-			// if getting focus
-			if (focus)
-			{
-				// load all resources
-				var content = SG.Assets;
-				textureControls = content.LoadTexture2DDefault("screens/controls.tga");
-				textureDisplay = content.LoadTexture2DDefault("screens/controls_display.tga");
-				textureContinue = content.LoadTexture2DDefault("screens/continue.tga");
-			}
-			else  // loosing focus
-			{
-				// free all resources
-				textureControls = null;
-				textureDisplay = null;
-				textureContinue = null;
-			}
+			// free all resources
+			textureControls = null;
+			textureDisplay = null;
+			textureContinue = null;
 		}
 
 		// process input
-		public override void ProcessInput(float elapsedTime)
+		public void ProcessInput(float elapsedTime)
 		{
 			var input = SG.InputManager;
 			for (int i = 0; i < 2; i++)
@@ -78,12 +67,12 @@ namespace ShipGame
 		}
 
 		// update screen
-		public override void Update(float elapsedTime)
+		public void Update(float elapsedTime)
 		{
 		}
 
 		// draw 3D scene
-		public override void Draw3D()
+		public void Draw3D()
 		{
 			var gd = SG.GraphicsDevice;
 
@@ -95,7 +84,7 @@ namespace ShipGame
 		}
 
 		// draw 2D gui
-		public override void Draw2D(RenderContext2D context)
+		public void Draw2D(RenderContext2D context)
 		{
 			Rectangle rect = new Rectangle(0, 0, 0, 0);
 

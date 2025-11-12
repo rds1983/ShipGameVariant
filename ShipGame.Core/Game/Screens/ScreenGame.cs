@@ -8,19 +8,15 @@
 #endregion
 
 #region Using Statements
-using AssetManagementBase;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using System;
-using System.Reflection.Metadata;
 
 #endregion
 
 namespace ShipGame
 {
-	public class ScreenGame : Screen
+	public class ScreenGame : IScreen
 	{
 		Texture2D hudCrosshair;       // hud crosshair texture
 		Texture2D hudEnergy;          // hud energy/shield/boost texture
@@ -30,57 +26,56 @@ namespace ShipGame
 
 		Texture2D damageTexture;      // damage indication texture
 
-		// called before screen shows
-		public override void SetFocus(bool focus)
+		public void Set()
 		{
-			// if getting focus
 			var gameManager = SG.GameManager;
-			if (focus == true)
+
+			// load all resources
+			gameManager.LoadFiles();
+
+			// load hud textures
+			var content = SG.Assets;
+			if (gameManager.GameMode == GameMode.SinglePlayer)
 			{
-				// load all resources
-				gameManager.LoadFiles();
-
-				// load hud textures
-				var content = SG.Assets;
-				if (gameManager.GameMode == GameMode.SinglePlayer)
-				{
-					hudCrosshair = content.LoadTexture2DDefault("screens/hud_sp_crosshair.tga");
-					hudEnergy = content.LoadTexture2DDefault("screens/hud_sp_energy.tga");
-					hudMissile = content.LoadTexture2DDefault("screens/hud_sp_missile.tga");
-					hudScore = content.LoadTexture2DDefault("screens/hud_sp_score.tga");
-					hudBars = content.LoadTexture2DDefault("screens/hud_sp_bars.tga");
-				}
-				else
-				{
-					hudCrosshair = content.LoadTexture2DDefault("screens/hud_mp_crosshair.tga");
-					hudEnergy = content.LoadTexture2DDefault("screens/hud_mp_energy.tga");
-					hudMissile = content.LoadTexture2DDefault("screens/hud_mp_missile.tga");
-					hudScore = content.LoadTexture2DDefault("screens/hud_mp_score.tga");
-					hudBars = content.LoadTexture2DDefault("screens/hud_mp_bars.tga");
-				}
-
-				// load damage indicator texture
-				damageTexture = content.LoadTexture2DDefault("screens/damage.tga");
+				hudCrosshair = content.LoadTexture2DDefault("screens/hud_sp_crosshair.tga");
+				hudEnergy = content.LoadTexture2DDefault("screens/hud_sp_energy.tga");
+				hudMissile = content.LoadTexture2DDefault("screens/hud_sp_missile.tga");
+				hudScore = content.LoadTexture2DDefault("screens/hud_sp_score.tga");
+				hudBars = content.LoadTexture2DDefault("screens/hud_sp_bars.tga");
 			}
-			else // loosing focus
+			else
 			{
-				// free all resources
-				gameManager.UnloadFiles();
-
-				// unload hud
-				hudCrosshair = null;
-				hudEnergy = null;
-				hudMissile = null;
-				hudScore = null;
-				hudBars = null;
-
-				// unload damage texture
-				damageTexture = null;
+				hudCrosshair = content.LoadTexture2DDefault("screens/hud_mp_crosshair.tga");
+				hudEnergy = content.LoadTexture2DDefault("screens/hud_mp_energy.tga");
+				hudMissile = content.LoadTexture2DDefault("screens/hud_mp_missile.tga");
+				hudScore = content.LoadTexture2DDefault("screens/hud_mp_score.tga");
+				hudBars = content.LoadTexture2DDefault("screens/hud_mp_bars.tga");
 			}
+
+			// load damage indicator texture
+			damageTexture = content.LoadTexture2DDefault("screens/damage.tga");
+		}
+
+		public void Unset()
+		{
+			var gameManager = SG.GameManager;
+
+			// free all resources
+			gameManager.UnloadFiles();
+
+			// unload hud
+			hudCrosshair = null;
+			hudEnergy = null;
+			hudMissile = null;
+			hudScore = null;
+			hudBars = null;
+
+			// unload damage texture
+			damageTexture = null;
 		}
 
 		// process input
-		public override void ProcessInput(float elapsedTime)
+		public void ProcessInput(float elapsedTime)
 		{
 			var gameManager = SG.GameManager;
 			gameManager.ProcessInput(elapsedTime);
@@ -99,7 +94,7 @@ namespace ShipGame
 		}
 
 		// update screen
-		public override void Update(float elapsedTime)
+		public void Update(float elapsedTime)
 		{
 			// update game
 			var gameManager = SG.GameManager;
@@ -119,7 +114,7 @@ namespace ShipGame
 		}
 
 		// draw 3D scene
-		public override void Draw3D()
+		public void Draw3D()
 		{
 			// draw the 3d game scene
 			SG.GameManager.Draw3D();
@@ -182,7 +177,7 @@ namespace ShipGame
 		}
 
 		// draw 2D gui
-		public override void Draw2D(RenderContext2D context)
+		public void Draw2D(RenderContext2D context)
 		{
 			// draw 2D game gui
 			Rectangle rect = context.ScreenRectangle;

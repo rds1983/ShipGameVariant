@@ -10,9 +10,9 @@ namespace ShipGame
 	{
 		public class ScreenManagerType : IDisposable
 		{
-			List<Screen> screens;         // list of available screens
-			Screen current;               // currently active screen
-			Screen next;                  // next screen on a transition 
+			List<IScreen> screens;         // list of available screens
+			IScreen current;               // currently active screen
+			IScreen next;                  // next screen on a transition 
 										  // (null for no transition)
 
 			float fadeTime = 1.0f;        // total fade time when in a transition
@@ -36,7 +36,7 @@ namespace ShipGame
 			// constructor
 			public ScreenManagerType()
 			{
-				screens = new List<Screen>();
+				screens = new List<IScreen>();
 
 				// add all screens
 				screens.Add(new ScreenIntro());
@@ -84,11 +84,11 @@ namespace ShipGame
 					if (next != null && fade < 0.5f * fadeTime)
 					{
 						// tell new screen it is getting in focus
-						next.SetFocus(true);
+						next.Set();
 
 						// tell the old screen it lost its focus
 						if (current != null)
-							current.SetFocus(false);
+							current.Unset();
 
 						// set new screen as current
 						current = next;
@@ -376,7 +376,7 @@ namespace ShipGame
 			}
 
 			// get screen with given type
-			public Screen GetScreen(ScreenType screenType)
+			public IScreen GetScreen(ScreenType screenType)
 			{
 				return screens[(int)screenType];
 			}

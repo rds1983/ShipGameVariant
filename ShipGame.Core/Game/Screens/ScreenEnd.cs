@@ -8,17 +8,15 @@
 #endregion
 
 #region Using Statements
-using AssetManagementBase;
 using DigitalRiseModel;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using System;
 #endregion
 
 namespace ShipGame
 {
-	public class ScreenEnd : Screen
+	public class ScreenEnd : IScreen
 	{
 		DrModel shipModel;          // winner player ship model
 
@@ -32,46 +30,42 @@ namespace ShipGame
 
 		float elapsedTime;        // elapsed time for rotation animation
 
-		// called before screen shows
-		public override void SetFocus(bool focus)
+		public void Set()
 		{
-			// if getting focus
-			if (focus)
-			{
-				// load all resources
-				var gameManager = SG.GameManager;
-				int winner = gameManager.PlayerWinner;
+			// load all resources
+			var gameManager = SG.GameManager;
+			int winner = gameManager.PlayerWinner;
 
-				var content = SG.Assets;
-				shipModel = content.LoadModel2($"ships/{gameManager.GetPlayerShip(winner)}");
+			var content = SG.Assets;
+			shipModel = content.LoadModel2($"ships/{gameManager.GetPlayerShip(winner)}");
 
-				padModel = content.LoadModel2("ships/pad");
-				padHaloModel = content.LoadModel2("ships/pad_halo");
+			padModel = content.LoadModel2("ships/pad");
+			padHaloModel = content.LoadModel2("ships/pad_halo");
 
-				lights = LightList.Load(content, "screens/end_lights.xml");
+			lights = LightList.Load(content, "screens/end_lights.xml");
 
-				textureContinue = content.LoadTexture2DDefault("screens/continue.tga");
-				if (winner == 0)
-					texturePlayerWin = content.LoadTexture2DDefault("screens/player1_wins.tga");
-				else
-					texturePlayerWin = content.LoadTexture2DDefault("screens/player2_wins.tga");
-			}
-			else // loosing focus
-			{
-				// free all resources
-				shipModel = null;
-				padModel = null;
-				padHaloModel = null;
+			textureContinue = content.LoadTexture2DDefault("screens/continue.tga");
+			if (winner == 0)
+				texturePlayerWin = content.LoadTexture2DDefault("screens/player1_wins.tga");
+			else
+				texturePlayerWin = content.LoadTexture2DDefault("screens/player2_wins.tga");
+		}
 
-				lights = null;
+		public void Unset()
+		{
+			// free all resources
+			shipModel = null;
+			padModel = null;
+			padHaloModel = null;
 
-				textureContinue = null;
-				texturePlayerWin = null;
-			}
+			lights = null;
+
+			textureContinue = null;
+			texturePlayerWin = null;
 		}
 
 		// process input
-		public override void ProcessInput(float elapsedTime)
+		public void ProcessInput(float elapsedTime)
 		{
 			var gameManager = SG.GameManager;
 			int i, j = (int)gameManager.GameMode;
@@ -101,14 +95,14 @@ namespace ShipGame
 		}
 
 		// update screen
-		public override void Update(float elapsedTime)
+		public void Update(float elapsedTime)
 		{
 			// accumulate elapsed time
 			this.elapsedTime += elapsedTime;
 		}
 
 		// draw 3D scene
-		public override void Draw3D()
+		public void Draw3D()
 		{
 			var gd = SG.GraphicsDevice;
 			// clear background
@@ -163,7 +157,7 @@ namespace ShipGame
 		}
 
 		// draw 2D gui
-		public override void Draw2D(RenderContext2D context)
+		public void Draw2D(RenderContext2D context)
 		{
 			Rectangle rect = new Rectangle(0, 0, 0, 0);
 

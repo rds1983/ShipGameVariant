@@ -8,9 +8,7 @@
 #endregion
 
 #region Using Statements
-using AssetManagementBase;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
@@ -18,7 +16,7 @@ using System;
 
 namespace ShipGame
 {
-	public class ScreenIntro : Screen
+	public class ScreenIntro : IScreen
 	{
 		int menuSelection;              // current menu selection
 		float menuTime;                 // menu time for animation
@@ -40,48 +38,44 @@ namespace ShipGame
 		// menu textures with hover
 		Texture2D[] textureMenuHover = new Texture2D[NumberMenuItems];
 
-		// called before screen shows or stops showing
-		public override void SetFocus(bool focus)
+		public void Set()
 		{
-			// if getting focus
-			if (focus)
+			// load all resources
+			SG.GameManager.GameMode = GameMode.SinglePlayer;
+
+			var content = SG.Assets;
+			textureLogo = content.LoadTexture2DDefault("screens/intro_logo.tga");
+			textureLens = content.LoadTexture2DDefault("screens/intro_lens.tga");
+
+			textureCursorAnim = content.LoadTexture2DDefault("screens/cursor_anim.tga");
+			textureCursorArrow = content.LoadTexture2DDefault("screens/cursor_arrow.tga");
+			textureCursorBullet = content.LoadTexture2DDefault("screens/cursor_bullet.tga");
+
+			for (int i = 0; i < NumberMenuItems; i++)
 			{
-				// load all resources
-				SG.GameManager.GameMode = GameMode.SinglePlayer;
-
-				var content = SG.Assets;
-				textureLogo = content.LoadTexture2DDefault("screens/intro_logo.tga");
-				textureLens = content.LoadTexture2DDefault("screens/intro_lens.tga");
-
-				textureCursorAnim = content.LoadTexture2DDefault("screens/cursor_anim.tga");
-				textureCursorArrow = content.LoadTexture2DDefault("screens/cursor_arrow.tga");
-				textureCursorBullet = content.LoadTexture2DDefault("screens/cursor_bullet.tga");
-
-				for (int i = 0; i < NumberMenuItems; i++)
-				{
-					textureMenu[i] = content.LoadTexture2DDefault($"screens/{menuNames[i]}.tga");
-					textureMenuHover[i] = content.LoadTexture2DDefault($"screens/{menuNames[i]}_hover.tga");
-				}
+				textureMenu[i] = content.LoadTexture2DDefault($"screens/{menuNames[i]}.tga");
+				textureMenuHover[i] = content.LoadTexture2DDefault($"screens/{menuNames[i]}_hover.tga");
 			}
-			else // loosing focus
-			{
-				// free all resources
-				textureLogo = null;
-				textureLens = null;
-				textureCursorAnim = null;
-				textureCursorArrow = null;
-				textureCursorBullet = null;
+		}
 
-				for (int i = 0; i < NumberMenuItems; i++)
-				{
-					textureMenu[i] = null;
-					textureMenuHover[i] = null;
-				}
+		public void Unset()
+		{
+			// free all resources
+			textureLogo = null;
+			textureLens = null;
+			textureCursorAnim = null;
+			textureCursorArrow = null;
+			textureCursorBullet = null;
+
+			for (int i = 0; i < NumberMenuItems; i++)
+			{
+				textureMenu[i] = null;
+				textureMenuHover[i] = null;
 			}
 		}
 
 		// process input
-		public override void ProcessInput(float elapsedTime)
+		public void ProcessInput(float elapsedTime)
 		{
 			var input = SG.InputManager;
 			for (int i = 0; i < 2; i++)
@@ -138,14 +132,14 @@ namespace ShipGame
 		}
 
 		// update screen
-		public override void Update(float elapsedTime)
+		public void Update(float elapsedTime)
 		{
 			// accumulate elapsed time
 			menuTime += elapsedTime;
 		}
 
 		// draw 3D scene
-		public override void Draw3D()
+		public void Draw3D()
 		{
 			var gd = SG.GraphicsDevice;
 
@@ -189,7 +183,7 @@ namespace ShipGame
 		}
 
 		// draw 2D gui
-		public override void Draw2D(RenderContext2D context)
+		public void Draw2D(RenderContext2D context)
 		{
 			// screen rect
 			var gd = SG.GraphicsDevice;
