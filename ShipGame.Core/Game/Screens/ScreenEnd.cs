@@ -177,8 +177,8 @@ namespace ShipGame
 			rect.Y = screenSizeY - rect.Height - 60;
 			rect.X = screenSizeX / 2 - rect.Width / 2;
 
-			var screenManager = SG.ScreenManager;
-			screenManager.DrawTexture(textureContinue, rect,
+			var fontManager = SG.FontManager;
+			fontManager.DrawTexture(textureContinue, rect,
 				Color.White, BlendState.AlphaBlend);
 
 			// deaw winning player number
@@ -186,7 +186,7 @@ namespace ShipGame
 			rect.Height = texturePlayerWin.Height;
 			rect.Y = 20;
 			rect.X = screenSizeX / 2 - rect.Width / 2;
-			screenManager.DrawTexture(texturePlayerWin, rect,
+			fontManager.DrawTexture(texturePlayerWin, rect,
 				Color.White, BlendState.AlphaBlend);
 		}
 	}

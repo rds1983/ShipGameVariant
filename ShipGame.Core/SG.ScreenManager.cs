@@ -180,27 +180,6 @@ namespace ShipGame
 
 			}
 
-			// draw a texture with destination rectangle, color and blend mode
-			public void DrawTexture(
-				Texture2D texture,
-				Rectangle rect,
-				Color color,
-				BlendState blend)
-			{
-				FontManager.DrawTexture(texture, rect, color, blend);
-			}
-
-			// draw a texture with desination rectange, rotation, color and blend settings
-			public void DrawTexture(
-				Texture2D texture,
-				Rectangle rect,
-				float rotation,
-				Color color,
-				BlendState blend)
-			{
-				FontManager.DrawTexture(texture, rect, rotation, color, blend);
-			}
-
 			// draw the background animated image
 			public void DrawBackground()
 			{

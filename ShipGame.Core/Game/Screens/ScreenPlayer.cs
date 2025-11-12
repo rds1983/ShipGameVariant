@@ -371,7 +371,7 @@ namespace ShipGame
 			int screenSizeY = gd.Viewport.Height;
 
 			// if single player mode
-			var screenManager = SG.ScreenManager;
+			var fontManager = SG.FontManager;
 			if (SG.GameManager.GameMode == GameMode.SinglePlayer)
 			{
 				rect.Width = textureSelectBack.Width;
@@ -382,11 +382,11 @@ namespace ShipGame
 				{
 					rect.Width = textureSelectCancel.Width;
 					rect.Height = textureSelectCancel.Height;
-					screenManager.DrawTexture(textureSelectCancel, rect,
+					fontManager.DrawTexture(textureSelectCancel, rect,
 						Color.White, BlendState.AlphaBlend);
 				}
 				else
-					screenManager.DrawTexture(textureSelectBack, rect,
+					fontManager.DrawTexture(textureSelectBack, rect,
 						Color.White, BlendState.AlphaBlend);
 
 				rect.Width = textureInvertYCheck.Width;
@@ -394,24 +394,24 @@ namespace ShipGame
 				rect.Y = screenSizeY - rect.Height - 30;
 				rect.X = screenSizeX / 2 - rect.Width / 2;
 				if ((invertY & 1) == 0)
-					screenManager.DrawTexture(textureInvertYUncheck, rect,
+					fontManager.DrawTexture(textureInvertYUncheck, rect,
 						Color.White, BlendState.AlphaBlend);
 				else
-					screenManager.DrawTexture(textureInvertYCheck, rect,
+					fontManager.DrawTexture(textureInvertYCheck, rect,
 						Color.White, BlendState.AlphaBlend);
 
 				rect.Width = textureChangeShip.Width;
 				rect.Height = textureChangeShip.Height;
 				rect.X = screenSizeX / 5 - rect.Width / 2;
 				rect.Y = 60;
-				screenManager.DrawTexture(textureChangeShip, rect,
+				fontManager.DrawTexture(textureChangeShip, rect,
 					Color.White, BlendState.AlphaBlend);
 
 				rect.Width = textureRotateShip.Width;
 				rect.Height = textureRotateShip.Height;
 				rect.X = screenSizeX * 4 / 5 - rect.Width / 2;
 				rect.Y = 60;
-				screenManager.DrawTexture(textureRotateShip, rect,
+				fontManager.DrawTexture(textureRotateShip, rect,
 					Color.White, BlendState.AlphaBlend);
 			}
 			else // if multi player mode
@@ -420,14 +420,14 @@ namespace ShipGame
 				rect.Height = textureChangeShip.Height;
 				rect.X = (screenSizeX - rect.Width) / 2;
 				rect.Y = 40;
-				screenManager.DrawTexture(textureChangeShip, rect,
+				fontManager.DrawTexture(textureChangeShip, rect,
 					Color.White, BlendState.AlphaBlend);
 
 				rect.Width = textureRotateShip.Width;
 				rect.Height = textureRotateShip.Height;
 				rect.X = (screenSizeX - rect.Width) / 2;
 				rect.Y = 40 + textureChangeShip.Height;
-				screenManager.DrawTexture(textureRotateShip, rect,
+				fontManager.DrawTexture(textureRotateShip, rect,
 					Color.White, BlendState.AlphaBlend);
 
 				rect.Width = textureInvertYCheck.Width;
@@ -435,17 +435,17 @@ namespace ShipGame
 				rect.Y = screenSizeY - rect.Height - 30;
 				rect.X = screenSizeX / 4 - rect.Width / 2;
 				if ((invertY & 1) == 0)
-					screenManager.DrawTexture(textureInvertYUncheck, rect,
+					fontManager.DrawTexture(textureInvertYUncheck, rect,
 						Color.White, BlendState.AlphaBlend);
 				else
-					screenManager.DrawTexture(textureInvertYCheck, rect,
+					fontManager.DrawTexture(textureInvertYCheck, rect,
 						Color.White, BlendState.AlphaBlend);
 				rect.X = screenSizeX * 3 / 4 - rect.Width / 2;
 				if ((invertY & 2) == 0)
-					screenManager.DrawTexture(textureInvertYUncheck, rect,
+					fontManager.DrawTexture(textureInvertYUncheck, rect,
 						Color.White, BlendState.AlphaBlend);
 				else
-					screenManager.DrawTexture(textureInvertYCheck, rect,
+					fontManager.DrawTexture(textureInvertYCheck, rect,
 						Color.White, BlendState.AlphaBlend);
 
 				rect.Width = textureSelectBack.Width;
@@ -456,11 +456,11 @@ namespace ShipGame
 				{
 					rect.Width = textureSelectCancel.Width;
 					rect.Height = textureSelectCancel.Height;
-					screenManager.DrawTexture(textureSelectCancel, rect,
+					fontManager.DrawTexture(textureSelectCancel, rect,
 						Color.White, BlendState.AlphaBlend);
 				}
 				else
-					screenManager.DrawTexture(textureSelectBack, rect,
+					fontManager.DrawTexture(textureSelectBack, rect,
 						Color.White, BlendState.AlphaBlend);
 				rect.Width = textureSelectBack.Width;
 				rect.Height = textureSelectBack.Height;
@@ -470,11 +470,11 @@ namespace ShipGame
 				{
 					rect.Width = textureSelectCancel.Width;
 					rect.Height = textureSelectCancel.Height;
-					screenManager.DrawTexture(textureSelectCancel, rect,
+					fontManager.DrawTexture(textureSelectCancel, rect,
 						Color.White, BlendState.AlphaBlend);
 				}
 				else
-					screenManager.DrawTexture(textureSelectBack, rect,
+					fontManager.DrawTexture(textureSelectBack, rect,
 						Color.White, BlendState.AlphaBlend);
 			}
 		}

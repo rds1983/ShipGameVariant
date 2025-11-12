@@ -109,8 +109,8 @@ namespace ShipGame
 			rect.X = screenSizeX / 2 - rect.Width / 2;
 			rect.Y = 40;
 
-			var screenManager = SG.ScreenManager;
-			screenManager.DrawTexture(textureControls, rect,
+			var fontManager = SG.FontManager;
+			fontManager.DrawTexture(textureControls, rect,
 				Color.White, BlendState.AlphaBlend);
 
 			// draw controller texture centered in screen
@@ -118,7 +118,7 @@ namespace ShipGame
 			rect.Height = textureDisplay.Height;
 			rect.X = screenSizeX / 2 - rect.Width / 2;
 			rect.Y = screenSizeY / 2 - rect.Height / 2 + 10;
-			screenManager.DrawTexture(textureDisplay, rect,
+			fontManager.DrawTexture(textureDisplay, rect,
 				Color.White, BlendState.AlphaBlend);
 
 			// draw continue message aligned to bottom of screen
@@ -126,7 +126,7 @@ namespace ShipGame
 			rect.Height = textureContinue.Height;
 			rect.X = screenSizeX / 2 - rect.Width / 2;
 			rect.Y = screenSizeY - rect.Height - 60;
-			screenManager.DrawTexture(textureContinue, rect,
+			fontManager.DrawTexture(textureContinue, rect,
 				Color.White, BlendState.AlphaBlend);
 		}
 	}

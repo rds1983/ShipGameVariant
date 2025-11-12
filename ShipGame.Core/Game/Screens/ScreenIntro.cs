@@ -164,12 +164,12 @@ namespace ShipGame
 			float rotation = menuTime * 2;
 
 			// draw animated cursor texture
-			var screenManager = SG.ScreenManager;
+			var fontManager = SG.FontManager;
 			rect.X = x - textureCursorAnim.Width / 2;
 			rect.Y = y - textureCursorAnim.Height / 2;
 			rect.Width = textureCursorAnim.Width;
 			rect.Height = textureCursorAnim.Height;
-			screenManager.DrawTexture(textureCursorAnim, rect, rotation,
+			fontManager.DrawTexture(textureCursorAnim, rect, rotation,
 				Color.White, BlendState.AlphaBlend);
 
 			// draw bullet cursor texture
@@ -177,7 +177,7 @@ namespace ShipGame
 			rect.Y = y - textureCursorBullet.Height / 2;
 			rect.Width = textureCursorBullet.Width;
 			rect.Height = textureCursorBullet.Height;
-			screenManager.DrawTexture(textureCursorBullet, rect,
+			fontManager.DrawTexture(textureCursorBullet, rect,
 				Color.White, BlendState.AlphaBlend);
 
 			// draw arrow cursor texture
@@ -185,7 +185,7 @@ namespace ShipGame
 			rect.Y = y - textureCursorArrow.Height / 2;
 			rect.Width = textureCursorArrow.Width;
 			rect.Height = textureCursorArrow.Height;
-			screenManager.DrawTexture(textureCursorArrow, rect,
+			fontManager.DrawTexture(textureCursorArrow, rect,
 				Color.White, BlendState.AlphaBlend);
 		}
 
@@ -198,12 +198,12 @@ namespace ShipGame
 							gd.Viewport.Width, gd.Viewport.Height);
 
 			// draw lens flare texture
-			var screenManager = SG.ScreenManager;
-			screenManager.DrawTexture(textureLens, rect,
+			var fontManager = SG.FontManager;
+			fontManager.DrawTexture(textureLens, rect,
 				Color.White, BlendState.Additive);
 
 			// draw logo texture
-			screenManager.DrawTexture(textureLogo, rect,
+			fontManager.DrawTexture(textureLogo, rect,
 				Color.White, BlendState.AlphaBlend);
 
 			// draw menu itens
@@ -217,7 +217,7 @@ namespace ShipGame
 					rect.Y = Y;
 					rect.Width = textureMenuHover[i].Width;
 					rect.Height = textureMenuHover[i].Height;
-					screenManager.DrawTexture(textureMenuHover[i], rect,
+					fontManager.DrawTexture(textureMenuHover[i], rect,
 						Color.White, BlendState.AlphaBlend);
 
 					// draw cursor left of selected item
@@ -232,7 +232,7 @@ namespace ShipGame
 					rect.Width = textureMenu[i].Width;
 					rect.Height = textureMenu[i].Height;
 
-					screenManager.DrawTexture(textureMenu[i], rect,
+					fontManager.DrawTexture(textureMenu[i], rect,
 						Color.White, BlendState.AlphaBlend);
 
 					Y += 40;

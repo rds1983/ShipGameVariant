@@ -132,9 +132,9 @@ namespace ShipGame
 			rect.Height = levelShots[selection].Height;
 			rect.X = (screenSizeX - rect.Width) / 2;
 			rect.Y = (screenSizeY - rect.Height) / 2 + 30;
-			
-			var screenManager = SG.ScreenManager;
-			screenManager.DrawTexture(levelShots[selection], rect,
+
+			var fontManager = SG.FontManager;
+			fontManager.DrawTexture(levelShots[selection], rect,
 				Color.White, BlendState.AlphaBlend);
 
 			// draw back and select buttons
@@ -142,7 +142,7 @@ namespace ShipGame
 			rect.Height = selectBack.Height;
 			rect.X = (screenSizeX - rect.Width) / 2;
 			rect.Y = 30;
-			screenManager.DrawTexture(selectBack, rect,
+			fontManager.DrawTexture(selectBack, rect,
 				Color.White, BlendState.AlphaBlend);
 
 			// draw change level text
@@ -150,7 +150,7 @@ namespace ShipGame
 			rect.Height = changeLevel.Height;
 			rect.X = (screenSizeX - rect.Width) / 2;
 			rect.Y = screenSizeY - rect.Height - 30;
-			screenManager.DrawTexture(changeLevel, rect,
+			fontManager.DrawTexture(changeLevel, rect,
 				Color.White, BlendState.AlphaBlend);
 		}
 	}
