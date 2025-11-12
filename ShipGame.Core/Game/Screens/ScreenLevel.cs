@@ -130,7 +130,7 @@ namespace ShipGame
 			screenManager.DrawBackground();
 		}
 
-		public override void Draw2D(FontManager font)
+		public override void Draw2D()
 		{
 			var gd = SG.GraphicsDevice;
 			int screenSizeX = gd.Viewport.Width;

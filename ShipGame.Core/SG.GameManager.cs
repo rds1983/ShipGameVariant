@@ -609,12 +609,12 @@ namespace ShipGame
 			/// <summary>
 			/// Draw the HUD interface
 			/// </summary>
-			void DrawHud(FontManager font, Rectangle rect, Vector3 bars,
-				int barsLeft, int barsWidth, bool crosshair)
+			void DrawHud(Rectangle rect, Vector3 bars, int barsLeft, int barsWidth, bool crosshair)
 			{
 				Rectangle r = new Rectangle(0, 0, 0, 0);
 
 				// if crosshair enabled
+				var font = FontManager;
 				if (crosshair)
 				{
 					// draw crosshair hud texture
@@ -666,13 +666,9 @@ namespace ShipGame
 			/// <summary>
 			/// Draw the 2D game screen
 			/// </summary>
-			public void Draw2D(FontManager font)
+			public void Draw2D()
 			{
-				if (font == null)
-				{
-					throw new ArgumentNullException("font");
-				}
-
+				var font = FontManager;
 				Rectangle rect = font.ScreenRectangle;
 
 				// if in single player mode
@@ -681,7 +677,7 @@ namespace ShipGame
 					if (players[0].IsAlive)
 					{
 						// draw hud 
-						DrawHud(font, rect, players[0].Bars, 70, 120,
+						DrawHud(rect, players[0].Bars, 70, 120,
 							players[0].Camera3rdPerson == false);
 
 						// draw missile count
@@ -706,7 +702,7 @@ namespace ShipGame
 					if (players[0].IsAlive)
 					{
 						// draw hud 
-						DrawHud(font, rect, players[0].Bars, 80, 100,
+						DrawHud(rect, players[0].Bars, 80, 100,
 							players[0].Camera3rdPerson == false);
 
 						// draw missile count
@@ -729,7 +725,7 @@ namespace ShipGame
 					if (players[1].IsAlive)
 					{
 						// draw hud
-						DrawHud(font, rect, players[1].Bars, 80, 100,
+						DrawHud(rect, players[1].Bars, 80, 100,
 							players[1].Camera3rdPerson == false);
 
 						// draw missile count
@@ -1246,6 +1242,6 @@ namespace ShipGame
 			#endregion
 		}
 
-		public static GameManagerType GameManager { get; } = new GameManagerType();
+		public static GameManagerType GameManager { get; private set; }
 	}
 }

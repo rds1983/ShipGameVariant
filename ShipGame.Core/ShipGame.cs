@@ -27,7 +27,6 @@ namespace ShipGame
 
 		GraphicsDeviceManager graphics;
 		ScreenManager screen;
-		FontManager font;
 		bool renderVsync = true;
 
 		public ShipGameGame()
@@ -62,10 +61,8 @@ namespace ShipGame
 		{
 			SG.Initialize(GraphicsDevice);
 
-			font = new FontManager();
-			screen = new ScreenManager(this, font);
+			screen = new ScreenManager(this);
 
-			font.LoadContent();
 			screen.LoadContent();
 		}
 
@@ -76,10 +73,8 @@ namespace ShipGame
 		protected override void UnloadContent()
 		{
 			screen.UnloadContent();
-			font.UnloadContent();
 
 			screen = null;
-			font = null;
 		}
 
 

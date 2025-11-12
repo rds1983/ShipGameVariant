@@ -22,7 +22,6 @@ namespace ShipGame
 	public class ScreenManager : IDisposable
 	{
 		ShipGameGame shipGame;            // xna game
-		FontManager fontManager;             // font manager
 		InputManager inputManager;           // input manager
 
 		List<Screen> screens;         // list of available screens
@@ -48,10 +47,9 @@ namespace ShipGame
 		float backgroundTime = 0.0f;  // time for background animation used on menus
 
 		// constructor
-		public ScreenManager(ShipGameGame shipGame, FontManager font)
+		public ScreenManager(ShipGameGame shipGame)
 		{
 			this.shipGame = shipGame;
-			fontManager = font;
 
 			screens = new List<Screen>();
 			inputManager = new InputManager();
@@ -206,7 +204,7 @@ namespace ShipGame
 			Color color,
 			BlendState blend)
 		{
-			fontManager.DrawTexture(texture, rect, color, blend);
+			SG.FontManager.DrawTexture(texture, rect, color, blend);
 		}
 
 		// draw a texture with source and destination rectangles, color and blend mode
@@ -217,7 +215,7 @@ namespace ShipGame
 			Color color,
 			BlendState blend)
 		{
-			fontManager.DrawTexture(texture, destinationRect, sourceRect, color, blend);
+			SG.FontManager.DrawTexture(texture, destinationRect, sourceRect, color, blend);
 		}
 
 		// draw a texture with desination rectange, rotation, color and blend settings
@@ -228,7 +226,7 @@ namespace ShipGame
 			Color color,
 			BlendState blend)
 		{
-			fontManager.DrawTexture(texture, rect, rotation, color, blend);
+			SG.FontManager.DrawTexture(texture, rect, rotation, color, blend);
 		}
 
 		// draw the background animated image
@@ -302,10 +300,10 @@ namespace ShipGame
 				DrawRenderTargetTexture(glowRT2, 2.0f, true);
 
 				// begin text mode
-				fontManager.BeginText();
+				SG.FontManager.BeginText();
 
 				// draw the 2D scene 
-				current.Draw2D(fontManager);
+				current.Draw2D();
 
 				// draw fps
 				//fontManager.DrawText(
@@ -314,7 +312,7 @@ namespace ShipGame
 				//    new Vector2(gd.Viewport.Width - 80, 0), Color.White);
 
 				// end text mode
-				fontManager.EndText();
+				SG.FontManager.EndText();
 			}
 
 			// if in a transition

@@ -89,10 +89,10 @@ namespace ShipGame
 		}
 
 		// draw 2D gui
-		public override void Draw2D(FontManager font)
+		public override void Draw2D()
 		{
 			// draw 2D game gui
-			SG.GameManager.Draw2D(font);
+			SG.GameManager.Draw2D();
 		}
 	}
 }

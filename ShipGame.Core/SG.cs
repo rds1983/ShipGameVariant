@@ -18,11 +18,16 @@ namespace ShipGame
 			var path = Path.Combine(Utility.ExecutingAssemblyDirectory, "Assets");
 			Assets = AssetManager.CreateFileAssetManager(path);
 
+			FontManager = new FontManagerType();
+			FontManager.LoadContent();
+
+			GameManager = new GameManagerType();
 			GameManager.LoadContent();
 		}
 
 		public static void Uninitialize()
 		{
+			FontManager.UnloadContent();
 			GameManager.UnloadContent();
 		}
 	}

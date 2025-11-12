@@ -200,7 +200,7 @@ namespace ShipGame
 		}
 
 		// draw 2D gui
-		public override void Draw2D(FontManager font)
+		public override void Draw2D()
 		{
 			// screen rect
 			var gd = SG.GraphicsDevice;

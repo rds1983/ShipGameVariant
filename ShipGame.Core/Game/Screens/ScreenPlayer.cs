@@ -373,7 +373,7 @@ namespace ShipGame
 			}
 		}
 
-		public override void Draw2D(FontManager font)
+		public override void Draw2D()
 		{
 			Rectangle rect = new Rectangle(0, 0, 0, 0);
 
