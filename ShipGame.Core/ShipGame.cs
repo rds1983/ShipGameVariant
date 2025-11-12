@@ -23,14 +23,15 @@ namespace ShipGame
 	/// </summary>
 	public class ShipGameGame : Game
 	{
-		static ShipGameGame instance;
+		private static ShipGameGame instance;
 
 		GraphicsDeviceManager graphics;
-		ScreenManager screen;
 		bool renderVsync = true;
 
 		public ShipGameGame()
 		{
+			instance = this;
+
 			graphics = new GraphicsDeviceManager(this);
 			Window.Title = "ShipGame";
 
@@ -60,10 +61,6 @@ namespace ShipGame
 		protected override void LoadContent()
 		{
 			SG.Initialize(GraphicsDevice);
-
-			screen = new ScreenManager(this);
-
-			screen.LoadContent();
 		}
 
 
@@ -72,9 +69,7 @@ namespace ShipGame
 		/// </summary>
 		protected override void UnloadContent()
 		{
-			screen.UnloadContent();
-
-			screen = null;
+			SG.Uninitialize();
 		}
 
 
@@ -85,12 +80,9 @@ namespace ShipGame
 		/// <param name="gameTime">Provides a snapshot of timing values.</param>
 		protected override void Update(GameTime gameTime)
 		{
-			float ElapsedTimeFloat = (float)gameTime.ElapsedGameTime.TotalSeconds;
-
-			screen.ProcessInput(ElapsedTimeFloat);
-			screen.Update(ElapsedTimeFloat);
-
 			base.Update(gameTime);
+
+			SG.Update(gameTime);
 		}
 
 
@@ -100,7 +92,7 @@ namespace ShipGame
 		/// <param name="gameTime">Provides a snapshot of timing values.</param>
 		protected override void Draw(GameTime gameTime)
 		{
-			screen.Draw();
+			SG.Draw(gameTime);
 
 			base.Draw(gameTime);
 		}
@@ -108,19 +100,14 @@ namespace ShipGame
 		/// <summary>
 		/// This is called to switch full screen mode.
 		/// </summary>
-		public void ToggleFullScreen()
+		public static void ToggleFullScreen()
 		{
-			graphics.ToggleFullScreen();
+			instance.graphics.ToggleFullScreen();
 		}
 
-		static public ShipGameGame GetInstance()
+		public static void DoExit()
 		{
-			return instance;
-		}
-
-		static public void SetInstance(ShipGameGame game)
-		{
-			instance = game;
+			instance.Exit();
 		}
 	}
 }

@@ -20,16 +20,13 @@ namespace ShipGame
 {
 	public class ScreenHelp : Screen
 	{
-		ScreenManager screenManager;    // screen manager
-
 		Texture2D textureControls;    // controlls text texture
 		Texture2D textureDisplay;     // controller texture
 		Texture2D textureContinue;    // continue text texture
 
 		// constructor
-		public ScreenHelp(ScreenManager manager)
+		public ScreenHelp()
 		{
-			screenManager = manager;
 		}
 
 		// called before screen shows
@@ -78,7 +75,7 @@ namespace ShipGame
 					input.IsKeyPressed(i, Keys.Escape) ||
 					input.IsKeyPressed(i, Keys.Space))
 				{
-					screenManager.SetNextScreen(ScreenType.ScreenIntro);
+					SG.ScreenManager.SetNextScreen(ScreenType.ScreenIntro);
 					SG.GameManager.PlaySound("menu_cancel");
 				}
 			}
@@ -98,7 +95,7 @@ namespace ShipGame
 			gd.Clear(ClearOptions.Target | ClearOptions.DepthBuffer, Color.Black, 1, 0);
 
 			// draw background animation
-			screenManager.DrawBackground();
+			SG.ScreenManager.DrawBackground();
 		}
 
 		// draw 2D gui
@@ -115,6 +112,8 @@ namespace ShipGame
 			rect.Height = textureControls.Height;
 			rect.X = screenSizeX / 2 - rect.Width / 2;
 			rect.Y = 40;
+
+			var screenManager = SG.ScreenManager;
 			screenManager.DrawTexture(textureControls, rect,
 				Color.White, BlendState.AlphaBlend);
 

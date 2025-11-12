@@ -22,8 +22,6 @@ namespace ShipGame
 {
 	public class ScreenPlayer : Screen
 	{
-		ScreenManager screenManager;    // screen manager
-
 		const int NumberShips = 2;    // number of available ships to choose from
 
 		// name for each ship
@@ -61,12 +59,6 @@ namespace ShipGame
 
 		// total elapsed time for ship model rotation
 		float elapsedTime = 0.0f;
-
-		// constructor
-		public ScreenPlayer(ScreenManager manager)
-		{
-			screenManager = manager;
-		}
 
 		// called before screen shows
 		public override void SetFocus(bool focus)
@@ -132,8 +124,9 @@ namespace ShipGame
 			const float rotationVelocity = 3.0f;
 
 			var gameManager = SG.GameManager;
-			int i, j = (int)gameManager.GameMode;
+			var screenManager = SG.ScreenManager;
 
+			int i, j = (int)gameManager.GameMode;
 			for (i = 0; i < j; i++)
 				if (confirmed[i] == false)
 				{
@@ -226,7 +219,7 @@ namespace ShipGame
 			gd.Clear(Color.Black);
 
 			// draw background animation
-			screenManager.DrawBackground();
+			SG.ScreenManager.DrawBackground();
 
 			// screen aspect
 			float aspect = (float)gd.Viewport.Width / (float)gd.Viewport.Height;
@@ -382,6 +375,7 @@ namespace ShipGame
 			int screenSizeY = gd.Viewport.Height;
 
 			// if single player mode
+			var screenManager = SG.ScreenManager;
 			if (SG.GameManager.GameMode == GameMode.SinglePlayer)
 			{
 				rect.Width = textureSelectBack.Width;
@@ -494,8 +488,6 @@ namespace ShipGame
 		/// <param name="model"></param>
 		private void FixupShip(DrModel model, string path)
 		{
-			ShipGameGame game = ShipGameGame.GetInstance();
-
 			foreach (var mesh in model.Meshes)
 			{
 				// for each mesh part
@@ -524,11 +516,9 @@ namespace ShipGame
 				new Color(0.1f,0,0.9f), new Color(0.0f,0,1.0f),
 			};
 
-			reflectCube = new TextureCube(ShipGameGame.GetInstance().GraphicsDevice,
-				8, true, SurfaceFormat.Color);
+			reflectCube = new TextureCube(SG.GraphicsDevice, 8, true, SurfaceFormat.Color);
 
 			Random rand = new Random();
-
 			for (int s = 0; s < 6; s++)
 			{
 				Color[] sideData = new Color[reflectCube.Size * reflectCube.Size];
@@ -541,8 +531,5 @@ namespace ShipGame
 
 			return reflectCube;
 		}
-
-
-
 	}
 }

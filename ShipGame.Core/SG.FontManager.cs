@@ -187,7 +187,5 @@ namespace ShipGame
 
 			#endregion
 		}
-
-		public static FontManagerType FontManager { get; private set; }
 	}
 }

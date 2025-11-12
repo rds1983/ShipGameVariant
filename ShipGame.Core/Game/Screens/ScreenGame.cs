@@ -19,14 +19,6 @@ namespace ShipGame
 {
 	public class ScreenGame : Screen
 	{
-		ScreenManager screenManager;    // screen manager
-
-		// constructor
-		public ScreenGame(ScreenManager manager)
-		{
-			screenManager = manager;
-		}
-
 		// called before screen shows
 		public override void SetFocus(bool focus)
 		{
@@ -60,7 +52,7 @@ namespace ShipGame
 				if (input.IsKeyPressed(i, Keys.Escape) || input.IsButtonPressedBack(i))
 				{
 					gameManager.GetPlayer(i).Score = -1;
-					screenManager.SetNextScreen(ScreenType.ScreenEnd);
+					SG.ScreenManager.SetNextScreen(ScreenType.ScreenEnd);
 					gameManager.PlaySound("menu_cancel");
 				}
 		}
@@ -76,9 +68,13 @@ namespace ShipGame
 			// if so, changes to the end screen
 			int i, j = (int)gameManager.GameMode;
 			for (i = 0; i < j; i++)
+			{
 				if (gameManager.GetPlayer(i).Score == GameOptions.MaxPoints)
-					screenManager.SetNextScreen(ScreenType.ScreenEnd,
+				{
+					SG.ScreenManager.SetNextScreen(ScreenType.ScreenEnd,
 						GameOptions.FadeColor, GameOptions.FadeTime);
+				}
+			}
 		}
 
 		// draw 3D scene

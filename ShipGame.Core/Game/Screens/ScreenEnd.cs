@@ -20,8 +20,6 @@ namespace ShipGame
 {
 	public class ScreenEnd : Screen
 	{
-		ScreenManager screenManager;    // screen manager
-
 		DrModel shipModel;          // winner player ship model
 
 		DrModel padModel;           // model for the ship pad
@@ -33,12 +31,6 @@ namespace ShipGame
 		Texture2D textureContinue;    // texture with continue message
 
 		float elapsedTime;        // elapsed time for rotation animation
-
-		// constructor
-		public ScreenEnd(ScreenManager manager)
-		{
-			screenManager = manager;
-		}
 
 		// called before screen shows
 		public override void SetFocus(bool focus)
@@ -105,7 +97,7 @@ namespace ShipGame
 					input.IsKeyPressed(i, Keys.Escape) ||
 					input.IsKeyPressed(i, Keys.Space))
 				{
-					screenManager.SetNextScreen(ScreenType.ScreenIntro);
+					SG.ScreenManager.SetNextScreen(ScreenType.ScreenIntro);
 					gameManager.PlaySound("menu_cancel");
 				}
 			}
@@ -126,7 +118,7 @@ namespace ShipGame
 			gd.Clear(ClearOptions.Target | ClearOptions.DepthBuffer, Color.Black, 1, 0);
 
 			// draw background animation
-			screenManager.DrawBackground();
+			SG.ScreenManager.DrawBackground();
 
 			// screen aspect
 			float aspect = (float)gd.Viewport.Width / (float)gd.Viewport.Height;
@@ -187,6 +179,8 @@ namespace ShipGame
 			rect.Height = textureContinue.Height;
 			rect.Y = screenSizeY - rect.Height - 60;
 			rect.X = screenSizeX / 2 - rect.Width / 2;
+
+			var screenManager = SG.ScreenManager;
 			screenManager.DrawTexture(textureContinue, rect,
 				Color.White, BlendState.AlphaBlend);
 

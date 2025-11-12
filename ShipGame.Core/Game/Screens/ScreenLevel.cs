@@ -20,8 +20,6 @@ namespace ShipGame
 {
 	public class ScreenLevel : Screen
 	{
-		ScreenManager screenManager;    // screen manager
-
 		const int NumberLevels = 2;   // number of available levels to choose from
 
 		// name for each level
@@ -34,12 +32,6 @@ namespace ShipGame
 		Texture2D changeLevel;    // change level texture
 
 		int selection = 0;
-
-		// constructor
-		public ScreenLevel(ScreenManager manager)
-		{
-			screenManager = manager;
-		}
 
 		// called before screen shows
 		public override void SetFocus(bool focus)
@@ -77,6 +69,7 @@ namespace ShipGame
 			for (i = 0; i < j; i++)
 			{
 				// select
+				var screenManager = SG.ScreenManager;
 				if (input.IsKeyPressed(i, Keys.Enter) || input.IsButtonPressedA(i))
 				{
 					gameManager.SetLevel(levels[selection]);
@@ -127,7 +120,7 @@ namespace ShipGame
 			gd.Clear(Color.Black);
 
 			// draw background animation
-			screenManager.DrawBackground();
+			SG.ScreenManager.DrawBackground();
 		}
 
 		public override void Draw2D()
@@ -143,6 +136,8 @@ namespace ShipGame
 			rect.Height = levelShots[selection].Height;
 			rect.X = (screenSizeX - rect.Width) / 2;
 			rect.Y = (screenSizeY - rect.Height) / 2 + 30;
+			
+			var screenManager = SG.ScreenManager;
 			screenManager.DrawTexture(levelShots[selection], rect,
 				Color.White, BlendState.AlphaBlend);
 

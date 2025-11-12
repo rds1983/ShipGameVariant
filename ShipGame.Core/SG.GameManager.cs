@@ -1241,7 +1241,5 @@ namespace ShipGame
 			}
 			#endregion
 		}
-
-		public static GameManagerType GameManager { get; private set; }
 	}
 }

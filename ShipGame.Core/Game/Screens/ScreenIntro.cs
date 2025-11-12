@@ -20,8 +20,6 @@ namespace ShipGame
 {
 	public class ScreenIntro : Screen
 	{
-		ScreenManager screenManager;    // screen manager
-
 		int menuSelection;              // current menu selection
 		float menuTime;                 // menu time for animation
 
@@ -41,12 +39,6 @@ namespace ShipGame
 		Texture2D[] textureMenu = new Texture2D[NumberMenuItems];
 		// menu textures with hover
 		Texture2D[] textureMenuHover = new Texture2D[NumberMenuItems];
-
-		// constructor
-		public ScreenIntro(ScreenManager manager)
-		{
-			screenManager = manager;
-		}
 
 		// called before screen shows or stops showing
 		public override void SetFocus(bool focus)
@@ -105,6 +97,7 @@ namespace ShipGame
 					input.IsKeyPressed(i, Keys.Enter) ||
 					input.IsKeyPressed(i, Keys.Space))
 				{
+					var screenManager = SG.ScreenManager;
 					switch (menuSelection)
 					{
 						case 0:
@@ -164,7 +157,7 @@ namespace ShipGame
 			gd.Clear(Color.Black);
 
 			// draw background animation
-			screenManager.DrawBackground();
+			SG.ScreenManager.DrawBackground();
 		}
 
 		// draw the animated cursor
@@ -175,6 +168,7 @@ namespace ShipGame
 			float rotation = menuTime * 2;
 
 			// draw animated cursor texture
+			var screenManager = SG.ScreenManager;
 			rect.X = x - textureCursorAnim.Width / 2;
 			rect.Y = y - textureCursorAnim.Height / 2;
 			rect.Width = textureCursorAnim.Width;
@@ -208,6 +202,7 @@ namespace ShipGame
 							gd.Viewport.Width, gd.Viewport.Height);
 
 			// draw lens flare texture
+			var screenManager = SG.ScreenManager;
 			screenManager.DrawTexture(textureLens, rect,
 				Color.White, BlendState.Additive);
 
