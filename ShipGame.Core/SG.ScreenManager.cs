@@ -54,7 +54,7 @@ namespace ShipGame
 			// process input
 			public void ProcessInput(float elapsedTime)
 			{
-				InputManager.BeginInputProcessing(SG.GameManager.GameMode == GameMode.SinglePlayer);
+				InputManager.BeginInputProcessing(GameManager.GameMode == GameMode.SinglePlayer);
 
 				// process input for currently active screen
 				if (current != null && next == null)
@@ -116,14 +116,14 @@ namespace ShipGame
 				//DepthStencilState ds = new DepthStencilState() { DepthBufferEnable = true, DepthBufferWriteEnable = true };
 				//gd.DepthStencilState = ds;
 
-				var gd = SG.GraphicsDevice;
+				var gd = GraphicsDevice;
 				gd.DepthStencilState = DepthStencilState.None;
 				//gd.BlendState = BlendState.Opaque;
 
 
 				// if in game screen and split screen mode
 				if (current == ScreenGame &&
-					SG.GameManager.GameMode == GameMode.MultiPlayer)
+					GameManager.GameMode == GameMode.MultiPlayer)
 				{
 					// blur horizontal with split horizontal blur shader
 					gd.SetRenderTarget(glowRT1);
@@ -161,7 +161,7 @@ namespace ShipGame
 				//    gd.BlendState = BlendState.Additive;
 				//}
 
-				var gd = SG.GraphicsDevice;
+				var gd = GraphicsDevice;
 				gd.DepthStencilState = DepthStencilState.None;
 				if (additiveBlend)
 				{
@@ -187,18 +187,7 @@ namespace ShipGame
 				Color color,
 				BlendState blend)
 			{
-				SG.FontManager.DrawTexture(texture, rect, color, blend);
-			}
-
-			// draw a texture with source and destination rectangles, color and blend mode
-			public void DrawTexture(
-				Texture2D texture,
-				Rectangle destinationRect,
-				Rectangle sourceRect,
-				Color color,
-				BlendState blend)
-			{
-				SG.FontManager.DrawTexture(texture, destinationRect, sourceRect, color, blend);
+				FontManager.DrawTexture(texture, rect, color, blend);
 			}
 
 			// draw a texture with desination rectange, rotation, color and blend settings
@@ -209,7 +198,7 @@ namespace ShipGame
 				Color color,
 				BlendState blend)
 			{
-				SG.FontManager.DrawTexture(texture, rect, rotation, color, blend);
+				FontManager.DrawTexture(texture, rect, rotation, color, blend);
 			}
 
 			// draw the background animated image
@@ -224,7 +213,7 @@ namespace ShipGame
 				float normalizedTime = ((backgroundTime / animationTime) % 1.0f);
 
 				// set render states
-				var gd = SG.GraphicsDevice;
+				var gd = GraphicsDevice;
 				DepthStencilState ds = gd.DepthStencilState;
 				BlendState bs = gd.BlendState;
 				gd.DepthStencilState = DepthStencilState.DepthRead;
@@ -261,7 +250,7 @@ namespace ShipGame
 				frameRateCount++;
 
 				// if a valid current screen is set
-				var gd = SG.GraphicsDevice;
+				var gd = GraphicsDevice;
 				if (current != null)
 				{
 					// set the color render target
@@ -283,7 +272,7 @@ namespace ShipGame
 					DrawRenderTargetTexture(glowRT2, 2.0f, true);
 
 					// begin text mode
-					SG.FontManager.BeginText();
+					FontManager.BeginText();
 
 					// draw the 2D scene 
 					current.Draw2D();
@@ -295,7 +284,7 @@ namespace ShipGame
 					//    new Vector2(gd.Viewport.Width - 80, 0), Color.White);
 
 					// end text mode
-					SG.FontManager.EndText();
+					FontManager.EndText();
 				}
 
 				// if in a transition
@@ -321,13 +310,13 @@ namespace ShipGame
 			// load all content
 			public void LoadContent()
 			{
-				var content = SG.Assets;
+				var content = Assets;
 				textureBackground = content.LoadTexture2DDefault("screens/intro_bg.tga");
 				// create blur manager
 				blurManager = new BlurManager(content.LoadEffect2("Blur.efb"),
 					GameOptions.GlowResolution, GameOptions.GlowResolution);
 
-				var gd = SG.GraphicsDevice;
+				var gd = GraphicsDevice;
 				int width = gd.Viewport.Width;
 				int height = gd.Viewport.Height;
 
